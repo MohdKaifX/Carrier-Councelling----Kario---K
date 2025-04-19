@@ -14,4 +14,51 @@ The "Carrier Counselling - Kario" project is a career guidance platform designed
    ```bash
    git clone https://github.com/MohdKaifX/Carrier-Councelling----Kario---K.git
 
+  cd Carrier-Councelling----Kario---K
+
+  pip install -r requirements.txt
+
+  python app.py
+
+
+
+  Usage
+Once the application is running, users can:
+
+Explore various career options.
+
+Take quizzes to receive personalized career suggestions.
+
+Submit forms to get in touch with career counsellors.
+
+Contributing
+We welcome contributions from the open-source community! If you'd like to contribute to the project:
+
+Fork the repository.
+
+Make your changes or add new features.
+
+Create a pull request with a clear description of the changes you've made.
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Contact
+If you have any questions, feel free to reach out via email:
+
+📧 Email: kaif27293@gmail.com
+
+
+---
+
+#### ✅ **2. Commit to GitHub After Editing**
+Make sure that after editing the file locally, you commit and push the changes to GitHub:
+
+```bash
+git add README.md
+git commit -m "Fix README formatting"
+git push origin main
+
+
+
 
