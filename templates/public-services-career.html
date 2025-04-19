@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Service Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --public-service: #10b981;
+            --government: #0ea5e9;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--public-service), var(--government));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--public-service);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--public-service);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--government);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--public-service);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--public-service);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+            border-color: var(--public-service);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--government);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-public {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--government);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-public:hover {
+            color: var(--public-service);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/public-services'">Back to Public Services</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Public Service Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Exam Required</h3>
+                        <p id="career-exam"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Departments & Postings</h2>
+        <p id="career-departments" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Preparation Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/public-services" class="back-to-public">
+            <i class="fas fa-arrow-left"></i> Back to Public Services Careers
+        </a>
+    </div>
+
+    <script>
+        // Public Service Career Data (for all sub-cards in public-services.html)
+        const publicServiceData = {
+            "ias-officer": {
+                title: "IAS Officer",
+                image: "{{ url_for('static', filename='images/ias-officer.jpg') }}",
+                description: "Indian Administrative Service (IAS) officers are the administrative heads of districts and key policy implementers at state and central government levels. They handle public administration, policy formulation, and implementation of government programs.",
+                salary: "₹56,100-₹2,50,000 (7th Pay Commission) + allowances",
+                education: "Bachelor's degree in any discipline from recognized university",
+                exam: "UPSC Civil Services Examination (CSE)",
+                experience: "Training: 2 years (Foundation + District), Career progression through promotions",
+                skills: [
+                    "Administrative Leadership",
+                    "Policy Analysis",
+                    "Public Administration",
+                    "Decision Making",
+                    "Crisis Management",
+                    "Interdepartmental Coordination",
+                    "People Management",
+                    "Financial Management",
+                    "Legal Knowledge"
+                ],
+                departments: "District Magistrate, Commissioner, Secretary in various ministries, Public Sector Undertakings (PSUs), Roles in central and state governments",
+                path: [
+                    {
+                        stage: "UPSC CSE",
+                        content: "Clear the highly competitive UPSC Civil Services Examination"
+                    },
+                    {
+                        stage: "Foundation Course",
+                        content: "Complete foundational training at LBSNAA, Mussoorie (3 months)"
+                    },
+                    {
+                        stage: "Phase I Training",
+                        content: "District training and Bharat Darshan (1 year)"
+                    },
+                    {
+                        stage: "Assistant Secretary",
+                        content: "Posting in central government ministry (3 months)"
+                    },
+                    {
+                        stage: "SDM/Joint Magistrate",
+                        content: "First independent charge posting (2-4 years)"
+                    },
+                    {
+                        stage: "District Magistrate",
+                        content: "Head of district administration (5-10 years)"
+                    },
+                    {
+                        stage: "Secretary Level",
+                        content: "Policy-making roles at state/central level (15+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "UPSC Official Website",
+                        link: "https://upsc.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Indian Polity by M. Laxmikant",
+                        link: "https://www.amazon.in/Indian-Polity-M-Laxmikanth/dp/9351451500"
+                    },
+                    {
+                        type: "Newspaper",
+                        title: "The Hindu & Indian Express",
+                        link: "https://www.thehindu.com/"
+                    },
+                    {
+                        type: "Magazine",
+                        title: "Yojana & Kurukshetra",
+                        link: "https://yojana.gov.in/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Vision IAS Current Affairs",
+                        link: "https://visionias.in/"
+                    }
+                ],
+                outlook: "IAS remains the most prestigious civil service in India with stable career progression. Recent reforms focus on specialization and technology adoption in governance. Demand remains consistently high with about 180 IAS positions allocated annually."
+            },
+            "ips-officer": {
+                title: "IPS Officer",
+                image: "{{ url_for('static', filename='images/ips-officer.jpg') }}",
+                description: "Indian Police Service (IPS) officers lead police forces and maintain law and order at state and national levels. They prevent and investigate crimes, manage security, and implement police reforms.",
+                salary: "₹56,100-₹2,25,000 (7th Pay Commission) + allowances",
+                education: "Bachelor's degree in any discipline from recognized university",
+                exam: "UPSC Civil Services Examination (CSE)",
+                experience: "Training: 2 years (Foundation + Sardar Vallabhbhai Patel National Police Academy), Field postings",
+                skills: [
+                    "Law Enforcement",
+                    "Crisis Management",
+                    "Criminal Investigation",
+                    "Public Safety",
+                    "Leadership",
+                    "Forensic Knowledge",
+                    "Traffic Management",
+                    "Anti-terror Operations",
+                    "Cyber Crime Awareness"
+                ],
+                departments: "State Police, CBI, IB, RAW, CRPF, BSF, CISF, ITBP, NSG, SPG, Traffic Police, Crime Branch",
+                path: [
+                    {
+                        stage: "UPSC CSE",
+                        content: "Clear UPSC Civil Services Examination with IPS allocation"
+                    },
+                    {
+                        stage: "Foundation Course",
+                        content: "Complete foundational training at LBSNAA, Mussoorie (3 months)"
+                    },
+                    {
+                        stage: "Phase I Training",
+                        content: "Basic police training at SVPNPA, Hyderabad (11 months)"
+                    },
+                    {
+                        stage: "Phase II Training",
+                        content: "District practical training (6 months)"
+                    },
+                    {
+                        stage: "Assistant SP",
+                        content: "First independent charge as sub-divisional police officer"
+                    },
+                    {
+                        stage: "Deputy Commissioner",
+                        content: "District police chief (5-8 years)"
+                    },
+                    {
+                        stage: "Commissioner/DIG",
+                        content: "City/range level command (10-15 years)"
+                    },
+                    {
+                        stage: "DG/Commissioner",
+                        content: "State/national level leadership (20+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Indian Penal Code by Ratanlal & Dhirajlal",
+                        link: "https://www.amazon.in/Ratanlal-Dhirajlals-Indian-Penal-Code/dp/9386515622"
+                    },
+                    {
+                        type: "Guide",
+                        title: "IPS Handbook by BPR&D",
+                        link: "https://bprd.nic.in/"
+                    },
+                    {
+                        type: "Physical",
+                        title: "UPSC Physical Standards",
+                        link: "https://upsc.gov.in/sites/default/files/Notifi-CSP-2022-Eng-07092021_1.pdf"
+                    },
+                    {
+                        type: "Course",
+                        title: "Criminal Justice Courses",
+                        link: "https://www.coursera.org/courses?query=criminal%20justice"
+                    }
+                ],
+                outlook: "IPS officers are in high demand with increasing security challenges. Recent focus on community policing, cybercrime, and modernization. About 150 IPS positions allocated annually through UPSC CSE."
+            },
+            "ifs-officer": {
+                title: "IFS Officer",
+                image: "{{ url_for('static', filename='images/ifs-officer.jpg') }}",
+                description: "Indian Foreign Service (IFS) officers represent India in foreign missions and handle diplomatic relations. They protect India's national interests abroad, promote foreign policy, and assist Indian citizens overseas.",
+                salary: "₹56,100-₹2,50,000 (7th Pay Commission) + foreign allowances",
+                education: "Bachelor's degree in any discipline from recognized university",
+                exam: "UPSC Civil Services Examination (CSE)",
+                experience: "Training: 1 year (Foundation + Foreign Service Institute), Postings in India and abroad",
+                skills: [
+                    "Diplomatic Negotiation",
+                    "International Relations",
+                    "Political Analysis",
+                    "Cultural Sensitivity",
+                    "Language Proficiency",
+                    "Crisis Management",
+                    "Protocol Management",
+                    "Economic Diplomacy",
+                    "Multilateral Engagement"
+                ],
+                departments: "Ministry of External Affairs, Indian embassies/high commissions worldwide, Consulates, Permanent Missions to UN, Multilateral organizations",
+                path: [
+                    {
+                        stage: "UPSC CSE",
+                        content: "Clear UPSC Civil Services Examination with IFS allocation"
+                    },
+                    {
+                        stage: "Foundation Course",
+                        content: "Complete foundational training at LBSNAA, Mussoorie (3 months)"
+                    },
+                    {
+                        stage: "Professional Course",
+                        content: "Specialized training at Foreign Service Institute, New Delhi (8 months)"
+                    },
+                    {
+                        stage: "Attaché",
+                        content: "First foreign posting as third secretary (3 years)"
+                    },
+                    {
+                        stage: "First Secretary",
+                        content: "Mid-level diplomatic role (5-8 years)"
+                    },
+                    {
+                        stage: "Counsellor",
+                        content: "Senior diplomatic position (10-15 years)"
+                    },
+                    {
+                        stage: "Ambassador/High Commissioner",
+                        content: "Head of mission (20+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "India's Foreign Policy by Muchkund Dubey",
+                        link: "https://www.amazon.in/Indias-Foreign-Policy-Muchkund-Dubey/dp/8124115648"
+                    },
+                    {
+                        type: "Report",
+                        title: "MEA Annual Report",
+                        link: "https://www.mea.gov.in/annual-reports.htm"
+                    },
+                    {
+                        type: "Newspaper",
+                        title: "International Relations Analysis",
+                        link: "https://www.thehindu.com/news/international/"
+                    },
+                    {
+                        type: "Language",
+                        title: "Foreign Language Training",
+                        link: "https://www.fsi-languages.gov/"
+                    }
+                ],
+                outlook: "IFS offers unique international exposure with about 35-40 positions annually. Growing importance with India's rising global profile. Specializations in economic diplomacy, multilateral engagement, and regional expertise are valuable."
+            },
+            "pcs-officer": {
+                title: "State PCS Officer",
+                image: "{{ url_for('static', filename='images/pcs-officer.jpg') }}",
+                description: "Provincial Civil Service (PCS) officers serve in state government administrative roles. They implement state policies, manage district administration, and oversee development programs at the state level.",
+                salary: "₹40,000-₹1,50,000 (varies by state) + allowances",
+                education: "Bachelor's degree in any discipline from recognized university",
+                exam: "State Public Service Commission examination",
+                experience: "Training: 1-2 years (varies by state), Field postings",
+                skills: [
+                    "State Administration",
+                    "Policy Implementation",
+                    "Local Governance",
+                    "Development Programs",
+                    "Revenue Management",
+                    "Disaster Management",
+                    "Public Service Delivery",
+                    "Regional Language Proficiency",
+                    "Interdepartmental Coordination"
+                ],
+                departments: "District administration, State secretariat, Municipal corporations, State public sector units, Development authorities",
+                path: [
+                    {
+                        stage: "State PSC Exam",
+                        content: "Clear state-level civil services examination"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete state administrative training (duration varies)"
+                    },
+                    {
+                        stage: "Probationary Officer",
+                        content: "Initial field postings (2-3 years)"
+                    },
+                    {
+                        stage: "SDM/Tehsildar",
+                        content: "Sub-divisional administrative roles (3-5 years)"
+                    },
+                    {
+                        stage: "District Officer",
+                        content: "Departmental head at district level (5-10 years)"
+                    },
+                    {
+                        stage: "Commissioner/Secretary",
+                        content: "State-level policy roles (15+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "State PSC Websites",
+                        link: "https://www.india.gov.in/website-state-psc"
+                    },
+                    {
+                        type: "Book",
+                        title: "State-specific Administrative Manuals",
+                        link: "https://www.amazon.in/s?k=state+administration+books"
+                    },
+                    {
+                        type: "Newspaper",
+                        title: "State Vernacular Newspapers",
+                        link: "https://www.indiannewspapers.com/"
+                    },
+                    {
+                        type: "Magazine",
+                        title: "State Government Gazettes",
+                        link: "https://egazette.nic.in/"
+                    }
+                ],
+                outlook: "State civil services offer stable careers with regional focus. Promotion opportunities to IAS through promotion quota. Growing emphasis on e-governance and local development."
+            },
+            "police-officer": {
+                title: "Police Officer",
+                image: "{{ url_for('static', filename='images/police-officer.jpg') }}",
+                description: "Police officers maintain public order, prevent crime, and enforce laws at local levels. They investigate crimes, patrol communities, and ensure citizen safety through visible policing.",
+                salary: "₹25,000-₹1,00,000 (varies by rank and state) + allowances",
+                education: "10+2 for constables, Bachelor's degree for SI/Inspector posts",
+                exam: "State Police Recruitment Board examinations",
+                experience: "Training: 6 months to 1 year, Field experience crucial",
+                skills: [
+                    "Law Enforcement",
+                    "Crime Prevention",
+                    "Community Policing",
+                    "First Response",
+                    "Evidence Collection",
+                    "Traffic Control",
+                    "Crowd Management",
+                    "Report Writing",
+                    "Interpersonal Skills"
+                ],
+                departments: "Local police stations, Crime branch, Traffic police, Special branches, Armed police, Cyber crime units",
+                path: [
+                    {
+                        stage: "Recruitment",
+                        content: "Clear state police recruitment exam for desired rank"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete police academy training (6-12 months)"
+                    },
+                    {
+                        stage: "Probation",
+                        content: "Field training under supervision (1-2 years)"
+                    },
+                    {
+                        stage: "Constable/Head Constable",
+                        content: "Entry-level law enforcement roles"
+                    },
+                    {
+                        stage: "Sub-Inspector",
+                        content: "Investigation and supervisory roles (promotion/exam)"
+                    },
+                    {
+                        stage: "Inspector",
+                        content: "Police station in-charge roles (5-10 years)"
+                    },
+                    {
+                        stage: "DSP/ACP",
+                        content: "Higher leadership roles (through promotion/exam)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Police Manual of respective state",
+                        link: "https://www.india.gov.in/website-state-police"
+                    },
+                    {
+                        type: "Physical",
+                        title: "Police Physical Standards",
+                        link: "https://www.police.gov.in/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Criminal Law Courses",
+                        link: "https://www.coursera.org/courses?query=criminal%20law"
+                    },
+                    {
+                        type: "Platform",
+                        title: "BPR&D Training Resources",
+                        link: "https://bprd.nic.in/"
+                    }
+                ],
+                outlook: "Police recruitment occurs regularly with state-level exams. Modernization drives increasing technical roles. Community policing initiatives creating new engagement models."
+            },
+            "income-tax-officer": {
+                title: "Income Tax Officer",
+                image: "{{ url_for('static', filename='images/income-tax-officer.jpg') }}",
+                description: "Income Tax Officers enforce tax laws, investigate evasion, and process tax returns. They work under the Central Board of Direct Taxes (CBDT) to ensure tax compliance and revenue collection.",
+                salary: "₹45,000-₹1,50,000 (7th Pay Commission) + allowances",
+                education: "Bachelor's degree (Commerce preferred) from recognized university",
+                exam: "SSC Combined Graduate Level (CGL) Examination",
+                experience: "Training: 3-6 months, Field postings",
+                skills: [
+                    "Tax Law Knowledge",
+                    "Financial Analysis",
+                    "Audit Techniques",
+                    "Legal Interpretation",
+                    "Investigation",
+                    "Data Analysis",
+                    "Communication",
+                    "Accounting Principles",
+                    "IT Systems Proficiency"
+                ],
+                departments: "Assessment circles, TDS units, Investigation wings, Appellate tribunals, International taxation, Systems wing",
+                path: [
+                    {
+                        stage: "SSC CGL",
+                        content: "Clear Staff Selection Commission CGL exam with high rank"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete foundational training at NADT, Nagpur"
+                    },
+                    {
+                        stage: "ITO",
+                        content: "Entry-level assessment and processing roles (3-5 years)"
+                    },
+                    {
+                        stage: "Assistant Commissioner",
+                        content: "Supervisory and investigation roles (promotion/exam)"
+                    },
+                    {
+                        stage: "Deputy Commissioner",
+                        content: "Complex case handling and team leadership (8-12 years)"
+                    },
+                    {
+                        stage: "Joint Commissioner",
+                        content: "Policy implementation and large-scale operations (15+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "Income Tax Department",
+                        link: "https://www.incometaxindia.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Income Tax Act & Rules",
+                        link: "https://www.amazon.in/Income-Tax-Act-Rules-2022/dp/9391012470"
+                    },
+                    {
+                        type: "Guide",
+                        title: "Taxmann's Direct Taxes",
+                        link: "https://www.taxmann.com/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "SSC CGL Preparation",
+                        link: "https://ssc.nic.in/"
+                    }
+                ],
+                outlook: "Stable career with regular recruitment through SSC CGL. Increasing digitization (e-assessment, faceless scrutiny) changing work patterns. Specializations in international taxation and investigation valued."
+            },
+            "army-officer": {
+                title: "Army Officer",
+                image: "{{ url_for('static', filename='images/army-officer.jpg') }}",
+                description: "Army officers lead troops and defend national security through the Indian Army. They command units, plan operations, and ensure combat readiness while managing personnel and resources.",
+                salary: "₹56,100-₹2,50,000 (7th Pay Commission) + military allowances",
+                education: "10+2 for NDA, Bachelor's degree for CDS/TES entries",
+                exam: "NDA exam (after 12th), CDS exam (after graduation), TES entry",
+                experience: "Training: 1-1.5 years (IMA/OTA), Field postings",
+                skills: [
+                    "Military Leadership",
+                    "Strategic Planning",
+                    "Combat Operations",
+                    "Personnel Management",
+                    "Crisis Response",
+                    "Physical Fitness",
+                    "Weapons Proficiency",
+                    "Logistics Management",
+                    "Communication Systems"
+                ],
+                departments: "Infantry, Artillery, Armored Corps, Engineers, Signals, Army Service Corps, Intelligence Corps, Medical Corps",
+                path: [
+                    {
+                        stage: "Selection",
+                        content: "Clear NDA/CDS/TES exam and SSB interview"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete training at IMA Dehradun or OTA Chennai"
+                    },
+                    {
+                        stage: "Lieutenant",
+                        content: "Platoon commander role (2-3 years)"
+                    },
+                    {
+                        stage: "Captain",
+                        content: "Company second-in-command (4-6 years)"
+                    },
+                    {
+                        stage: "Major",
+                        content: "Company commander (8-10 years)"
+                    },
+                    {
+                        stage: "Colonel",
+                        content: "Battalion commander (15-18 years)"
+                    },
+                    {
+                        stage: "Brigadier+",
+                        content: "Higher command and staff roles (20+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "Indian Army Official",
+                        link: "https://joinindianarmy.nic.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Pathfinder for NDA/NA",
+                        link: "https://www.amazon.in/Pathfinder-NDA-National-Defence-Academy/dp/9391125710"
+                    },
+                    {
+                        type: "Physical",
+                        title: "SSB Interview Guide",
+                        link: "https://www.amazon.in/SSB-Interview-Books/s?k=SSB+Interview+Books"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Current Affairs for Defence",
+                        link: "https://www.ssbcrack.com/"
+                    }
+                ],
+                outlook: "Army offers structured career with leadership opportunities. About 300-400 officers inducted annually through various entries. Technological modernization creating new specialization areas."
+            },
+            "navy-officer": {
+                title: "Navy Officer",
+                image: "{{ url_for('static', filename='images/navy-officer.jpg') }}",
+                description: "Navy officers serve in the Indian Navy to protect maritime borders and interests. They operate warships, submarines, and aircraft while managing naval operations and personnel.",
+                salary: "₹56,100-₹2,50,000 (7th Pay Commission) + naval allowances",
+                education: "10+2 for NDA, Bachelor's degree (Engg for technical branches) for CDS/other entries",
+                exam: "NDA exam (after 12th), CDS exam (after graduation), TES entry",
+                experience: "Training: 1-1.5 years (INA Ezhimala), Sea postings",
+                skills: [
+                    "Naval Operations",
+                    "Ship Handling",
+                    "Navigation",
+                    "Weapons Systems",
+                    "Marine Engineering",
+                    "Electronics",
+                    "Leadership",
+                    "Crisis Management",
+                    "International Maritime Laws"
+                ],
+                departments: "Executive Branch (including pilots), Engineering Branch, Electrical Branch, Naval Architecture, Education Branch, Logistics",
+                path: [
+                    {
+                        stage: "Selection",
+                        content: "Clear NDA/CDS/TES exam and SSB interview"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete training at Indian Naval Academy, Ezhimala"
+                    },
+                    {
+                        stage: "Sub Lieutenant",
+                        content: "Initial sea training and department roles (2-3 years)"
+                    },
+                    {
+                        stage: "Lieutenant",
+                        content: "Watchkeeping and specialist training (4-6 years)"
+                    },
+                    {
+                        stage: "Lieutenant Commander",
+                        content: "Department head on ships (8-10 years)"
+                    },
+                    {
+                        stage: "Commander",
+                        content: "Executive officer/ship command (12-15 years)"
+                    },
+                    {
+                        stage: "Captain+",
+                        content: "Higher command and staff roles (18+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "Indian Navy Official",
+                        link: "https://www.joinindiannavy.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Guide to Indian Navy Exams",
+                        link: "https://www.amazon.in/Guide-Indian-Navy-Entrance-Examination/dp/9350126335"
+                    },
+                    {
+                        type: "Physical",
+                        title: "Navy Physical Standards",
+                        link: "https://www.joinindiannavy.gov.in/en/page/physical-fitness-test.html"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Maritime Current Affairs",
+                        link: "https://www.marineinsight.com/"
+                    }
+                ],
+                outlook: "Navy offers technologically advanced career with global exposure. About 200-300 officers inducted annually. Growing focus on indigenization and blue water capabilities."
+            },
+            "airforce-officer": {
+                title: "Air Force Officer",
+                image: "{{ url_for('static', filename='images/airforce-officer.jpg') }}",
+                description: "Air Force officers serve in the Indian Air Force to operate aircraft and defense systems. They manage air operations, maintain aircraft, and ensure airspace security.",
+                salary: "₹56,100-₹2,50,000 (7th Pay Commission) + flying allowances",
+                education: "10+2 (PCM) for NDA, Bachelor's degree (Engg for technical branches) for CDS/AFCAT entries",
+                exam: "NDA exam (after 12th), CDS exam (after graduation), AFCAT",
+                experience: "Training: 1-1.5 years (AFA Hyderabad), Operational postings",
+                skills: [
+                    "Aviation Knowledge",
+                    "Aircraft Operations",
+                    "Aerospace Systems",
+                    "Flight Safety",
+                    "Leadership",
+                    "Technical Maintenance",
+                    "Radar Systems",
+                    "Crisis Response",
+                    "Strategic Planning"
+                ],
+                departments: "Flying Branch, Technical Branch, Ground Duty Branches, Logistics, Administration, Meteorology, Air Traffic Control",
+                path: [
+                    {
+                        stage: "Selection",
+                        content: "Clear NDA/CDS/AFCAT exam and SSB interview"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete training at Air Force Academy, Hyderabad"
+                    },
+                    {
+                        stage: "Flying Officer",
+                        content: "Initial operational training and squadron postings (2-3 years)"
+                    },
+                    {
+                        stage: "Flight Lieutenant",
+                        content: "Operational roles and specialization (4-6 years)"
+                    },
+                    {
+                        stage: "Squadron Leader",
+                        content: "Squadron commander roles (8-10 years)"
+                    },
+                    {
+                        stage: "Wing Commander",
+                        content: "Base operations and staff roles (12-15 years)"
+                    },
+                    {
+                        stage: "Group Captain+",
+                        content: "Higher command and strategic roles (18+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "Indian Air Force Official",
+                        link: "https://indianairforce.nic.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "AFCAT Exam Guide",
+                        link: "https://www.amazon.in/AFCAT-Air-Force-Common-Admission/dp/9391125745"
+                    },
+                    {
+                        type: "Physical",
+                        title: "Air Force Physical Standards",
+                        link: "https://indianairforce.nic.in/content/career-opportunities"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Aviation Knowledge Resources",
+                        link: "https://www.faa.gov/"
+                    }
+                ],
+                outlook: "Air Force offers technologically advanced career with specialization opportunities. About 200-300 officers inducted annually. Modernization and indigenization programs creating new roles."
+            },
+            "firefighter": {
+                title: "Firefighter",
+                image: "{{ url_for('static', filename='images/firefighter.jpg') }}",
+                description: "Firefighters respond to fire emergencies, conduct rescues, and ensure public safety. They work for municipal fire departments, airports, and industrial units to prevent and combat fires.",
+                salary: "₹25,000-₹80,000 (varies by state and rank) + allowances",
+                education: "10+2 for basic roles, Bachelor's degree for officer positions",
+                exam: "State fire service recruitment exams",
+                experience: "Training: 6 months to 1 year, On-the-job experience crucial",
+                skills: [
+                    "Fire Suppression",
+                    "Rescue Operations",
+                    "Emergency Medical Response",
+                    "Hazardous Materials Handling",
+                    "Physical Fitness",
+                    "Equipment Operation",
+                    "Teamwork",
+                    "Crisis Management",
+                    "Public Education",
+                    "Prevention Techniques"
+                ],
+                departments: "Municipal fire services, Airport fire units, Industrial fire teams, Disaster response units, Fire safety inspection",
+                path: [
+                    {
+                        stage: "Recruitment",
+                        content: "Clear state fire service recruitment exam"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete basic firefighter training (6-12 months)"
+                    },
+                    {
+                        stage: "Probation",
+                        content: "Field training under supervision (1 year)"
+                    },
+                    {
+                        stage: "Firefighter",
+                        content: "Emergency response and fire prevention duties"
+                    },
+                    {
+                        stage: "Leading Firefighter",
+                        content: "Team leadership roles (3-5 years)"
+                    },
+                    {
+                        stage: "Sub-Officer",
+                        content: "Supervisory roles (promotion/exam)"
+                    },
+                    {
+                        stage: "Station Officer",
+                        content: "Fire station command (8-10 years)"
+                    },
+                    {
+                        stage: "Divisional Officer",
+                        content: "Area-level command (15+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Fire Engineering Handbook",
+                        link: "https://www.amazon.in/Fire-Engineering-Handbook-Department/dp/B0006CQY7G"
+                    },
+                    {
+                        type: "Physical",
+                        title: "Firefighter Fitness Standards",
+                        link: "https://www.nfpa.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Emergency Medical Technician",
+                        link: "https://www.coursera.org/courses?query=emt"
+                    },
+                    {
+                        type: "Website",
+                        title: "National Disaster Response Force",
+                        link: "https://ndrf.gov.in/"
+                    }
+                ],
+                outlook: "Fire services expanding with urbanization and safety regulations. Increasing technical specialization in industrial and high-rise firefighting. Disaster response roles growing in importance."
+            },
+            "rbi-officer": {
+                title: "RBI Grade B Officer",
+                image: "{{ url_for('static', filename='images/rbi-officer.jpg') }}",
+                description: "RBI Grade B officers formulate monetary policy and regulate the banking system in India. They work in various departments of the Reserve Bank of India to maintain financial stability.",
+                salary: "₹75,000-₹1,50,000 (starting) + allowances",
+                education: "Bachelor's degree (Economics/Finance preferred) with 60% marks",
+                exam: "RBI Grade B examination",
+                experience: "Training: 4 months (Foundation course), Department rotations",
+                skills: [
+                    "Economic Analysis",
+                    "Banking Regulation",
+                    "Monetary Policy",
+                    "Financial Markets",
+                    "Risk Management",
+                    "Data Interpretation",
+                    "Report Writing",
+                    "Supervisory Skills",
+                    "Payment Systems",
+                    "Foreign Exchange"
+                ],
+                departments: "Department of Economic and Policy Research, Financial Markets, Banking Regulation, Foreign Exchange, Payment Systems, Inspection, Rural Planning",
+                path: [
+                    {
+                        stage: "RBI Grade B Exam",
+                        content: "Clear 3-phase RBI Grade B examination"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete foundation course at RBI Academy"
+                    },
+                    {
+                        stage: "Probation",
+                        content: "Department rotations and on-the-job training (2 years)"
+                    },
+                    {
+                        stage: "Grade B Officer",
+                        content: "Specialized roles in various departments"
+                    },
+                    {
+                        stage: "Assistant Manager",
+                        content: "Supervisory roles (promotion after 4-5 years)"
+                    },
+                    {
+                        stage: "Manager",
+                        content: "Departmental leadership (8-10 years)"
+                    },
+                    {
+                        stage: "Chief Manager+",
+                        content: "Policy-making roles (15+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "RBI Official",
+                        link: "https://www.rbi.org.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Indian Economy by Ramesh Singh",
+                        link: "https://www.amazon.in/Indian-Economy-Ramesh-Singh/dp/9353167563"
+                    },
+                    {
+                        type: "Report",
+                        title: "RBI Annual Reports",
+                        link: "https://www.rbi.org.in/Scripts/AnnualReportPublications.aspx"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Economic Survey of India",
+                        link: "https://www.indiabudget.gov.in/economicsurvey/"
+                    }
+                ],
+                outlook: "RBI offers prestigious career in central banking. About 150-200 Grade B officers recruited annually. Growing focus on digital currency, financial inclusion, and banking reforms."
+            },
+            "railway-officer": {
+                title: "Railway Officer",
+                image: "{{ url_for('static', filename='images/railway-officer.jpg') }}",
+                description: "Railway officers manage operations, infrastructure, and services in Indian Railways. They work in technical, administrative, and operational roles across the vast railway network.",
+                salary: "₹50,000-₹1,80,000 (7th Pay Commission) + allowances",
+                education: "Engineering degree for technical posts, Bachelor's for non-technical",
+                exam: "RRB NTPC, RRB JE, RRB ALP, or UPSC Engineering Services Examination",
+                experience: "Training: 6 months to 2 years (varies by post), Field postings",
+                skills: [
+                    "Railway Operations",
+                    "Infrastructure Management",
+                    "Transport Logistics",
+                    "Safety Regulations",
+                    "Project Management",
+                    "Team Leadership",
+                    "Technical Maintenance",
+                    "Passenger Services",
+                    "Budgeting",
+                    "Disaster Management"
+                ],
+                departments: "Engineering, Mechanical, Electrical, Signal & Telecom, Traffic, Personnel, Accounts, Stores, Medical, Security",
+                path: [
+                    {
+                        stage: "Recruitment",
+                        content: "Clear RRB or UPSC engineering services exam"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete specialized railway training (6-24 months)"
+                    },
+                    {
+                        stage: "Probation",
+                        content: "Field postings and on-the-job training (1-2 years)"
+                    },
+                    {
+                        stage: "Junior Officer",
+                        content: "Department-specific operational roles"
+                    },
+                    {
+                        stage: "Senior Section Engineer",
+                        content: "Supervisory technical roles (promotion after 5-8 years)"
+                    },
+                    {
+                        stage: "Divisional Officer",
+                        content: "Department head at division level (10-12 years)"
+                    },
+                    {
+                        stage: "Senior Administration",
+                        content: "Zonal/headquarter policy roles (15+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "Indian Railways",
+                        link: "https://indianrailways.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Railway Engineering by Satish Chandra",
+                        link: "https://www.amazon.in/Railway-Engineering-Satish-Chandra/dp/8190675968"
+                    },
+                    {
+                        type: "Guide",
+                        title: "RRB Exam Preparation Books",
+                        link: "https://www.amazon.in/s?k=rrb+exam+books"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Railway Recruitment Board",
+                        link: "https://www.rrbcdg.gov.in/"
+                    }
+                ],
+                outlook: "Railways offer stable careers with nationwide postings. Modernization projects creating new technical roles. About 10,000+ officers recruited annually through various exams."
+            },
+            "bsf-officer": {
+                title: "BSF Officer",
+                image: "{{ url_for('static', filename='images/border-security.jpg') }}",
+                description: "Border Security Force (BSF) officers guard India's borders, prevent illegal activities, and combat trans-border crimes. They serve in challenging terrain conditions to protect national security.",
+                salary: "₹50,000-₹2,00,000 (7th Pay Commission) + border allowances",
+                education: "Bachelor's degree for GDMO, technical qualifications for specialist roles",
+                exam: "UPSC CAPF for Assistant Commandant, BSF RO/RMO for specialist posts",
+                experience: "Training: 1 year (BSF Academy), Field postings in border areas",
+                skills: [
+                    "Border Security",
+                    "Counter-Insurgency",
+                    "Weapons Handling",
+                    "Surveillance",
+                    "Crisis Management",
+                    "Field Craft",
+                    "Intelligence Gathering",
+                    "Physical Endurance",
+                    "Team Leadership",
+                    "Humanitarian Operations"
+                ],
+                departments: "Border outposts, Intelligence wing, Air wing, Water wing, Communications, Training establishments, Special operations",
+                path: [
+                    {
+                        stage: "Selection",
+                        content: "Clear UPSC CAPF exam or BSF specialist recruitment"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete rigorous training at BSF Academy, Tekanpur"
+                    },
+                    {
+                        stage: "Assistant Commandant",
+                        content: "Platoon commander in border areas (3-5 years)"
+                    },
+                    {
+                        stage: "Deputy Commandant",
+                        content: "Company commander roles (promotion after 5-8 years)"
+                    },
+                    {
+                        stage: "Second-in-Command",
+                        content: "Battalion-level leadership (10-12 years)"
+                    },
+                    {
+                        stage: "Commandant",
+                        content: "Unit commander (15+ years)"
+                    },
+                    {
+                        stage: "Senior Staff",
+                        content: "Headquarters and policy roles (20+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "BSF Official",
+                        link: "https://bsf.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "CAPF AC Exam Guide",
+                        link: "https://www.amazon.in/CAPF-Assistant-Commandants-Examination-Paperback/dp/9350126289"
+                    },
+                    {
+                        type: "Physical",
+                        title: "BSF Physical Standards",
+                        link: "https://bsf.gov.in/recruitment.html"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Border Security Updates",
+                        link: "https://www.pib.gov.in/"
+                    }
+                ],
+                outlook: "BSF offers challenging career with national importance. About 100-150 officers recruited annually. Modernization increasing technical surveillance capabilities."
+            },
+            "customs-officer": {
+                title: "Customs Officer",
+                image: "{{ url_for('static', filename='images/customs-officer.jpg') }}",
+                description: "Customs officers regulate imports/exports and prevent smuggling at airports, ports, and land borders. They enforce customs laws, collect duties, and facilitate legitimate trade.",
+                salary: "₹45,000-₹1,50,000 (7th Pay Commission) + allowances",
+                education: "Bachelor's degree from recognized university",
+                exam: "SSC Combined Graduate Level (CGL) Examination",
+                experience: "Training: 3-6 months (Customs Academy), Field postings",
+                skills: [
+                    "Customs Procedures",
+                    "Tariff Classification",
+                    "Trade Regulations",
+                    "Risk Assessment",
+                    "Investigation Techniques",
+                    "Document Verification",
+                    "Valuation Methods",
+                    "Anti-Smuggling",
+                    "International Conventions",
+                    "IT Systems"
+                ],
+                departments: "Airport customs, Port customs, Land customs, Preventive units, Appraising, Export promotion, Audit, Investigation",
+                path: [
+                    {
+                        stage: "SSC CGL",
+                        content: "Clear SSC CGL exam with high rank for customs allocation"
+                    },
+                    {
+                        stage: "Training",
+                        content: "Complete foundational training at NACEN, Faridabad"
+                    },
+                    {
+                        stage: "Probation",
+                        content: "Field training at customs formations (1 year)"
+                    },
+                    {
+                        stage: "Appraiser/Examiner",
+                        content: "Entry-level assessment and examination roles"
+                    },
+                    {
+                        stage: "Superintendent",
+                        content: "Supervisory roles (promotion after 5-8 years)"
+                    },
+                    {
+                        stage: "Assistant Commissioner",
+                        content: "Leadership roles in customs formations (10-12 years)"
+                    },
+                    {
+                        stage: "Deputy Commissioner+",
+                        content: "Policy and administration roles (15+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "Central Board of Indirect Taxes",
+                        link: "https://www.cbic.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Customs Act & Rules",
+                        link: "https://www.amazon.in/Customs-Act-1962-Rules-2022/dp/9391012497"
+                    },
+                    {
+                        type: "Guide",
+                        title: "SSC CGL Preparation Books",
+                        link: "https://www.amazon.in/s?k=ssc+cgl+books"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Customs EDI Systems",
+                        link: "https://www.icegate.gov.in/"
+                    }
+                ],
+                outlook: "Customs offers stable career with international trade focus. Increasing digitization (ICEGATE, faceless assessment) changing work patterns. Special anti-smuggling units growing."
+            },
+            "municipal-officer": {
+                title: "Municipal Commissioner",
+                image: "{{ url_for('static', filename='images/municipal-officer.jpg') }}",
+                description: "Municipal commissioners oversee urban local body administration and civic services. They manage city infrastructure, sanitation, taxation, and public services for urban populations.",
+                salary: "₹1,00,000-₹2,50,000 (varies by city size) + allowances",
+                education: "Bachelor's degree (Engineering preferred), IAS/PCS officers often appointed",
+                exam: "State municipal service exams or IAS/PCS cadre allocation",
+                experience: "Field experience in urban administration preferred",
+                skills: [
+                    "Urban Governance",
+                    "Municipal Finance",
+                    "Public Service Delivery",
+                    "Infrastructure Planning",
+                    "Sanitation Management",
+                    "Project Execution",
+                    "Stakeholder Coordination",
+                    "Crisis Management",
+                    "Policy Implementation",
+                    "Citizen Engagement"
+                ],
+                departments: "City municipal corporations, Town planning, Water supply, Sanitation, Property tax, Licensing, Public health, Engineering, Enforcement",
+                path: [
+                    {
+                        stage: "State Municipal Exam",
+                        content: "Clear state municipal service exam or enter as IAS/PCS officer"
+                    },
+                    {
+                        stage: "Assistant Commissioner",
+                        content: "Zonal administration roles (2-3 years)"
+                    },
+                    {
+                        stage: "Deputy Commissioner",
+                        content: "Departmental head at municipal level (5-8 years)"
+                    },
+                    {
+                        stage: "Additional Commissioner",
+                        content: "Senior administrative roles (10-12 years)"
+                    },
+                    {
+                        stage: "Municipal Commissioner",
+                        content: "Head of municipal administration (15+ years)"
+                    },
+                    {
+                        stage: "Metropolitan Commissioner",
+                        content: "For large cities and urban development authorities"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Website",
+                        title: "Smart Cities Mission",
+                        link: "https://smartcities.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Urban Governance in India",
+                        link: "https://www.amazon.in/Urban-Governance-India-Rumi-Aijaz/dp/8131603556"
+                    },
+                    {
+                        type: "Report",
+                        title: "Municipal Performance Reports",
+                        link: "https://www.mohua.gov.in/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "E-Governance Initiatives",
+                        link: "https://egov.eletsonline.com/"
+                    }
+                ],
+                outlook: "Urban governance careers growing with Smart Cities Mission. Increasing focus on PPP models and e-governance. Technical roles in urban planning and infrastructure in demand."
+            }
+        };
+
+        // Get career parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerName = urlParams.get('career');
+
+        // Display career data based on URL parameter
+        if (careerName && publicServiceData[careerName]) {
+            const career = publicServiceData[careerName];
+            
+            // Set basic information
+            document.getElementById('career-title').textContent = career.title;
+            document.getElementById('career-image').src = career.image;
+            document.getElementById('career-description').textContent = career.description;
+            document.getElementById('career-salary').textContent = career.salary;
+            document.getElementById('career-education').textContent = career.education;
+            document.getElementById('career-exam').textContent = career.exam;
+            document.getElementById('career-experience').textContent = career.experience;
+            document.getElementById('career-departments').textContent = career.departments;
+            document.getElementById('job-outlook').innerHTML = `<h3><i class="fas fa-chart-line"></i> Job Market Outlook</h3><p>${career.outlook}</p>`;
+            
+            // Set skills
+            const skillsContainer = document.getElementById('skills-container');
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Set career path
+            const careerPath = document.getElementById('career-path');
+            career.path.forEach(stage => {
+                const pathItem = document.createElement('div');
+                pathItem.className = 'path-item';
+                pathItem.innerHTML = `
+                    <div class="path-content">
+                        <h4>${stage.stage}</h4>
+                        <p>${stage.content}</p>
+                    </div>
+                `;
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Set resources
+            const resourcesContainer = document.getElementById('resources-container');
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <h4><i class="fas ${resource.type === 'Book' ? 'fa-book' : 
+                                       resource.type === 'Course' ? 'fa-graduation-cap' : 
+                                       resource.type === 'Website' ? 'fa-globe' : 
+                                       resource.type === 'Physical' ? 'fa-dumbbell' : 
+                                       resource.type === 'Guide' ? 'fa-book-open' : 
+                                       resource.type === 'Report' ? 'fa-file-alt' : 
+                                       resource.type === 'Newspaper' ? 'fa-newspaper' : 
+                                       resource.type === 'Magazine' ? 'fa-book-reader' : 
+                                       resource.type === 'Platform' ? 'fa-laptop' : 'fa-link'}"></i> 
+                        ${resource.type}: ${resource.title}
+                    </h4>
+                    <a href="${resource.link}" target="_blank">Visit Resource <i class="fas fa-external-link-alt"></i></a>
+                `;
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Update page title
+            document.title = `${career.title} | CareerHub`;
+        } else {
+            // Handle invalid career parameter
+            document.getElementById('career-title').textContent = "Career Not Found";
+            document.getElementById('career-description').textContent = "The requested public service career path could not be found. Please return to the public services page and select a valid option.";
+        }
+    </script>
+</body>
+</html>

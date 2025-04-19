@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Public Services Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --public-service: #10b981;
+            --government: #0ea5e9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/public-services-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(16, 185, 129, 0.2), rgba(14, 165, 233, 0.2));
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--public-service), var(--government));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .field-intro {
+            padding: 3rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-size: 2rem;
+            color: var(--public-service);
+            margin-bottom: 1.5rem;
+        }
+
+        .field-intro h3 {
+            font-size: 1.5rem;
+            color: var(--government);
+            margin: 2rem 0 1rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--public-service);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul.feature-list li::before {
+            content: '🏛️';
+            position: absolute;
+            left: 0;
+        }
+
+        .career-cards-container {
+            padding: 2rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+            border-color: var(--public-service);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .career-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .career-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--government);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--public-service);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .learn-more:hover {
+            background: var(--public-service);
+            color: var(--light);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 6%;
+            margin: 3rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--public-service);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--public-service);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-landmark"></i> Indian Public Services Careers</h1>
+        <p>Serving the nation through law enforcement, governance, and community development</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About Public Services in India</h2>
+        <p>The public services sector in India offers diverse career opportunities to serve the nation and its citizens. From prestigious civil services to essential emergency responders, these careers provide stability, respect, and the chance to make meaningful contributions to society. The sector includes central and state government services, defense, law enforcement, and social welfare.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Service Spectrum:</strong> Civil services, law enforcement, defense, social welfare, and government administration. Careers range from highly competitive UPSC positions to essential municipal services, with opportunities at central, state, and local government levels.</p>
+        </div>
+
+        <h3>Who Should Pursue Public Service Careers?</h3>
+        <p>This field is ideal for individuals who:</p>
+        <ul class="feature-list">
+            <li>Want to serve the nation and contribute to society</li>
+            <li>Have strong leadership and decision-making skills</li>
+            <li>Can work under pressure and handle responsibility</li>
+            <li>Are interested in governance, policy-making, or law enforcement</li>
+            <li>Value job security and structured career progression</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+        <p>The public services sector in India offers:</p>
+        <ul class="feature-list">
+            <li><strong>UPSC Civil Services:</strong> 1000+ positions annually across IAS, IPS, IFS</li>
+            <li><strong>State Services:</strong> 10,000+ positions across states annually</li>
+            <li><strong>Defense:</strong> 60,000+ annual recruitment in armed forces</li>
+            <li><strong>Police Services:</strong> Growing demand with 30% increase in recruitment</li>
+        </ul>
+        <p>Government initiatives like Agnipath scheme and increased state-level recruitment are creating new opportunities.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Civil Services -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/ias-officer.jpg') }}" alt="IAS Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-user-tie"></i> IAS Officer</h3>
+                <p>Administrative head of districts and policy implementation at state/central level.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹56,100-₹2,50,000</span>
+                    <span class="stat-pill">UPSC CSE</span>
+                    <span class="stat-pill">Top rank</span>
+                </div>
+                <a href="/public-services-career?career=ias-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/ips-officer.jpg') }}" alt="IPS Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-shield-alt"></i> IPS Officer</h3>
+                <p>Lead police forces, maintain law and order, and prevent crime at state/national level.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹56,100-₹2,25,000</span>
+                    <span class="stat-pill">UPSC CSE</span>
+                    <span class="stat-pill">Physical test</span>
+                </div>
+                <a href="/public-services-career?career=ips-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/ifs-officer.jpg') }}" alt="IFS Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-globe"></i> IFS Officer</h3>
+                <p>Represent India in foreign missions and handle diplomatic relations.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹56,100-₹2,50,000</span>
+                    <span class="stat-pill">UPSC CSE</span>
+                    <span class="stat-pill">Language skills</span>
+                </div>
+                <a href="/public-services-career?career=ifs-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- State Services -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/pcs-officer.jpg') }}" alt="PCS Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-building"></i> State PCS Officer</h3>
+                <p>State-level administrative roles in districts and state departments.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹40,000-₹1,50,000</span>
+                    <span class="stat-pill">State PSC</span>
+                    <span class="stat-pill">Regional focus</span>
+                </div>
+                <a href="/public-services-career?career=pcs-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Law Enforcement -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/police-officer.jpg') }}" alt="Police Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-badge"></i> Police Officer</h3>
+                <p>Maintain public order, prevent crime, and enforce laws at local level.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹25,000-₹1,00,000</span>
+                    <span class="stat-pill">State exam</span>
+                    <span class="stat-pill">Physical test</span>
+                </div>
+                <a href="/public-services-career?career=police-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/income-tax-officer.jpg') }}" alt="Income Tax Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-file-invoice-dollar"></i> Income Tax Officer</h3>
+                <p>Enforce tax laws, investigate evasion, and process tax returns.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹45,000-₹1,50,000</span>
+                    <span class="stat-pill">SSC CGL</span>
+                    <span class="stat-pill">Finance skills</span>
+                </div>
+                <a href="/public-services-career?career=income-tax-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Defense -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/army-officer.jpg') }}" alt="Army Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-medal"></i> Army Officer</h3>
+                <p>Lead troops, defend national security through Indian Army.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹56,100-₹2,50,000</span>
+                    <span class="stat-pill">NDA/CDS</span>
+                    <span class="stat-pill">SSB interview</span>
+                </div>
+                <a href="/public-services-career?career=army-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/navy-officer.jpg') }}" alt="Navy Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-anchor"></i> Navy Officer</h3>
+                <p>Serve in Indian Navy, protect maritime borders and interests.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹56,100-₹2,50,000</span>
+                    <span class="stat-pill">NDA/CDS</span>
+                    <span class="stat-pill">Technical skills</span>
+                </div>
+                <a href="/public-services-career?career=navy-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/airforce-officer.jpg') }}" alt="Air Force Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-fighter-jet"></i> Air Force Officer</h3>
+                <p>Serve in Indian Air Force, operate aircraft and defense systems.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹56,100-₹2,50,000</span>
+                    <span class="stat-pill">NDA/CDS</span>
+                    <span class="stat-pill">Fitness critical</span>
+                </div>
+                <a href="/public-services-career?career=airforce-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Emergency Services -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/firefighter.jpg') }}" alt="Firefighter">
+            <div class="card-content">
+                <h3><i class="fas fa-fire-extinguisher"></i> Firefighter</h3>
+                <p>Respond to fire emergencies, conduct rescues, ensure public safety.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹25,000-₹80,000</span>
+                    <span class="stat-pill">State exam</span>
+                    <span class="stat-pill">Physical test</span>
+                </div>
+                <a href="/public-services-career?career=firefighter" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Government Departments -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/rbi-officer.jpg') }}" alt="RBI Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-rupee-sign"></i> RBI Grade B Officer</h3>
+                <p>Formulate monetary policy and regulate banking system in India.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹75,000-₹1,50,000</span>
+                    <span class="stat-pill">RBI exam</span>
+                    <span class="stat-pill">Economics focus</span>
+                </div>
+                <a href="/public-services-career?career=rbi-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/railway-officer.jpg') }}" alt="Railway Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-train"></i> Railway Officer</h3>
+                <p>Manage operations, infrastructure, and services in Indian Railways.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹50,000-₹1,80,000</span>
+                    <span class="stat-pill">RRB exam</span>
+                    <span class="stat-pill">Engineering</span>
+                </div>
+                <a href="/public-services-career?career=railway-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Border Security -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/border-security.jpg') }}" alt="Border Security Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-border-all"></i> BSF Officer</h3>
+                <p>Guard India's borders, prevent illegal activities and infiltration.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹50,000-₹2,00,000</span>
+                    <span class="stat-pill">UPSC/Force exam</span>
+                    <span class="stat-pill">Field posting</span>
+                </div>
+                <a href="/public-services-career?career=bsf-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/customs-officer.jpg') }}" alt="Customs Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-boxes"></i> Customs Officer</h3>
+                <p>Regulate imports/exports, prevent smuggling at airports/ports.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹45,000-₹1,50,000</span>
+                    <span class="stat-pill">SSC CGL</span>
+                    <span class="stat-pill">Vigilance</span>
+                </div>
+                <a href="/public-services-career?career=customs-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Municipal Services -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/municipal-officer.jpg') }}" alt="Municipal Officer">
+            <div class="card-content">
+                <h3><i class="fas fa-city"></i> Municipal Commissioner</h3>
+                <p>Oversee urban local body administration and civic services.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">₹1,00,000-₹2,50,000</span>
+                    <span class="stat-pill">State cadre</span>
+                    <span class="stat-pill">IAS/PCS</span>
+                </div>
+                <a href="/public-services-career?career=municipal-officer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Public Services Career FAQs</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>What are the eligibility criteria for UPSC Civil Services?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Basic eligibility requirements:</p>
+                    <ul>
+                        <li><strong>Nationality:</strong> Indian citizen for IAS/IPS; varies for other services</li>
+                        <li><strong>Age:</strong> 21-32 years (relaxation for reserved categories)</li>
+                        <li><strong>Education:</strong> Bachelor's degree from recognized university</li>
+                        <li><strong>Attempts:</strong> 6 attempts for General category (more for reserved)</li>
+                        <li><strong>Physical standards:</strong> Specific requirements for IPS/IFS</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What's the selection process for government jobs in India?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Typical selection stages include:</p>
+                    <ul>
+                        <li><strong>Preliminary exam:</strong> Objective test screening</li>
+                        <li><strong>Main exam:</strong> Descriptive written examination</li>
+                        <li><strong>Interview:</strong> Personality test for final ranking</li>
+                        <li><strong>Physical tests:</strong> For police/defense roles</li>
+                        <li><strong>Medical examination:</strong> Fitness verification</li>
+                        <li><strong>Document verification:</strong> Final eligibility check</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What are the benefits of government jobs in India?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Key benefits include:</p>
+                    <ul>
+                        <li><strong>Job security:</strong> Permanent positions with no layoffs</li>
+                        <li><strong>Salary structure:</strong> 7th Pay Commission benefits</li>
+                        <li><strong>Allowances:</strong> DA, HRA, TA, and other perks</li>
+                        <li><strong>Pension:</strong> Old pension scheme for some, NPS for others</li>
+                        <li><strong>Work-life balance:</strong> Fixed hours and leave policies</li>
+                        <li><strong>Social status:</strong> Respect and recognition in society</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How can I prepare for public service exams effectively?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Effective preparation strategies:</p>
+                    <ul>
+                        <li><strong>Understand syllabus:</strong> Thoroughly analyze exam pattern</li>
+                        <li><strong>Current affairs:</strong> Daily newspaper reading essential</li>
+                        <li><strong>NCERT books:</strong> Foundation for basic concepts</li>
+                        <li><strong>Test series:</strong> Regular practice with mock exams</li>
+                        <li><strong>Answer writing:</strong> Develop structured responses</li>
+                        <li><strong>Time management:</strong> Balanced study schedule</li>
+                        <li><strong>Optional subject:</strong> Choose based on interest/scoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq").forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

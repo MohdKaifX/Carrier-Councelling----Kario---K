@@ -1,0 +1,15 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# Ignore environment-related files
+.env
+__pycache__/
+*.pyc
+
+# Ignore virtual environment folder
+venv/
+env/
+
+# Ignore database if local
+*.db
+
+# Optional: Ignore VS Code settings
+.vscode/

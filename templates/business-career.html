@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --business-green: #10b981;
+            --business-teal: #14b8a6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--business-green), var(--business-teal));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--business-green), var(--business-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .highlight-card h3 {
+            color: var(--business-green);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--business-green);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--business-green);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--business-green);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--business-green);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+            border-color: var(--business-green);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--business-green);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-business {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--business-green);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-business:hover {
+            color: var(--business-teal);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Career Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/business'">Back to Business Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Business Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/business" class="back-to-business">
+            <i class="fas fa-arrow-left"></i> Back to Business Careers
+        </a>
+    </div>
+
+    <script>
+        // Business Career Data (for all sub-cards in business.html)
+        const businessCareerData = {
+            "management-consultant": {
+                title: "Management Consultant",
+                image: "{{ url_for('static', filename='images/management-consultant.jpg') }}",
+                description: "Management consultants help organizations solve problems, improve performance, and create value for stakeholders. They analyze business challenges and develop strategies for growth, efficiency, and competitive advantage.",
+                salary: "₹8-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "MBA from top B-schools preferred, Bachelor's in Business/Commerce",
+                growth: "14% (Faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Strategic Thinking",
+                    "Problem Solving",
+                    "Data Analysis",
+                    "Financial Modeling",
+                    "Communication",
+                    "Project Management",
+                    "Industry Knowledge",
+                    "Client Relationship"
+                ],
+                companies: "McKinsey, BCG, Bain, Deloitte, PwC, EY, KPMG, Accenture, TCS Consulting",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in business or related field, pursue MBA"
+                    },
+                    {
+                        stage: "Analyst",
+                        content: "Entry-level position conducting research and analysis (1-2 years)"
+                    },
+                    {
+                        stage: "Associate",
+                        content: "Lead workstreams and client interactions (2-4 years)"
+                    },
+                    {
+                        stage: "Consultant",
+                        content: "Manage projects and develop recommendations (4-6 years)"
+                    },
+                    {
+                        stage: "Partner/Director",
+                        content: "Lead client relationships and firm initiatives (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Case Interview Secrets",
+                        link: "https://www.amazon.in/Case-Interview-Secrets-Victor-Cheng/dp/0984183524"
+                    },
+                    {
+                        type: "Course",
+                        title: "Management Consulting Specialization",
+                        link: "https://www.coursera.org/specializations/management-consulting"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Consulting Case Preparation",
+                        link: "https://www.preplounge.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Management Consultant",
+                        link: "https://www.imcindia.org/"
+                    }
+                ],
+                outlook: "Management consulting growing steadily with increasing demand for strategic advice. Digital transformation consulting is particularly in high demand."
+            },
+            "financial-analyst": {
+                title: "Financial Analyst",
+                image: "{{ url_for('static', filename='images/financial-analyst.jpg') }}",
+                description: "Financial analysts evaluate financial data to guide investment decisions and business strategies. They analyze market trends, company performance, and economic conditions to provide recommendations.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "B.Com/MBA in Finance + CFA/FRM Certifications",
+                growth: "10% (Average growth)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Financial Modeling",
+                    "Excel/Financial Software",
+                    "Data Analysis",
+                    "Valuation Techniques",
+                    "Accounting Principles",
+                    "Risk Assessment",
+                    "Presentation Skills",
+                    "Industry Research"
+                ],
+                companies: "Goldman Sachs, JP Morgan, Morgan Stanley, HDFC, ICICI, Indian banks, fintech startups",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in commerce/finance"
+                    },
+                    {
+                        stage: "Certifications",
+                        content: "Pursue CFA/FRM certifications"
+                    },
+                    {
+                        stage: "Junior Analyst",
+                        content: "Assist with financial research (1-2 years)"
+                    },
+                    {
+                        stage: "Financial Analyst",
+                        content: "Conduct independent analyses (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Analyst/Manager",
+                        content: "Lead teams and strategic decisions (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Chartered Financial Analyst (CFA)",
+                        link: "https://www.cfainstitute.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Financial Markets (Yale on Coursera)",
+                        link: "https://www.coursera.org/learn/financial-markets-global"
+                    },
+                    {
+                        type: "Book",
+                        title: "Investment Banking by Rosenbaum & Pearl",
+                        link: "https://www.amazon.in/Investment-Banking-Valuation-Leveraged-Buyouts/dp/111845611X"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Wall Street Prep Training",
+                        link: "https://www.wallstreetprep.com/"
+                    }
+                ],
+                outlook: "Financial analyst roles growing steadily with increasing complexity in financial markets. Fintech revolution creating new opportunities in digital finance."
+            },
+            "marketing-manager": {
+                title: "Marketing Manager",
+                image: "{{ url_for('static', filename='images/marketing-manager.jpg') }}",
+                description: "Marketing managers develop strategies to promote products and services. They oversee market research, branding, advertising, and digital marketing campaigns to drive customer engagement and sales.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "MBA in Marketing preferred, Bachelor's in Business/Marketing",
+                growth: "10% (Average growth)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Market Research",
+                    "Brand Management",
+                    "Digital Marketing",
+                    "Consumer Behavior",
+                    "Data Analysis",
+                    "Creative Strategy",
+                    "Budget Management",
+                    "Team Leadership"
+                ],
+                companies: "Unilever, P&G, HUL, ITC, Amazon, Flipkart, Swiggy, Zomato, advertising agencies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in business/marketing, pursue MBA"
+                    },
+                    {
+                        stage: "Marketing Executive",
+                        content: "Assist with campaigns and research (1-2 years)"
+                    },
+                    {
+                        stage: "Assistant Manager",
+                        content: "Lead specific marketing initiatives (2-4 years)"
+                    },
+                    {
+                        stage: "Marketing Manager",
+                        content: "Develop and implement strategies (4-6 years)"
+                    },
+                    {
+                        stage: "Senior Manager/Director",
+                        content: "Oversee entire marketing function (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Digital Marketing Certifications",
+                        link: "https://learndigital.withgoogle.com/digitalgarage/course/digital-marketing"
+                    },
+                    {
+                        type: "Course",
+                        title: "Marketing Analytics Specialization",
+                        link: "https://www.coursera.org/specializations/marketing-analytics"
+                    },
+                    {
+                        type: "Book",
+                        title: "Contagious: Why Things Catch On",
+                        link: "https://www.amazon.in/Contagious-Things-Catch-Jonah-Berger/dp/1451686587"
+                    },
+                    {
+                        type: "Platform",
+                        title: "HubSpot Marketing Resources",
+                        link: "https://www.hubspot.com/resources"
+                    }
+                ],
+                outlook: "Marketing roles evolving with digital transformation. High demand for professionals skilled in digital marketing, analytics, and customer experience management."
+            },
+            "hr-manager": {
+                title: "HR Manager",
+                image: "{{ url_for('static', filename='images/hr-manager.jpg') }}",
+                description: "HR managers oversee all aspects of human resources practices and processes. They manage recruitment, employee relations, performance management, training, and compliance with labor laws.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "MBA in HR preferred, Bachelor's in Business/Psychology",
+                growth: "9% (Average growth)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Recruitment",
+                    "Employee Relations",
+                    "Performance Management",
+                    "Compensation & Benefits",
+                    "HR Policies",
+                    "Training & Development",
+                    "Labor Laws",
+                    "Conflict Resolution"
+                ],
+                companies: "All major corporations, IT companies, manufacturing firms, consulting firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in business/psychology, pursue MBA in HR"
+                    },
+                    {
+                        stage: "HR Executive",
+                        content: "Assist with recruitment and admin tasks (1-2 years)"
+                    },
+                    {
+                        stage: "HR Generalist",
+                        content: "Handle multiple HR functions (2-4 years)"
+                    },
+                    {
+                        stage: "HR Manager",
+                        content: "Lead HR department (4-6 years)"
+                    },
+                    {
+                        stage: "Senior HR Manager/Director",
+                        content: "Develop HR strategies (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "SHRM Certification",
+                        link: "https://www.shrm.org/certification"
+                    },
+                    {
+                        type: "Course",
+                        title: "HR Analytics Specialization",
+                        link: "https://www.coursera.org/specializations/human-resources-analytics"
+                    },
+                    {
+                        type: "Book",
+                        title: "The HR Scorecard",
+                        link: "https://www.amazon.in/HR-Scorecard-Linking-Strategy-Performance/dp/1578511364"
+                    },
+                    {
+                        type: "Platform",
+                        title: "LinkedIn HR Groups",
+                        link: "https://www.linkedin.com/groups/"
+                    }
+                ],
+                outlook: "HR roles becoming more strategic with focus on talent management and organizational development. Digital HR tools and analytics skills are increasingly valuable."
+            },
+            "sales-manager": {
+                title: "Sales Manager",
+                image: "{{ url_for('static', filename='images/sales-manager.jpg') }}",
+                description: "Sales managers lead sales teams to meet revenue targets. They develop sales strategies, train representatives, and build relationships with key clients.",
+                salary: "₹8-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "Bachelor's in Business/Marketing, MBA preferred",
+                growth: "8% (Average growth)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Sales Strategy",
+                    "Team Leadership",
+                    "Customer Relationship",
+                    "Negotiation",
+                    "Market Analysis",
+                    "CRM Software",
+                    "Revenue Growth",
+                    "Presentation Skills"
+                ],
+                companies: "Pharmaceutical companies, FMCG firms, tech companies, automotive",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in business/marketing"
+                    },
+                    {
+                        stage: "Sales Executive",
+                        content: "Entry-level sales position (1-2 years)"
+                    },
+                    {
+                        stage: "Account Manager",
+                        content: "Manage client accounts (2-4 years)"
+                    },
+                    {
+                        stage: "Sales Manager",
+                        content: "Lead sales team (4-6 years)"
+                    },
+                    {
+                        stage: "Director of Sales",
+                        content: "Oversee sales strategy (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Challenger Sale",
+                        link: "https://www.amazon.in/Challenger-Sale-Taking-Control-Customer/dp/0670922854"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sales Training",
+                        link: "https://www.coursera.org/learn/skills-for-sales-success"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Sales Professional",
+                        link: "https://www.salesandmarketing.com/csp"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Sales Hacker Resources",
+                        link: "https://www.saleshacker.com/"
+                    }
+                ],
+                outlook: "Sales management remains essential across industries. Digital sales tools and analytics are transforming the field."
+            },
+            "business-data-analyst": {
+                title: "Business Data Analyst",
+                image: "{{ url_for('static', filename='images/data-analyst.jpg') }}",
+                description: "Business data analysts transform data into actionable insights. They use statistical analysis and visualization to help organizations make data-driven decisions.",
+                salary: "₹7-14 LPA (Entry Level), ₹14-28 LPA (Mid Level), ₹28-50+ LPA (Senior)",
+                education: "B.Tech/B.Sc in Data Science, Business Analytics degrees",
+                growth: "22% (Much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "SQL",
+                    "Python/R",
+                    "Data Visualization",
+                    "Statistical Analysis",
+                    "Machine Learning",
+                    "Business Intelligence",
+                    "Excel",
+                    "Problem Solving"
+                ],
+                companies: "IT firms, consulting companies, banks, e-commerce, analytics firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in analytics/statistics/computer science"
+                    },
+                    {
+                        stage: "Data Intern",
+                        content: "Entry-level position (0-1 years)"
+                    },
+                    {
+                        stage: "Junior Analyst",
+                        content: "Basic reporting and analysis (1-3 years)"
+                    },
+                    {
+                        stage: "Business Data Analyst",
+                        content: "Advanced analytics and modeling (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Analyst/Manager",
+                        content: "Lead analytics projects (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Google Data Analytics Certificate",
+                        link: "https://www.coursera.org/professional-certificates/google-data-analytics"
+                    },
+                    {
+                        type: "Course",
+                        title: "Business Analytics Specialization",
+                        link: "https://www.coursera.org/specializations/business-analytics"
+                    },
+                    {
+                        type: "Book",
+                        title: "Storytelling with Data",
+                        link: "https://www.amazon.in/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Kaggle Learning",
+                        link: "https://www.kaggle.com/learn"
+                    }
+                ],
+                outlook: "Business data analytics is one of the fastest-growing fields. AI and machine learning skills are becoming increasingly valuable."
+            },
+            "business-consultant": {
+                title: "Business Consultant",
+                image: "{{ url_for('static', filename='images/business-consultant.jpg') }}",
+                description: "Business consultants provide expert advice to organizations seeking to improve performance, solve problems, or implement changes. They analyze business operations and recommend solutions.",
+                salary: "₹8-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "MBA from top B-schools preferred, Bachelor's in Business",
+                growth: "14% (Faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Problem Solving",
+                    "Strategic Thinking",
+                    "Process Improvement",
+                    "Financial Analysis",
+                    "Client Management",
+                    "Presentation Skills",
+                    "Industry Knowledge",
+                    "Change Management"
+                ],
+                companies: "Consulting firms (McKinsey, BCG, Bain), Big 4 firms, boutique consultancies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in business, pursue MBA"
+                    },
+                    {
+                        stage: "Research Analyst",
+                        content: "Entry-level position (1-2 years)"
+                    },
+                    {
+                        stage: "Consultant",
+                        content: "Lead client engagements (2-4 years)"
+                    },
+                    {
+                        stage: "Senior Consultant",
+                        content: "Manage projects (4-6 years)"
+                    },
+                    {
+                        stage: "Partner/Director",
+                        content: "Business development (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The McKinsey Way",
+                        link: "https://www.amazon.in/McKinsey-Way-Ethan-Rasiel/dp/0070534489"
+                    },
+                    {
+                        type: "Course",
+                        title: "Consulting Approach to Problem Solving",
+                        link: "https://www.coursera.org/learn/problem-solving"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Management Consultant",
+                        link: "https://www.imcindia.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Management Consulted",
+                        link: "https://managementconsulted.com/"
+                    }
+                ],
+                outlook: "Business consulting continues to grow with increasing complexity in global markets. Digital transformation consulting is particularly in demand."
+            },
+
+            "entrepreneur": {
+                title: "Entrepreneur",
+                image: "{{ url_for('static', filename='images/entrepreneur.jpg') }}",
+                description: "Entrepreneurs start and manage their own businesses, taking on financial risks in pursuit of profit. They identify opportunities, develop business models, and build organizations to bring ideas to market.",
+                salary: "Varies widely (Often negative in early years, potentially unlimited)",
+                education: "No formal requirements, Business/Engineering degrees helpful",
+                growth: "Varies by industry",
+                experience: "Can start at any career stage",
+                skills: [
+                    "Opportunity Recognition",
+                    "Business Planning",
+                    "Financial Management",
+                    "Sales & Marketing",
+                    "Risk Assessment",
+                    "Leadership",
+                    "Adaptability",
+                    "Networking"
+                ],
+                companies: "Self-owned businesses, startups, ventures",
+                path: [
+                    {
+                        stage: "Idea Stage",
+                        content: "Identify business opportunity and validate concept"
+                    },
+                    {
+                        stage: "Startup Phase",
+                        content: "Develop MVP, secure initial funding, launch"
+                    },
+                    {
+                        stage: "Growth Phase",
+                        content: "Scale operations, build team, expand market"
+                    },
+                    {
+                        stage: "Maturity Phase",
+                        content: "Optimize operations, diversify, innovate"
+                    },
+                    {
+                        stage: "Exit/Expansion",
+                        content: "Consider acquisitions, IPO, or new ventures"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Lean Startup",
+                        link: "https://www.amazon.in/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0670921602"
+                    },
+                    {
+                        type: "Course",
+                        title: "Entrepreneurship Specialization",
+                        link: "https://www.coursera.org/specializations/wharton-entrepreneurship"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Startup India Resources",
+                        link: "https://www.startupindia.gov.in/"
+                    },
+                    {
+                        type: "Community",
+                        title: "Local Entrepreneur Networks",
+                        link: "https://yourstory.com/"
+                    }
+                ],
+                outlook: "Entrepreneurship ecosystem growing with government support and venture capital. Technology startups and social enterprises are particularly active sectors."
+            },
+            "investment-banker": {
+                title: "Investment Banker",
+                image: "{{ url_for('static', filename='images/investment-banker.jpg') }}",
+                description: "Investment bankers help companies and governments raise capital through debt and equity offerings. They also advise on mergers, acquisitions, and other financial transactions.",
+                salary: "₹10-20 LPA (Entry Level), ₹20-50 LPA (Mid Level), ₹50-100+ LPA (Senior)",
+                education: "MBA in Finance from top schools, CFA preferred",
+                growth: "10% (Average growth)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Financial Modeling",
+                    "Valuation Techniques",
+                    "Deal Structuring",
+                    "Pitch Preparation",
+                    "Regulatory Knowledge",
+                    "Client Relationship",
+                    "Negotiation",
+                    "Market Analysis"
+                ],
+                companies: "Goldman Sachs, Morgan Stanley, JP Morgan, Citi, Barclays, Indian banks",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in finance, pursue MBA from top school"
+                    },
+                    {
+                        stage: "Analyst",
+                        content: "2-3 year intensive training program"
+                    },
+                    {
+                        stage: "Associate",
+                        content: "3-4 years managing deal execution"
+                    },
+                    {
+                        stage: "Vice President",
+                        content: "5-7 years leading deal teams"
+                    },
+                    {
+                        stage: "Director/Managing Director",
+                        content: "8+ years bringing in business"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Investment Banking by Rosenbaum & Pearl",
+                        link: "https://www.amazon.in/Investment-Banking-Valuation-Leveraged-Buyouts/dp/111845611X"
+                    },
+                    {
+                        type: "Course",
+                        title: "Investment Banking Preparation",
+                        link: "https://www.wallstreetprep.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Chartered Financial Analyst (CFA)",
+                        link: "https://www.cfainstitute.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Mergers & Inquisitions",
+                        link: "https://www.mergersandinquisitions.com/"
+                    }
+                ],
+                outlook: "Investment banking remains competitive with steady demand. Fintech and sustainable finance are emerging growth areas."
+            },
+            "supply-chain-manager": {
+                title: "Supply Chain Manager",
+                image: "{{ url_for('static', filename='images/supply-chain-manager.jpg') }}",
+                description: "Supply chain managers oversee the flow of goods and services from suppliers to customers. They optimize procurement, production, logistics, and distribution to reduce costs and improve efficiency.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "MBA in Operations/SCM preferred, Bachelor's in Engineering/Business",
+                growth: "12% (Faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Logistics Management",
+                    "Inventory Control",
+                    "Supplier Relationship",
+                    "Demand Forecasting",
+                    "Process Optimization",
+                    "Data Analysis",
+                    "Risk Management",
+                    "ERP Systems"
+                ],
+                companies: "Amazon, Flipkart, Walmart, Tata, Reliance, manufacturing firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in engineering/business, pursue MBA"
+                    },
+                    {
+                        stage: "Logistics Analyst",
+                        content: "Entry-level position in procurement or logistics (1-2 years)"
+                    },
+                    {
+                        stage: "Supply Chain Specialist",
+                        content: "Focus on specific SCM functions (2-4 years)"
+                    },
+                    {
+                        stage: "Supply Chain Manager",
+                        content: "Oversee entire supply chain (4-6 years)"
+                    },
+                    {
+                        stage: "Director/VP",
+                        content: "Develop SCM strategies (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "CSCP Certification",
+                        link: "https://www.apics.org/apics-for-individuals/certification/cscp"
+                    },
+                    {
+                        type: "Course",
+                        title: "Supply Chain Management Specialization",
+                        link: "https://www.coursera.org/specializations/supply-chain-management"
+                    },
+                    {
+                        type: "Book",
+                        title: "Supply Chain Management by Sunil Chopra",
+                        link: "https://www.amazon.in/Supply-Chain-Management-Strategy-Operation/dp/9352866155"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Council of Supply Chain Management",
+                        link: "https://cscmp.org/"
+                    }
+                ],
+                outlook: "Supply chain management gaining importance with globalization and e-commerce growth. Digital supply chains and sustainability are key trends."
+            },
+            "accountant": {
+                title: "Accountant",
+                image: "{{ url_for('static', filename='images/accountant.jpg') }}",
+                description: "Accountants prepare and examine financial records, ensure accuracy, and assess financial operations. They help organizations run efficiently by managing taxes, audits, and financial reporting.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-30+ LPA (Senior)",
+                education: "B.Com + CA/CPA/CMA certifications",
+                growth: "6% (Slower than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Financial Reporting",
+                    "Tax Preparation",
+                    "Auditing",
+                    "Accounting Software",
+                    "Regulatory Compliance",
+                    "Attention to Detail",
+                    "Analytical Skills",
+                    "Ethical Judgment"
+                ],
+                companies: "Big 4 accounting firms (PwC, EY, Deloitte, KPMG), corporations, banks, CA firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Com, pursue CA/CPA/CMA"
+                    },
+                    {
+                        stage: "Article Clerk",
+                        content: "3-year training under practicing CA"
+                    },
+                    {
+                        stage: "Junior Accountant",
+                        content: "Entry-level position (1-2 years)"
+                    },
+                    {
+                        stage: "Accountant",
+                        content: "Handle full accounting cycle (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Accountant/Manager",
+                        content: "Supervise team and complex accounts (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Chartered Accountant (CA)",
+                        link: "https://www.icai.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Accounting Fundamentals",
+                        link: "https://www.coursera.org/learn/financial-accounting-fundamentals"
+                    },
+                    {
+                        type: "Book",
+                        title: "Accounting Made Simple",
+                        link: "https://www.amazon.in/Accounting-Made-Simple-Explained-Hundreds/dp/0981454224"
+                    },
+                    {
+                        type: "Platform",
+                        title: "ICAI Learning Resources",
+                        link: "https://www.icai.org/post.html?post_id=14523"
+                    }
+                ],
+                outlook: "Accounting remains stable with steady demand. Automation changing the profession, increasing focus on advisory services."
+            },
+            "product-manager": {
+                title: "Product Manager",
+                image: "{{ url_for('static', filename='images/product-manager.jpg') }}",
+                description: "Product managers guide the development and success of products. They bridge technical, business, and user needs to deliver valuable solutions to market.",
+                salary: "₹10-20 LPA (Entry Level), ₹20-40 LPA (Mid Level), ₹40-80+ LPA (Senior)",
+                education: "B.Tech/MBA preferred, Bachelor's in any field",
+                growth: "15% (Much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Product Strategy",
+                    "Market Research",
+                    "User Experience",
+                    "Agile Methodology",
+                    "Data Analysis",
+                    "Stakeholder Management",
+                    "Roadmapping",
+                    "Technical Understanding"
+                ],
+                companies: "Google, Microsoft, Amazon, Flipkart, Swiggy, Zomato, tech startups",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's degree (tech/business preferred)"
+                    },
+                    {
+                        stage: "Associate PM",
+                        content: "Entry-level product role (1-2 years)"
+                    },
+                    {
+                        stage: "Product Manager",
+                        content: "Own product features (2-4 years)"
+                    },
+                    {
+                        stage: "Senior PM",
+                        content: "Lead product lines (4-6 years)"
+                    },
+                    {
+                        stage: "Director/VP",
+                        content: "Define product vision (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Inspired: How to Create Tech Products Customers Love",
+                        link: "https://www.amazon.in/INSPIRED-Create-Tech-Products-Customers/dp/1119387507"
+                    },
+                    {
+                        type: "Course",
+                        title: "Digital Product Management",
+                        link: "https://www.coursera.org/learn/uva-darden-digital-product-management"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Pragmatic Institute Certification",
+                        link: "https://www.pragmaticinstitute.com/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Product School Resources",
+                        link: "https://www.productschool.com/"
+                    }
+                ],
+                outlook: "Product management growing rapidly with digital transformation. Technical PMs and AI product specialists in high demand."
+            }
+        };
+
+        // Get career parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerId = urlParams.get('career');
+
+        // Set career data if valid ID provided
+        if (careerId && businessCareerData[careerId]) {
+            const career = businessCareerData[careerId];
+            
+            // Set basic info
+            document.getElementById('career-title').textContent = career.title;
+            document.getElementById('career-image').src = career.image;
+            document.getElementById('career-image').alt = career.title;
+            document.getElementById('career-description').textContent = career.description;
+            document.getElementById('career-salary').textContent = career.salary;
+            document.getElementById('career-education').textContent = career.education;
+            document.getElementById('career-growth').textContent = career.growth;
+            document.getElementById('career-experience').textContent = career.experience;
+            document.getElementById('career-companies').textContent = career.companies;
+            document.getElementById('job-outlook').innerHTML = `<h3><i class="fas fa-chart-line"></i> Outlook</h3><p>${career.outlook}</p>`;
+            
+            // Set skills
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Set career path
+            const careerPath = document.getElementById('career-path');
+            careerPath.innerHTML = '';
+            career.path.forEach(stage => {
+                const pathItem = document.createElement('div');
+                pathItem.className = 'path-item';
+                pathItem.innerHTML = `
+                    <div class="path-content">
+                        <h4>${stage.stage}</h4>
+                        <p>${stage.content}</p>
+                    </div>
+                `;
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Set resources
+            const resourcesContainer = document.getElementById('resources-container');
+            resourcesContainer.innerHTML = '';
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <h4><i class="fas fa-${resource.type.toLowerCase()}"></i> ${resource.type}: ${resource.title}</h4>
+                    <p>${resource.description || ''}</p>
+                    <a href="${resource.link}" target="_blank">Learn More <i class="fas fa-external-link-alt"></i></a>
+                `;
+                resourcesContainer.appendChild(resourceCard);
+            });
+        } else {
+            // Redirect if invalid career ID
+            window.location.href = '/business';
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.highlight-card, .path-item, .resource-card')
+               .forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

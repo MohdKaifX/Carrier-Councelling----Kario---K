@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --sports: #ef4444;
+            --fitness: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--sports), var(--fitness));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--sports);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--sports);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--fitness);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--sports);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--sports);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2);
+            border-color: var(--sports);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--sports);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-sports {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--sports);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-sports:hover {
+            color: var(--fitness);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/sports'">Back to Sports Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Sports Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Organizations Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/sports" class="back-to-sports">
+            <i class="fas fa-arrow-left"></i> Back to Sports Careers
+        </a>
+    </div>
+
+    <script>
+        // Sports Career Data (for all sub-cards in sports.html)
+        const sportsCareerData = {
+            "professional-athlete": {
+                title: "Professional Athlete",
+                image: "{{ url_for('static', filename='images/professional-athlete.jpg') }}",
+                description: "Professional athletes compete at the highest levels in their chosen sports. They train rigorously to maintain peak physical condition, develop technical skills, and compete in tournaments, leagues, or individual events. Success requires exceptional talent, dedication, and often years of training.",
+                salary: "₹5L-₹50Cr+ (Varies widely by sport and success level)",
+                education: "No formal education required, but training at sports academies from young age is typical",
+                growth: "5% (Competition is extremely high)",
+                experience: "Begins with amateur competition, progressing to professional levels",
+                skills: [
+                    "Exceptional athletic ability",
+                    "Sport-specific technical skills",
+                    "Physical endurance",
+                    "Mental toughness",
+                    "Competitive spirit",
+                    "Teamwork (for team sports)",
+                    "Discipline & work ethic",
+                    "Injury prevention"
+                ],
+                companies: "Sports franchises, National teams, Professional leagues, Endorsement deals",
+                path: [
+                    {
+                        stage: "Early Training",
+                        content: "Start sport-specific training at young age (5-12 years)"
+                    },
+                    {
+                        stage: "Amateur Competition",
+                        content: "Compete in local/regional tournaments (10-18 years)"
+                    },
+                    {
+                        stage: "Elite Development",
+                        content: "Join sports academies or national programs (15-21 years)"
+                    },
+                    {
+                        stage: "Professional Debut",
+                        content: "Sign professional contracts or compete internationally (18+ years)"
+                    },
+                    {
+                        stage: "Peak Performance",
+                        content: "Compete at highest levels (25-35 years typically)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "Sports Authority of India",
+                        link: "https://www.sportsauthorityofindia.nic.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Champion's Mind by Jim Afremow",
+                        link: "https://www.amazon.in/Champions-Mind-Psychology-Great-Athletes/dp/162336148X"
+                    },
+                    {
+                        type: "Platform",
+                        title: "MyCoach - Sports Training App",
+                        link: "https://www.mycoach.in/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sports Science for Performance",
+                        link: "https://www.coursera.org/learn/sports-performance"
+                    }
+                ],
+                outlook: "Professional sports is highly competitive with only a small percentage reaching elite levels. However, growing sports infrastructure in India and success in international competitions is creating more opportunities."
+            },
+            "sports-coach": {
+                title: "Sports Coach",
+                image: "{{ url_for('static', filename='images/sports-coach.jpg') }}",
+                description: "Sports coaches train athletes to improve their performance. They develop training programs, teach techniques and strategies, and motivate athletes. Coaches may work with individuals or teams at various levels from school to professional sports.",
+                salary: "₹3-10 LPA (School/College), ₹10-25 LPA (Professional), ₹25-50+ LPA (Elite)",
+                education: "Bachelor's in Physical Education or Sport Science + Coaching Certification",
+                growth: "12% (Faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Sport-specific knowledge",
+                    "Teaching techniques",
+                    "Training program design",
+                    "Performance analysis",
+                    "Motivational skills",
+                    "Leadership",
+                    "Communication",
+                    "First aid/CPR"
+                ],
+                companies: "Sports academies, Schools/colleges, Professional teams, National sports federations",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in Physical Education or related field"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain coaching certification in chosen sport"
+                    },
+                    {
+                        stage: "Assistant Coach",
+                        content: "Gain experience under senior coaches (1-3 years)"
+                    },
+                    {
+                        stage: "Head Coach",
+                        content: "Lead training programs independently (3-5 years)"
+                    },
+                    {
+                        stage: "High Performance Coach",
+                        content: "Work with elite athletes (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "NIS Coaching Certification",
+                        link: "https://www.nsnis.gov.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Art of Smart Football by Chris B. Brown",
+                        link: "https://www.amazon.in/Art-Smart-Football-Coaching-Manual/dp/1493048120"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sports Coaching Science Diploma",
+                        link: "https://www.udemy.com/course/sports-coaching/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "International Council for Coaching Excellence",
+                        link: "https://www.icce.ws/"
+                    }
+                ],
+                outlook: "Growing demand for qualified coaches with expansion of sports programs in schools and professionalization of sports in India. Specialized coaches in emerging sports have particularly good prospects."
+            },
+            "fitness-trainer": {
+                title: "Fitness Trainer",
+                image: "{{ url_for('static', filename='images/fitness-trainer.jpg') }}",
+                description: "Fitness trainers design and lead exercise programs to help clients achieve health and fitness goals. They assess clients' fitness levels, demonstrate exercises, provide motivation, and ensure proper technique to prevent injuries.",
+                salary: "₹2-6 LPA (Entry Level), ₹6-15 LPA (Experienced), ₹15-30+ LPA (Celebrity/Elite)",
+                education: "Certification in Personal Training (ACE, NASM, ISSA) + Degree in Exercise Science preferred",
+                growth: "15% (Much faster than average)",
+                experience: "Entry-level: 0-1 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Exercise physiology",
+                    "Program design",
+                    "Nutrition basics",
+                    "Client assessment",
+                    "Motivational techniques",
+                    "First aid/CPR",
+                    "Communication",
+                    "Adaptability"
+                ],
+                companies: "Gyms (Gold's, Cult.fit), Wellness centers, Corporate fitness programs, Private clients",
+                path: [
+                    {
+                        stage: "Certification",
+                        content: "Obtain personal training certification (3-6 months)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience at gym or fitness center (6-12 months)"
+                    },
+                    {
+                        stage: "Personal Trainer",
+                        content: "Work with individual clients (1-3 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Get certified in areas like yoga, strength training etc. (2-4 years)"
+                    },
+                    {
+                        stage: "Senior Trainer/Manager",
+                        content: "Lead training programs or manage facility (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "ACE Personal Trainer Certification",
+                        link: "https://www.acefitness.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Science of Exercise by University of Colorado",
+                        link: "https://www.coursera.org/learn/science-exercise"
+                    },
+                    {
+                        type: "Book",
+                        title: "NASM Essentials of Personal Fitness Training",
+                        link: "https://www.amazon.in/NASM-Essentials-Personal-Fitness-Training/dp/1284186370"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Fitness Mentorship Programs",
+                        link: "https://www.fitnessmentors.com/"
+                    }
+                ],
+                outlook: "Strong growth expected with increasing health consciousness. Opportunities expanding beyond traditional gyms to corporate wellness, online training, and specialized populations."
+            },
+            "sports-analyst": {
+                title: "Sports Analyst",
+                image: "{{ url_for('static', filename='images/sports-analyst.jpg') }}",
+                description: "Sports analysts use data and statistics to evaluate player performance, team strategies, and game outcomes. They work for teams, media outlets, or betting companies to provide insights that inform decisions and engage fans.",
+                salary: "₹4-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "Degree in Statistics, Data Science, or Sports Management + Sports Knowledge",
+                growth: "20% (Much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Statistical analysis",
+                    "Data visualization",
+                    "Sports knowledge",
+                    "Programming (Python, R)",
+                    "Database management",
+                    "Critical thinking",
+                    "Communication",
+                    "Attention to detail"
+                ],
+                companies: "Sports teams (IPL, ISL), Broadcasters (Star, Sony), Sports tech companies, Fantasy sports platforms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in relevant quantitative field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience with sports organization (6-12 months)"
+                    },
+                    {
+                        stage: "Junior Analyst",
+                        content: "Work with data under supervision (1-2 years)"
+                    },
+                    {
+                        stage: "Sports Analyst",
+                        content: "Lead analyses and present findings (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Analyst",
+                        content: "Develop analytical strategies (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Moneyball by Michael Lewis",
+                        link: "https://www.amazon.in/Moneyball-Art-Winning-Unfair-Game/dp/0393324818"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sports Analytics by University of Michigan",
+                        link: "https://www.coursera.org/learn/sports-analytics"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Kaggle Sports Analytics Competitions",
+                        link: "https://www.kaggle.com/competitions?sortBy=grouped&group=general&page=1&pageSize=20&category=sports"
+                    },
+                    {
+                        type: "Software",
+                        title: "Tableau for Sports Visualization",
+                        link: "https://www.tableau.com/learn/articles/sports-analytics"
+                    }
+                ],
+                outlook: "Rapid growth expected as sports organizations increasingly rely on data. Emerging opportunities in player tracking, injury prediction, and fan engagement analytics."
+            },
+            "sports-physiotherapist": {
+                title: "Sports Physiotherapist",
+                image: "{{ url_for('static', filename='images/physical-therapist.jpg') }}",
+                description: "Sports physiotherapists help athletes prevent and recover from injuries. They assess physical condition, design rehabilitation programs, and use techniques like massage, stretching, and electrotherapy to restore function and performance.",
+                salary: "₹3-8 LPA (Entry Level), ₹8-18 LPA (Experienced), ₹18-30+ LPA (Elite)",
+                education: "Bachelor's in Physiotherapy (BPT) + Master's in Sports Physiotherapy",
+                growth: "18% (Much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Anatomy knowledge",
+                    "Rehabilitation techniques",
+                    "Injury assessment",
+                    "Therapeutic exercises",
+                    "Manual therapy",
+                    "Sports medicine",
+                    "Communication",
+                    "Preventive care"
+                ],
+                companies: "Sports teams, Hospitals, Rehabilitation centers, Private clinics, National sports institutes",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete BPT (4.5 years including internship)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Register with state physiotherapy council"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue Master's in Sports Physiotherapy (2 years)"
+                    },
+                    {
+                        stage: "Clinical Experience",
+                        content: "Work with athletes (1-3 years)"
+                    },
+                    {
+                        stage: "Senior Physiotherapist",
+                        content: "Lead rehabilitation programs (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "Indian Association of Physiotherapists",
+                        link: "https://www.physiotherapyindia.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Clinical Sports Medicine by Brukner & Khan",
+                        link: "https://www.amazon.in/Clinical-Sports-Medicine-Peter-Brukner/dp/1743311190"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sports Physiotherapy Certification",
+                        link: "https://www.physiotherapyedu.com/sports-physiotherapy-courses/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "British Journal of Sports Medicine",
+                        link: "https://bjsm.bmj.com/"
+                    }
+                ],
+                outlook: "Strong growth expected with increasing sports participation and awareness of sports medicine. Opportunities expanding beyond elite athletes to recreational sports and fitness enthusiasts."
+            },
+            "sports-journalist": {
+                title: "Sports Journalist",
+                image: "{{ url_for('static', filename='images/sports-journalist.jpg') }}",
+                description: "Sports journalists report on sports news, events, and personalities. They write articles, conduct interviews, provide commentary, and may work in print, broadcast, or digital media. Specializations include beat reporting, feature writing, or broadcasting.",
+                salary: "₹3-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-30+ LPA (Senior)",
+                education: "Degree in Journalism/Mass Communication + Sports Knowledge",
+                growth: "10% (Average growth)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Writing ability",
+                    "Interviewing",
+                    "Research",
+                    "Sports knowledge",
+                    "Deadline management",
+                    "Multimedia skills",
+                    "Social media",
+                    "Adaptability"
+                ],
+                companies: "ESPN, Star Sports, Sony Sports, Newspapers (TOI, HT), Digital platforms (Sportskeeda)",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in journalism or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience at media outlet (6-12 months)"
+                    },
+                    {
+                        stage: "Junior Reporter",
+                        content: "Cover local/college sports (1-2 years)"
+                    },
+                    {
+                        stage: "Sports Journalist",
+                        content: "Cover professional leagues/teams (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Correspondent",
+                        content: "Lead coverage or specialize (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Sports Journalism by University of Florida",
+                        link: "https://www.coursera.org/learn/sports-journalism"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Best American Sports Writing series",
+                        link: "https://www.amazon.in/Best-American-Sports-Writing-2020/dp/0358279260"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Sports Journalists' Association",
+                        link: "https://www.sportsjournalists.co.uk/"
+                    },
+                    {
+                        type: "Workshop",
+                        title: "Poynter Sports Journalism Training",
+                        link: "https://www.poynter.org/tag/sports-journalism/"
+                    }
+                ],
+                outlook: "Traditional sports media growing slowly, but digital platforms creating new opportunities. Multimedia skills and ability to engage audiences across platforms increasingly important."
+            },
+            "sports-psychologist": {
+                title: "Sports Psychologist",
+                image: "{{ url_for('static', filename='images/sports-psychologist.jpg') }}",
+                description: "Sports psychologists help athletes with mental conditioning, focus, and performance anxiety. They work on motivation, confidence, stress management, and team dynamics to enhance athletic performance and well-being.",
+                salary: "₹4-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "Master's in Psychology + Sports Psychology Certification",
+                growth: "15% (Faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Psychological assessment",
+                    "Counseling techniques",
+                    "Performance psychology",
+                    "Communication",
+                    "Research methods",
+                    "Team dynamics",
+                    "Mental training",
+                    "Crisis intervention"
+                ],
+                companies: "Sports teams, National institutes, Private practice, Universities, Corporate athletes",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete Master's in Psychology (2 years)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain sports psychology certification (6-12 months)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Work under supervision (1 year)"
+                    },
+                    {
+                        stage: "Sports Psychologist",
+                        content: "Work with athletes/teams (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Consultant",
+                        content: "Develop mental training programs (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "Association for Applied Sport Psychology",
+                        link: "https://appliedsportpsych.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Foundations of Sport and Exercise Psychology",
+                        link: "https://www.amazon.in/Foundations-Sport-Exercise-Psychology-Weinberg/dp/1492570144"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sports Psychology Specialization",
+                        link: "https://www.coursera.org/specializations/sports-psychology"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of Applied Sport Psychology",
+                        link: "https://www.tandfonline.com/toc/uasp20/current"
+                    }
+                ],
+                outlook: "Growing recognition of mental health in sports creating more opportunities. Demand increasing at all levels from youth to professional sports."
+            },
+            "sports-agent": {
+                title: "Sports Agent",
+                image: "{{ url_for('static', filename='images/sports-agent.jpg') }}",
+                description: "Sports agents represent athletes in contract negotiations, endorsements, and career management. They act as intermediaries between athletes and teams/sponsors, handling business affairs to maximize their clients' earnings and opportunities.",
+                salary: "₹5-15 LPA (Entry Level), ₹15-50 LPA (Mid Level), ₹50+ LPA (Senior - often commission-based)",
+                education: "Law degree or MBA preferred + Sports Management Certification",
+                growth: "12% (Faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Negotiation",
+                    "Contract law",
+                    "Marketing",
+                    "Networking",
+                    "Financial planning",
+                    "Communication",
+                    "Industry knowledge",
+                    "Player evaluation"
+                ],
+                companies: "Sports agencies (IOS, IMG), Independent practice, Team front offices",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in law, business, or sports management"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Work with sports agency or team (6-12 months)"
+                    },
+                    {
+                        stage: "Junior Agent",
+                        content: "Assist with client management (1-3 years)"
+                    },
+                    {
+                        stage: "Licensed Agent",
+                        content: "Represent athletes independently (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Agent",
+                        content: "Manage high-profile clients (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "FIFA Licensed Players' Agent",
+                        link: "https://www.fifa.com/legal/players-agents"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Business of Sports Agents by Kenneth Shropshire",
+                        link: "https://www.amazon.in/Business-Sports-Agents-Kenneth-Shropshire/dp/0812219547"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sports Agent Certification",
+                        link: "https://www.sportsmanagementworldwide.com/courses/sports-agent"
+                    },
+                    {
+                        type: "Organization",
+                        title: "International Association of Sports Agents",
+                        link: "https://www.theiasa.org/"
+                    }
+                ],
+                outlook: "Growing professionalization of sports in India creating more opportunities. Particularly strong prospects in cricket, football, and emerging sports."
+            },
+            "sports-commentator": {
+                title: "Sports Commentator",
+                image: "{{ url_for('static', filename='images/sports-commentator.jpg') }}",
+                description: "Sports commentators provide live commentary and analysis during sports broadcasts. They describe the action, provide insights, and engage audiences through their knowledge and personality. May work for TV, radio, or digital platforms.",
+                salary: "₹3-8 LPA (Entry Level), ₹8-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "No formal requirement, but journalism/broadcasting degree helpful",
+                growth: "8% (Average growth)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Sports knowledge",
+                    "Communication",
+                    "Quick thinking",
+                    "Voice modulation",
+                    "Storytelling",
+                    "Improvisation",
+                    "Research",
+                    "Technical awareness"
+                ],
+                companies: "Broadcasters (Star, Sony, ESPN), Streaming platforms (Hotstar), Radio stations",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Develop deep sports knowledge and communication skills"
+                    },
+                    {
+                        stage: "Small Markets",
+                        content: "Start with local/college sports (1-2 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on specific sport (2-3 years)"
+                    },
+                    {
+                        stage: "Commentator",
+                        content: "Work regional/national broadcasts (3-5 years)"
+                    },
+                    {
+                        stage: "Lead Commentator",
+                        content: "Cover major events (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Sports Broadcasting by Syracuse University",
+                        link: "https://www.syracuse.edu/academics/undergraduate-majors-minors/sports-broadcasting/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Talking Sport by Pat Summerall",
+                        link: "https://www.amazon.in/Talking-Sport-Broadcasting-Highs-Lows/dp/0312310991"
+                    },
+                    {
+                        type: "Workshop",
+                        title: "ESPN Commentator Training",
+                        link: "https://espnpressroom.com/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Sports Broadcasting Podcasts",
+                        link: "https://www.sportscasters.com/"
+                    }
+                ],
+                outlook: "Traditional broadcasting growing slowly, but digital platforms creating new opportunities. Bilingual commentators and those with multimedia skills have advantage."
+            },
+            "sports-official": {
+                    title: "Sports Official",
+                    image: "{{ url_for('static', filename='images/sports-official.jpg') }}",
+                    description: "Sports officials (referees, umpires, judges) enforce rules and ensure fair play during competitions. They make real-time decisions, manage player conduct, and maintain game flow. Officials may work at various levels from youth to professional sports.",
+                    salary: "₹2-8 LPA (Local/College), ₹8-20 LPA (Professional Leagues), ₹20-40+ LPA (International)",
+                    education: "Sport-specific certification programs + On-field training",
+                    growth: "6% (Average growth)",
+                    experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                    skills: [
+                        "Rule mastery",
+                        "Decision-making",
+                        "Conflict resolution",
+                        "Game awareness",
+                        "Physical fitness",
+                        "Communication",
+                        "Composure under pressure",
+                        "Positioning"
+                    ],
+                    companies: "Sports federations (BCCI, AIFF), Professional leagues (IPL, ISL), School/college associations",
+                    path: [
+                        {
+                            stage: "Certification",
+                            content: "Complete basic officiating course for chosen sport"
+                        },
+                        {
+                            stage: "Local Games",
+                            content: "Officiate youth/school matches (1-2 years)"
+                        },
+                        {
+                            stage: "Regional Level",
+                            content: "Work regional tournaments (2-3 years)"
+                        },
+                        {
+                            stage: "National Panel",
+                            content: "Officiate national competitions (3-5 years)"
+                        },
+                        {
+                            stage: "International Official",
+                            content: "Work international matches (5+ years)"
+                        }
+                    ],
+                    resources: [
+                        {
+                            type: "Organization",
+                            title: "National Sports Federations",
+                            link: "https://www.sportsauthorityofindia.nic.in/sai/national-sports-federations"
+                        },
+                        {
+                            type: "Book",
+                            title: "The Official's Guide to Sports Officiating",
+                            link: "https://www.amazon.in/Officials-Guide-Sports-Officiating-Refereeing/dp/073607538X"
+                        },
+                        {
+                            type: "Course",
+                            title: "FIBA Referee Certification",
+                            link: "https://www.fiba.basketball/officiating/courses"
+                        },
+                        {
+                            type: "Platform",
+                            title: "Referee Training Videos",
+                            link: "https://www.referee.com/"
+                        }
+                    ],
+                    outlook: "Steady demand for qualified officials as sports participation grows. Professional leagues offering better compensation and career paths for top officials."
+                },
+                "sports-nutritionist": {
+                    title: "Sports Nutritionist",
+                    image: "{{ url_for('static', filename='images/sports-nutritionist.jpg') }}",
+                    description: "Sports nutritionists design diet plans to optimize athlete performance and recovery. They assess nutritional needs, develop meal plans, and educate athletes on proper fueling strategies for training and competition.",
+                    salary: "₹3-8 LPA (Entry Level), ₹8-18 LPA (Mid Level), ₹18-30+ LPA (Senior)",
+                    education: "Degree in Nutrition/Dietetics + Sports Nutrition Certification",
+                    growth: "14% (Faster than average)",
+                    experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                    skills: [
+                        "Nutrition science",
+                        "Diet planning",
+                        "Supplement knowledge",
+                        "Body composition",
+                        "Performance nutrition",
+                        "Communication",
+                        "Research",
+                        "Cultural sensitivity"
+                    ],
+                    companies: "Sports teams, Fitness centers, National institutes, Private practice, Supplement companies",
+                    path: [
+                        {
+                            stage: "Education",
+                            content: "Complete degree in Nutrition/Dietetics (3-4 years)"
+                        },
+                        {
+                            stage: "Certification",
+                            content: "Obtain sports nutrition certification (6-12 months)"
+                        },
+                        {
+                            stage: "Internship",
+                            content: "Work with athletes (6-12 months)"
+                        },
+                        {
+                            stage: "Sports Nutritionist",
+                            content: "Develop nutrition programs (2-4 years)"
+                        },
+                        {
+                            stage: "Senior Consultant",
+                            content: "Lead nutrition strategy (5+ years)"
+                        }
+                    ],
+                    resources: [
+                        {
+                            type: "Certification",
+                            title: "International Society of Sports Nutrition",
+                            link: "https://www.sportsnutritionsociety.org/"
+                        },
+                        {
+                            type: "Book",
+                            title: "Sports Nutrition Guidebook by Nancy Clark",
+                            link: "https://www.amazon.in/Nancy-Clarks-Sports-Nutrition-Guidebook/dp/1450468184"
+                        },
+                        {
+                            type: "Course",
+                            title: "Sports Nutrition Specialization",
+                            link: "https://www.coursera.org/specializations/sports-nutrition"
+                        },
+                        {
+                            type: "Journal",
+                            title: "Journal of the International Society of Sports Nutrition",
+                            link: "https://jissn.biomedcentral.com/"
+                        }
+                    ],
+                    outlook: "Growing demand as athletes at all levels recognize nutrition's role in performance. Opportunities expanding beyond elite sports to fitness enthusiasts and recreational athletes."
+                },
+                "esports-player": {
+                    title: "Esports Player",
+                    image: "{{ url_for('static', filename='images/esports-player.jpg') }}",
+                    description: "Professional esports players compete in organized video game tournaments. They train extensively to master game mechanics, strategies, and teamwork. Players may specialize in specific games like Dota 2, CS:GO, or Valorant.",
+                    salary: "₹5-20 LPA (Entry Level), ₹20-50 LPA (Mid Level), ₹50L-2Cr+ (Top Players)",
+                    education: "No formal requirements, but game-specific training essential",
+                    growth: "25% (Much faster than average)",
+                    experience: "Begins with amateur competition, progressing to professional levels",
+                    skills: [
+                        "Game mastery",
+                        "Quick reflexes",
+                        "Strategic thinking",
+                        "Team coordination",
+                        "Adaptability",
+                        "Stress management",
+                        "Communication",
+                        "Analytical skills"
+                    ],
+                    companies: "Esports organizations (TSM, Fnatic), Game publishers (Riot, Valve), Tournament organizers (ESL)",
+                    path: [
+                        {
+                            stage: "Amateur Play",
+                            content: "Compete in online tournaments (1-2 years)"
+                        },
+                        {
+                            stage: "Semi-Pro",
+                            content: "Join amateur teams (2-3 years)"
+                        },
+                        {
+                            stage: "Professional",
+                            content: "Sign with esports organization (3-5 years)"
+                        },
+                        {
+                            stage: "Top Player",
+                            content: "Compete at international level (5+ years)"
+                        },
+                        {
+                            stage: "Retirement/Transition",
+                            content: "Often transition to coaching/streaming"
+                        }
+                    ],
+                    resources: [
+                        {
+                            type: "Platform",
+                            title: "Esports Earnings (Tournament Info)",
+                            link: "https://www.esportsearnings.com/"
+                        },
+                        {
+                            type: "Book",
+                            title: "The Esports Observer: Industry Guide",
+                            link: "https://www.amazon.in/Esports-Observer-Industry-Guide-2020/dp/3947856025"
+                        },
+                        {
+                            type: "Course",
+                            title: "Esports Performance Training",
+                            link: "https://www.udemy.com/course/esports-performance-training/"
+                        },
+                        {
+                            type: "Organization",
+                            title: "Esports Federation of India",
+                            link: "https://esfi.in/"
+                        }
+                    ],
+                    outlook: "Explosive growth expected as esports gains mainstream recognition. Increasing sponsorship, media rights, and professionalization creating stable career paths."
+                }
+            };
+
+            // Get career type from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const careerType = urlParams.get('career');
+
+            // Display career data
+            if (careerType && sportsCareerData[careerType]) {
+                const career = sportsCareerData[careerType];
+                
+                // Set basic info
+                document.getElementById('career-title').textContent = career.title;
+                document.getElementById('career-description').textContent = career.description;
+                document.getElementById('career-image').src = career.image;
+                document.getElementById('career-image').alt = career.title;
+                
+                // Set highlights
+                document.getElementById('career-salary').textContent = career.salary;
+                document.getElementById('career-education').textContent = career.education;
+                document.getElementById('career-growth').textContent = career.growth;
+                document.getElementById('career-experience').textContent = career.experience;
+                
+                // Set skills
+                const skillsContainer = document.getElementById('skills-container');
+                career.skills.forEach(skill => {
+                    const skillTag = document.createElement('div');
+                    skillTag.className = 'skill-tag';
+                    skillTag.textContent = skill;
+                    skillsContainer.appendChild(skillTag);
+                });
+                
+                // Set companies
+                document.getElementById('career-companies').textContent = career.companies;
+                
+                // Set career path
+                const careerPath = document.getElementById('career-path');
+                career.path.forEach(item => {
+                    const pathItem = document.createElement('div');
+                    pathItem.className = 'path-item';
+                    
+                    const pathContent = document.createElement('div');
+                    pathContent.className = 'path-content';
+                    
+                    const h4 = document.createElement('h4');
+                    h4.textContent = item.stage;
+                    
+                    const p = document.createElement('p');
+                    p.textContent = item.content;
+                    
+                    pathContent.appendChild(h4);
+                    pathContent.appendChild(p);
+                    pathItem.appendChild(pathContent);
+                    careerPath.appendChild(pathItem);
+                });
+                
+                // Set resources
+                const resourcesContainer = document.getElementById('resources-container');
+                career.resources.forEach(resource => {
+                    const resourceCard = document.createElement('div');
+                    resourceCard.className = 'resource-card';
+                    
+                    const h4 = document.createElement('h4');
+                    const icon = document.createElement('i');
+                    
+                    // Set appropriate icon based on resource type
+                    if (resource.type === 'Book') {
+                        icon.className = 'fas fa-book';
+                    } else if (resource.type === 'Course') {
+                        icon.className = 'fas fa-graduation-cap';
+                    } else if (resource.type === 'Platform') {
+                        icon.className = 'fas fa-globe';
+                    } else if (resource.type === 'Journal') {
+                        icon.className = 'fas fa-newspaper';
+                    } else if (resource.type === 'Certification') {
+                        icon.className = 'fas fa-certificate';
+                    } else if (resource.type === 'Organization') {
+                        icon.className = 'fas fa-university';
+                    } else if (resource.type === 'Software') {
+                        icon.className = 'fas fa-laptop-code';
+                    } else if (resource.type === 'Workshop') {
+                        icon.className = 'fas fa-chalkboard-teacher';
+                    }
+                    
+                    h4.appendChild(icon);
+                    h4.appendChild(document.createTextNode(` ${resource.type}: ${resource.title}`));
+                    
+                    const a = document.createElement('a');
+                    a.href = resource.link;
+                    a.textContent = 'View Resource';
+                    a.target = '_blank';
+                    
+                    resourceCard.appendChild(h4);
+                    resourceCard.appendChild(document.createElement('p'));
+                    resourceCard.appendChild(a);
+                    resourcesContainer.appendChild(resourceCard);
+                });
+                
+                // Set job outlook
+                document.getElementById('job-outlook').innerHTML = `
+                    <h3><i class="fas fa-chart-line"></i> Market Outlook</h3>
+                    <p>${career.outlook}</p>
+                `;
+            } else {
+                // Default content if no valid career type
+                document.getElementById('career-title').textContent = 'Sports Career Not Found';
+                document.getElementById('career-description').textContent = 'The requested sports career path could not be found. Please return to the sports careers page and select a valid option.';
+            }
+
+            // Animation for elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.career-header, .highlight-card, .section-title, .career-path, .resource-card, #job-outlook')
+                   .forEach(el => observer.observe(el));
+        </script>
+    </body>
+    </html>

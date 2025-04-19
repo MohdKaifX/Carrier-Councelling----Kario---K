@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Careers | CareerHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #7c3aed;
+      --accent: #00d4ff;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --science: #3b82f6;
+      --research: #8b5cf6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 8rem 6% 3rem;
+      background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                  url('/static/images/science-banner.jpg') center/cover;
+      text-align: center;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--science), var(--research));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #e2e8f0;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+
+    .field-intro {
+      padding: 3rem 6%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .field-intro h2 {
+      font-size: 2rem;
+      color: var(--science);
+      margin-bottom: 1.5rem;
+    }
+
+    .field-intro h3 {
+      font-size: 1.5rem;
+      color: var(--research);
+      margin: 2rem 0 1rem;
+    }
+
+    .field-intro p {
+      margin-bottom: 1.5rem;
+      color: #94a3b8;
+    }
+
+    .highlight-box {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid var(--science);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    ul.feature-list {
+      color: #94a3b8;
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    ul.feature-list li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    ul.feature-list li::before {
+      content: '🔬';
+      position: absolute;
+      left: 0;
+    }
+
+    .career-cards-container {
+      padding: 2rem 6%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .career-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .career-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+      border-color: var(--science);
+    }
+
+    .career-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .career-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .career-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .career-card p {
+      color: #94a3b8;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      min-height: 60px;
+    }
+
+    .career-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.2rem 0;
+    }
+
+    .stat-pill {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--research);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .learn-more {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid var(--science);
+      border-radius: 0.5rem;
+      color: var(--light);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .learn-more:hover {
+      background: var(--science);
+      color: var(--light);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .faq-section {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3rem 6%;
+      margin: 3rem auto;
+      border-radius: 1rem;
+      max-width: 1000px;
+      backdrop-filter: blur(10px);
+    }
+
+    .faq-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--science);
+    }
+
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .faq:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--science);
+    }
+
+    .question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--light);
+    }
+
+    .answer {
+      font-size: 1rem;
+      color: #94a3b8;
+      margin-top: 1rem;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .faq.active .answer {
+      display: block;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .faq.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding-top: 6rem;
+      }
+      
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .career-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .field-intro, .career-cards-container, .faq-section {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-flask"></i> Science Careers</h1>
+    <p>Explore careers in scientific research, discovery, and innovation that shape our understanding of the world.</p>
+  </header>
+
+  <section class="field-intro">
+    <h2>About Science Careers</h2>
+    <p>The field of science offers diverse career opportunities for curious minds passionate about discovery and problem-solving. From fundamental research to applied sciences, these careers drive innovation across industries and contribute to solving global challenges. Science careers span academia, industry, government, and non-profit sectors.</p>
+    
+    <div class="highlight-box">
+      <p><strong>Scientific Spectrum:</strong> Physical sciences, life sciences, environmental sciences, data science, and interdisciplinary fields. Careers range from pure research to applied technology development, with opportunities in laboratories, field work, and computational analysis.</p>
+    </div>
+
+    <h3>Who Should Pursue Science Careers?</h3>
+    <p>This field is ideal for individuals who:</p>
+    <ul class="feature-list">
+      <li>Are curious about how the world works</li>
+      <li>Enjoy problem-solving and critical thinking</li>
+      <li>Have strong analytical and mathematical skills</li>
+      <li>Are detail-oriented and patient with research</li>
+      <li>Want to contribute to technological advancements</li>
+    </ul>
+
+    <h3>Career Outlook</h3>
+    <p>The science sector offers:</p>
+    <ul class="feature-list">
+      <li><strong>Growing demand:</strong> 13% projected growth for life scientists (2020-2030)</li>
+      <li><strong>Diverse opportunities:</strong> From academia to tech companies</li>
+      <li><strong>Global challenges:</strong> Climate change, healthcare, energy solutions</li>
+      <li><strong>Interdisciplinary:</strong> Combining fields like biology with computing</li>
+    </ul>
+    <p>Emerging fields like biotechnology, AI, and renewable energy are creating new career paths.</p>
+
+    <a href="/explore" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to All Fields
+    </a>
+  </section>
+
+  <section class="career-cards-container">
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/physicist.jpg') }}" alt="Physicist">
+      <div class="card-content">
+        <h3><i class="fas fa-atom"></i> Physicist</h3>
+        <p>Study matter, energy, and the fundamental laws of the universe through theoretical and experimental research.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹4-15 LPA</span>
+          <span class="stat-pill">PhD common</span>
+          <span class="stat-pill">Research</span>
+        </div>
+        <a href="/science-career?career=physicist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/biologist.jpg') }}" alt="Biologist">
+      <div class="card-content">
+        <h3><i class="fas fa-dna"></i> Biologist</h3>
+        <p>Research living organisms and their interactions with each other and their environments.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3-12 LPA</span>
+          <span class="stat-pill">Specialized</span>
+          <span class="stat-pill">Field work</span>
+        </div>
+        <a href="/science-career?career=biologist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/chemist.jpg') }}" alt="Chemist">
+      <div class="card-content">
+        <h3><i class="fas fa-vial"></i> Chemist</h3>
+        <p>Study substances at atomic/molecular level to develop new materials and products.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3.5-14 LPA</span>
+          <span class="stat-pill">Lab work</span>
+          <span class="stat-pill">Pharma</span>
+        </div>
+        <a href="/science-career?career=chemist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/astronomer.jpg') }}" alt="Astronomer">
+      <div class="card-content">
+        <h3><i class="fas fa-star"></i> Astronomer</h3>
+        <p>Study celestial objects, space, and the physical universe through observation and theory.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹5-18 LPA</span>
+          <span class="stat-pill">PhD required</span>
+          <span class="stat-pill">Observatories</span>
+        </div>
+        <a href="/science-career?career=astronomer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/environmental-scientist.jpg') }}" alt="Environmental Scientist">
+      <div class="card-content">
+        <h3><i class="fas fa-leaf"></i> Environmental Scientist</h3>
+        <p>Analyze environmental problems and develop solutions to protect ecosystems and human health.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3.5-12 LPA</span>
+          <span class="stat-pill">Field studies</span>
+          <span class="stat-pill">Policy</span>
+        </div>
+        <a href="/science-career?career=environmental-scientist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/geneticist.jpg') }}" alt="Geneticist">
+      <div class="card-content">
+        <h3><i class="fas fa-dna"></i> Geneticist</h3>
+        <p>Study genes, heredity, and variation in living organisms to understand and treat diseases.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹4-20 LPA</span>
+          <span class="stat-pill">Biotech</span>
+          <span class="stat-pill">Medical</span>
+        </div>
+        <a href="/science-career?career=geneticist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/data-scientist.jpg') }}" alt="Data Scientist">
+      <div class="card-content">
+        <h3><i class="fas fa-chart-line"></i> Data Scientist</h3>
+        <p>Use scientific methods to extract insights from complex data sets across industries.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹6-30 LPA</span>
+          <span class="stat-pill">Tech skills</span>
+          <span class="stat-pill">High demand</span>
+        </div>
+        <a href="/science-career?career=data-scientist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/marine-biologist.jpg') }}" alt="Marine Biologist">
+      <div class="card-content">
+        <h3><i class="fas fa-water"></i> Marine Biologist</h3>
+        <p>Study ocean ecosystems, marine organisms, and their interactions with the environment.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3.5-15 LPA</span>
+          <span class="stat-pill">Field research</span>
+          <span class="stat-pill">Conservation</span>
+        </div>
+        <a href="/science-career?career=marine-biologist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/forensic-scientist.jpg') }}" alt="Forensic Scientist">
+      <div class="card-content">
+        <h3><i class="fas fa-search"></i> Forensic Scientist</h3>
+        <p>Apply scientific principles to analyze evidence and solve crimes in legal investigations.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3-12 LPA</span>
+          <span class="stat-pill">Lab analysis</span>
+          <span class="stat-pill">Legal system</span>
+        </div>
+        <a href="/science-career?career=forensic-scientist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/research-scientist.jpg') }}" alt="Research Scientist">
+      <div class="card-content">
+        <h3><i class="fas fa-microscope"></i> Research Scientist</h3>
+        <p>Design and conduct experiments to advance knowledge in specialized scientific fields.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹4-18 LPA</span>
+          <span class="stat-pill">Publications</span>
+          <span class="stat-pill">Innovation</span>
+        </div>
+        <a href="/science-career?career=research-scientist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/neuroscientist.jpg') }}" alt="Neuroscientist">
+      <div class="card-content">
+        <h3><i class="fas fa-brain"></i> Neuroscientist</h3>
+        <p>Study the nervous system to understand brain function and neurological disorders.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹5-20 LPA</span>
+          <span class="stat-pill">Medical research</span>
+          <span class="stat-pill">PhD required</span>
+        </div>
+        <a href="/science-career?career=neuroscientist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/quantum-physicist.jpg') }}" alt="Quantum Physicist">
+      <div class="card-content">
+        <h3><i class="fas fa-atom"></i> Quantum Physicist</h3>
+        <p>Research quantum phenomena to develop new computing and communication technologies.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹6-25 LPA</span>
+          <span class="stat-pill">Emerging field</span>
+          <span class="stat-pill">Tech industry</span>
+        </div>
+        <a href="/science-career?career=quantum-physicist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>Science Career FAQs</h2>
+    <div class="faq-container">
+      <div class="faq">
+        <div class="question">
+          <span>What education is needed for a science career?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Educational pathways vary by specialization:</p>
+          <ul>
+            <li><strong>Bachelor's degree:</strong> Minimum requirement for entry-level positions</li>
+            <li><strong>Master's degree:</strong> Needed for advancement in many fields</li>
+            <li><strong>PhD:</strong> Required for independent research and academic positions</li>
+            <li><strong>Specialized certifications:</strong> Often needed for applied fields</li>
+            <li><strong>Continuous learning:</strong> Essential to stay current in fast-evolving fields</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>What skills are important for scientists?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Key skills for science careers include:</p>
+          <ul>
+            <li><strong>Analytical thinking:</strong> Interpreting complex data</li>
+            <li><strong>Technical proficiency:</strong> Lab techniques or computational methods</li>
+            <li><strong>Problem-solving:</strong> Developing innovative solutions</li>
+            <li><strong>Communication:</strong> Writing papers and presenting findings</li>
+            <li><strong>Collaboration:</strong> Working in interdisciplinary teams</li>
+            <li><strong>Attention to detail:</strong> Ensuring accuracy in research</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>What industries employ scientists?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Scientists work in diverse sectors:</p>
+          <ul>
+            <li><strong>Academic institutions:</strong> Universities and research institutes</li>
+            <li><strong>Government agencies:</strong> Research labs and policy organizations</li>
+            <li><strong>Pharmaceuticals:</strong> Drug discovery and development</li>
+            <li><strong>Technology companies:</strong> R&D and product development</li>
+            <li><strong>Environmental organizations:</strong> Conservation and sustainability</li>
+            <li><strong>Healthcare:</strong> Medical research and diagnostics</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>How competitive are science careers?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Competitiveness varies by field:</p>
+          <ul>
+            <li><strong>Academic positions:</strong> Highly competitive, especially for tenure-track</li>
+            <li><strong>Industry research:</strong> Competitive but growing in tech/biotech</li>
+            <li><strong>Emerging fields:</strong> High demand for specialized skills</li>
+            <li><strong>Government jobs:</strong> Stable but limited positions</li>
+            <li><strong>Interdisciplinary:</strong> Combining fields increases opportunities</li>
+          </ul>
+          <p>Building a strong publication record and networking are crucial for success.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // FAQ Toggle Functionality
+    document.querySelectorAll(".faq").forEach((faq) => {
+      faq.addEventListener("click", () => {
+        faq.classList.toggle("active");
+      });
+    });
+
+    // Scroll Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.career-card, .field-intro > *, .faq')
+           .forEach(el => observer.observe(el));
+
+    // Card hover enhancement
+    document.querySelectorAll('.career-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.querySelector('img').style.transform = 'scale(1.05)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.querySelector('img').style.transform = 'scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>

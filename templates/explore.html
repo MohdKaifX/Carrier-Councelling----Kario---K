@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Career Fields | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+            --card1: #ec4899;
+            --card2: #8b5cf6;
+            --card3: #6366f1;
+            --card4: #10b981;
+            --card5: #f59e0b;
+            --card6: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 12rem 6% 4rem;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('../static/images/career-explore-banner.jpg') center/cover;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(37, 99, 235, 0.1));
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            position: relative;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto;
+            max-width: 800px;
+            position: relative;
+            animation: fadeInUp 1.4s ease;
+        }
+
+        .search-container input {
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1.1rem;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .search-container::after {
+            content: '\f002';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            pointer-events: none;
+        }
+
+        /* Career Fields Section */
+        .career-list {
+            padding: 4rem 6%;
+            position: relative;
+        }
+
+        .career-list::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../static/images/pattern-dark.svg') center/cover;
+            opacity: 0.03;
+            z-index: -1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .career-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .field-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .field-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .field-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(37, 99, 235, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .field-card:hover::before {
+            opacity: 1;
+        }
+
+        .field-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .field-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .field-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .field-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .field-card .explore-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .field-card .explore-btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Category Colors */
+        .field-card:nth-child(6n+1) { border-color: var(--card1); }
+        .field-card:nth-child(6n+2) { border-color: var(--card2); }
+        .field-card:nth-child(6n+3) { border-color: var(--card3); }
+        .field-card:nth-child(6n+4) { border-color: var(--card4); }
+        .field-card:nth-child(6n+5) { border-color: var(--card5); }
+        .field-card:nth-child(6n+6) { border-color: var(--card6); }
+
+        .field-card:nth-child(6n+1):hover { box-shadow: 0 15px 30px rgba(236, 72, 153, 0.2); }
+        .field-card:nth-child(6n+2):hover { box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2); }
+        .field-card:nth-child(6n+3):hover { box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2); }
+        .field-card:nth-child(6n+4):hover { box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2); }
+        .field-card:nth-child(6n+5):hover { box-shadow: 0 15px 30px rgba(245, 158, 11, 0.2); }
+        .field-card:nth-child(6n+6):hover { box-shadow: 0 15px 30px rgba(239, 68, 68, 0.2); }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 6%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(139, 92, 246, 0.1));
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5rem 6%;
+            margin: 0 auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 6%;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.8);
+            margin-top: 4rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 8rem 5% 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .career-fields {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .search-container input {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="window.location.href='/'">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Career Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/'">Back to Home</button>
+    </header>
+
+    <section class="hero">
+        <h1>Discover Your Career Path</h1>
+        <p>Explore diverse career fields and find the perfect match for your skills, interests, and aspirations</p>
+        <div class="search-container">
+            <input type="text" id="search-career" placeholder="Search career fields (e.g., Technology, Healthcare, Law)...">
+        </div>
+    </section>
+    
+    <section class="career-list">
+        <div class="section-header">
+            <h2>Major Career Fields</h2>
+            <p>Browse through our comprehensive collection of career fields to find your calling</p>
+        </div>
+        
+        <div class="career-fields">
+            <!-- Technology -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/technology-field.jpg') }}" alt="Technology">
+                <div class="card-content">
+                    <h3><i class="fas fa-laptop-code"></i> Technology</h3>
+                    <p>Innovate and build the digital future with careers in software development, cybersecurity, AI, and more.</p>
+                    <a href="/technology" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Business & Management -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/business-field.jpg') }}" alt="Business & Management">
+                <div class="card-content">
+                    <h3><i class="fas fa-briefcase"></i> Business</h3>
+                    <p>Lead organizations to success with careers in finance, marketing, HR, entrepreneurship, and operations.</p>
+                    <a href="/business" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Engineering -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/engineering-field.jpg') }}" alt="Engineering">
+                <div class="card-content">
+                    <h3><i class="fas fa-cogs"></i> Engineering</h3>
+                    <p>Design and build solutions across mechanical, civil, electrical, and other engineering disciplines.</p>
+                    <a href="/engineering" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Finance & Accounting -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/finance-field.jpg') }}" alt="Finance & Accounting">
+                <div class="card-content">
+                    <h3><i class="fas fa-chart-line"></i> Finance</h3>
+                    <p>Manage money, investments, and financial systems to drive economic growth and stability.</p>
+                    <a href="/finance" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Medical & Healthcare -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/healthcare-field.jpg') }}" alt="Medical & Healthcare">
+                <div class="card-content">
+                    <h3><i class="fas fa-heartbeat"></i> Healthcare</h3>
+                    <p>Improve lives through patient care, medical research, and public health initiatives.</p>
+                    <a href="/healthcare" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Law & Legal Services -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/law-field.jpg') }}" alt="Law & Legal Services">
+                <div class="card-content">
+                    <h3><i class="fas fa-gavel"></i> Law</h3>
+                    <p>Uphold justice and provide legal counsel in various specializations from corporate to criminal law.</p>
+                    <a href="/law" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Media & Communication -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/media-field.jpg') }}" alt="Media & Communication">
+                <div class="card-content">
+                    <h3><i class="fas fa-bullhorn"></i> Media</h3>
+                    <p>Shape narratives and connect people through journalism, PR, broadcasting, and digital media.</p>
+                    <a href="/media" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Education & Training -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/education-field.jpg') }}" alt="Education & Training">
+                <div class="card-content">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <p>Inspire and educate future generations through teaching and educational leadership.</p>
+                    <a href="/education" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Arts & Design -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/arts-field.jpg') }}" alt="Arts & Design">
+                <div class="card-content">
+                    <h3><i class="fas fa-palette"></i> Arts</h3>
+                    <p>Express creativity through visual arts, graphic design, fashion, and interior design.</p>
+                    <a href="/arts" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Science & Research -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/science-field.jpg') }}" alt="Science & Research">
+                <div class="card-content">
+                    <h3><i class="fas fa-flask"></i> Science</h3>
+                    <p>Advance human knowledge through research in biology, chemistry, physics, and more.</p>
+                    <a href="/science" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Hospitality & Tourism -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/hospitality-field.jpg') }}" alt="Hospitality & Tourism">
+                <div class="card-content">
+                    <h3><i class="fas fa-umbrella-beach"></i> Hospitality</h3>
+                    <p>Create memorable experiences in hotels, restaurants, travel, and event management.</p>
+                    <a href="/hospitality" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Public Services (Exam) -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/public-services-field.jpg') }}" alt="Public Service Exams">
+                <div class="card-content">
+                    <h3><i class="fas fa-file-alt"></i> Public Service Exams</h3>  <!-- Changed icon to "file-alt" (exam papers) -->
+                    <p>UPSC, state PSCs, SSC, and defense recruitment for administrative roles</p>  <!-- More specific -->
+                    <a href="/public-services" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+           
+            <!-- Entertainment & Culture -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/entertainment-field.jpg') }}" alt="Entertainment & Culture">
+                <div class="card-content">
+                    <h3><i class="fas fa-film"></i> Entertainment</h3>
+                    <p>Create content that entertains and inspires through film, music, and performing arts.</p>
+                    <a href="/culture" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Environment & Agriculture -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/environment-field.jpg') }}" alt="Environment & Agriculture">
+                <div class="card-content">
+                    <h3><i class="fas fa-leaf"></i> Environment</h3>
+                    <p>Address environmental challenges through conservation, farming, and sustainability careers.</p>
+                    <a href="/environment" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Sports & Physical Education -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/sports-field.jpg') }}" alt="Sports & Physical Education">
+                <div class="card-content">
+                    <h3><i class="fas fa-running"></i> Sports</h3>
+                    <p>Promote health and athletic excellence through coaching, training, and sports management.</p>
+                    <a href="/sports" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Agriculture.html -->
+            <div class="field-card">
+                <img src="{{ url_for('static', filename='images/agriculture-field.jpg') }}" alt="Agriculture">
+                <div class="card-content">
+                    <h3><i class="fas fa-leaf"></i> Agriculture</h3>
+                    <p>Drive sustainable food systems through farming, agribusiness, and agricultural technology innovations.</p>
+                    <a href="/agriculture" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="stats-section">
+        <div class="section-header">
+            <h2>Career Insights</h2>
+            <p>Key statistics to help guide your career exploration journey</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">16+</div>
+                <div class="stat-label">Career Fields</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Career Paths</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1M+</div>
+                <div class="stat-label">Career Resources</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">User Satisfaction</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about career exploration</p>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>How do I choose the right career field?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Choosing the right career field involves several steps:</p>
+                    <ul>
+                        <li>Assess your interests, skills, and values</li>
+                        <li>Research various industries and job roles</li>
+                        <li>Consider your preferred work environment and lifestyle</li>
+                        <li>Take our career assessment quiz for personalized recommendations</li>
+                        <li>Explore job shadowing or informational interviews</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What information will I find on each field page?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Each career field page provides comprehensive information including:</p>
+                    <ul>
+                        <li>Overview of the industry and key sectors</li>
+                        <li>Detailed career paths with salary ranges</li>
+                        <li>Required education and certifications</li>
+                        <li>Skills and qualifications needed</li>
+                        <li>Job outlook and growth projections</li>
+                        <li>Resources for further exploration</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>Can I switch between career fields later?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Yes, career transitions are increasingly common. Many skills are transferable across fields. We provide:</p>
+                    <ul>
+                        <li>Guidance on identifying transferable skills</li>
+                        <li>Resources for upskilling or reskilling</li>
+                        <li>Strategies for networking in new industries</li>
+                        <li>Tips for highlighting relevant experience</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How often is the career information updated?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>We maintain rigorous update schedules:</p>
+                    <ul>
+                        <li>Salary data updated quarterly</li>
+                        <li>Job growth statistics updated biannually</li>
+                        <li>Emerging career paths reviewed monthly</li>
+                        <li>Educational requirements verified annually</li>
+                    </ul>
+                    <p>Our team continuously monitors industry trends to ensure information remains current.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="/#contact">Contact</a>
+        </div>
+        
+        <p class="copyright">&copy; 2025 CareerHub. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq").forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+
+        // Career Field Search Functionality
+        const searchInput = document.getElementById('search-career');
+        const fieldCards = document.querySelectorAll('.field-card');
+
+        function searchFields() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            fieldCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', searchFields);
+
+        // Redirect to field page if exact match is found on Enter
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.trim().toLowerCase();
+                let matchedField = null;
+                
+                fieldCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    if (title === searchTerm) {
+                        matchedField = card.querySelector('a').getAttribute('href');
+                    }
+                });
+                
+                if (matchedField) {
+                    window.location.href = matchedField;
+                }
+            }
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.field-card, .section-header, .stats-grid, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Smooth hover effects
+        document.querySelectorAll('.field-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --education: #0ea5e9;
+            --teaching: #38bdf8;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--education), var(--teaching));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .highlight-card h3 {
+            color: var(--teaching);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--education);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--teaching);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--education);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--education);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
+            border-color: var(--education);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--teaching);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-edu {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--teaching);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-edu:hover {
+            color: var(--education);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/education'">Back to Education Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Education Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Employers</h2>
+        <p id="career-employers" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/education" class="back-to-edu">
+            <i class="fas fa-arrow-left"></i> Back to Education Careers
+        </a>
+    </div>
+
+    <script>
+        // Education Career Data (for all sub-cards in education.html)
+        const eduCareerData = {
+            "school-teacher": {
+                title: "School Teacher",
+                image: "{{ url_for('static', filename='images/teacher.jpg') }}",
+                description: "School teachers educate students in K-12 schools, specializing in specific subjects or grade levels. They create lesson plans, assess student progress, and foster a positive learning environment while collaborating with parents and administrators.",
+                salary: "₹3-6 LPA (Entry Level), ₹6-12 LPA (Mid Level), ₹12-20+ LPA (Senior)",
+                education: "Bachelor's in Education (B.Ed) + Subject Specialization, State Teaching Certification",
+                growth: "5% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-8 years, Senior: 9+ years",
+                skills: [
+                    "Lesson Planning",
+                    "Classroom Management",
+                    "Differentiated Instruction",
+                    "Assessment Design",
+                    "Communication",
+                    "Patience & Empathy",
+                    "Technology Integration",
+                    "Collaboration"
+                ],
+                employers: "Public/Private Schools, International Schools, Charter Schools, Online Schools",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's degree in education or subject area + B.Ed"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain state teaching license/certification"
+                    },
+                    {
+                        stage: "Probationary Teacher",
+                        content: "Begin teaching with mentorship (1-2 years)"
+                    },
+                    {
+                        stage: "Licensed Teacher",
+                        content: "Full teaching responsibilities (3-8 years)"
+                    },
+                    {
+                        stage: "Senior Teacher",
+                        content: "Mentor new teachers, lead departments (9+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "CTET (Central Teacher Eligibility Test)",
+                        link: "https://ctet.nic.in/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Foundations of Teaching for Learning",
+                        link: "https://www.coursera.org/specializations/teaching"
+                    },
+                    {
+                        type: "Book",
+                        title: "The First Days of School by Harry Wong",
+                        link: "https://www.amazon.in/First-Days-School-Harry-Wong/dp/0962936022"
+                    },
+                    {
+                        type: "Platform",
+                        title: "National Council for Teacher Education",
+                        link: "https://ncte.gov.in/"
+                    }
+                ],
+                outlook: "Teaching positions growing at average rate with steady demand. Shortages in STEM subjects and special education. Increasing opportunities in online education."
+            },
+            "college-professor": {
+                title: "College Professor",
+                image: "{{ url_for('static', filename='images/professor.jpg') }}",
+                description: "College professors teach specialized subjects at higher education institutions while conducting research in their field. They develop curricula, advise students, publish scholarly work, and contribute to academic governance.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "Master's degree (minimum), PhD preferred for universities, NET/SET qualification",
+                growth: "12% (faster than average)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-8 years, Senior: 9+ years",
+                skills: [
+                    "Subject Matter Expertise",
+                    "Research Methodology",
+                    "Curriculum Development",
+                    "Academic Writing",
+                    "Student Mentoring",
+                    "Public Speaking",
+                    "Grant Writing",
+                    "Peer Review"
+                ],
+                employers: "Universities, Colleges, Research Institutions, Professional Schools",
+                path: [
+                    {
+                        stage: "Graduate Education",
+                        content: "Complete master's degree (minimum), preferably PhD"
+                    },
+                    {
+                        stage: "Qualification",
+                        content: "Pass NET/SET exam for eligibility"
+                    },
+                    {
+                        stage: "Assistant Professor",
+                        content: "Begin teaching and research (0-6 years)"
+                    },
+                    {
+                        stage: "Associate Professor",
+                        content: "Established teaching and research (7-12 years)"
+                    },
+                    {
+                        stage: "Full Professor",
+                        content: "Senior faculty with leadership roles (13+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Exam",
+                        title: "UGC NET Examination",
+                        link: "https://ugcnet.nta.nic.in/"
+                    },
+                    {
+                        type: "Course",
+                        title: "University Teaching 101",
+                        link: "https://www.coursera.org/learn/university-teaching"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Professor Is In by Karen Kelsky",
+                        link: "https://www.amazon.in/Professor-Karen-Kelsky/dp/0553419420"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Shodhganga - Indian Theses Repository",
+                        link: "https://shodhganga.inflibnet.ac.in/"
+                    }
+                ],
+                outlook: "Postsecondary teaching growing faster than average, especially in professional fields. Strong competition for tenure-track positions at universities."
+            },
+            "special-educator": {
+                title: "Special Educator",
+                image: "{{ url_for('static', filename='images/special-educator.jpg') }}",
+                description: "Special educators support students with diverse learning needs through individualized instruction. They develop IEPs (Individualized Education Programs), adapt curriculum, and collaborate with other professionals to ensure student success.",
+                salary: "₹3.5-7 LPA (Entry Level), ₹7-12 LPA (Mid Level), ₹12-18+ LPA (Senior)",
+                education: "Bachelor's/Master's in Special Education, RCI (Rehabilitation Council of India) certification",
+                growth: "8% (faster than average)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-8 years, Senior: 9+ years",
+                skills: [
+                    "IEP Development",
+                    "Behavior Management",
+                    "Differentiated Instruction",
+                    "Assessment Adaptation",
+                    "Collaboration",
+                    "Patience & Empathy",
+                    "Assistive Technology",
+                    "Parent Counseling"
+                ],
+                employers: "Special Schools, Inclusive Classrooms, Therapy Centers, NGOs",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in special education (B.Ed/M.Ed in Special Ed)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain RCI certification"
+                    },
+                    {
+                        stage: "Junior Special Educator",
+                        content: "Work under supervision (0-3 years)"
+                    },
+                    {
+                        stage: "Special Educator",
+                        content: "Independent case management (4-8 years)"
+                    },
+                    {
+                        stage: "Senior Special Educator",
+                        content: "Lead programs, train others (9+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "RCI Certification",
+                        link: "https://www.rehabcouncil.nic.in/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Inclusive Education Specialization",
+                        link: "https://www.coursera.org/specializations/inclusive-education"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Complete Learning Disabilities Handbook",
+                        link: "https://www.amazon.in/Complete-Learning-Disabilities-Handbook-Third/dp/0787997552"
+                    },
+                    {
+                        type: "Organization",
+                        title: "National Institute for the Empowerment of Persons with Intellectual Disabilities",
+                        link: "https://niepid.nic.in/"
+                    }
+                ],
+                outlook: "Special education growing faster than average due to increased awareness and inclusion policies. High demand for autism specialists and early intervention experts."
+            },
+            "esl-teacher": {
+                title: "ESL Teacher",
+                image: "{{ url_for('static', filename='images/esl-teacher.jpg') }}",
+                description: "ESL (English as a Second Language) teachers help non-native speakers develop English language skills. They teach reading, writing, listening and speaking through immersive methods, often working with diverse cultural backgrounds.",
+                salary: "₹3-6 LPA (India), ₹6-15+ LPA (International), Varies by country",
+                education: "Bachelor's degree + TESOL/TEFL/CELTA certification, B.Ed preferred",
+                growth: "10% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Language Acquisition Knowledge",
+                    "Cultural Sensitivity",
+                    "Lesson Planning",
+                    "Communicative Teaching Methods",
+                    "Assessment Design",
+                    "Classroom Management",
+                    "Technology Integration",
+                    "Multilingual Awareness"
+                ],
+                employers: "Language Institutes, International Schools, Universities, Online Platforms, Corporate Trainers",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's degree (English/Education preferred)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain TESOL/TEFL/CELTA certification (120+ hours)"
+                    },
+                    {
+                        stage: "Junior ESL Teacher",
+                        content: "Begin teaching with guidance (0-2 years)"
+                    },
+                    {
+                        stage: "ESL Teacher",
+                        content: "Independent teaching (3-6 years)"
+                    },
+                    {
+                        stage: "Senior ESL Teacher",
+                        content: "Curriculum development, teacher training (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "CELTA Certification",
+                        link: "https://www.cambridgeenglish.org/teaching-english/teaching-qualifications/celta/"
+                    },
+                    {
+                        type: "Course",
+                        title: "TESOL Certificate Program",
+                        link: "https://www.coursera.org/professional-certificates/tesol"
+                    },
+                    {
+                        type: "Book",
+                        title: "Learning Teaching by Jim Scrivener",
+                        link: "https://www.amazon.in/Learning-Teaching-Guide-English-Teachers/dp/0230729843"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Teaching English in India (British Council)",
+                        link: "https://www.britishcouncil.in/teach"
+                    }
+                ],
+                outlook: "ESL teaching growing faster than average globally. Strong demand in India for corporate English training and in countries with English immersion programs."
+            },
+            "education-counselor": {
+                title: "Education Counselor",
+                image: "{{ url_for('static', filename='images/education-counselor.jpg') }}",
+                description: "Education counselors guide students in academic planning, career choices, and personal development. They assess student abilities, provide career advice, help with college applications, and address learning challenges.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-25+ LPA (Senior)",
+                education: "Master's in Counseling/Psychology, B.Ed + Counseling Certification",
+                growth: "11% (faster than average)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-8 years, Senior: 9+ years",
+                skills: [
+                    "Active Listening",
+                    "Assessment Administration",
+                    "Career Guidance",
+                    "Academic Advising",
+                    "Crisis Intervention",
+                    "Workshop Facilitation",
+                    "Record Keeping",
+                    "Educational Psychology"
+                ],
+                employers: "Schools, Colleges, Universities, Private Practices, Career Centers",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete master's in counseling/psychology or B.Ed + certification"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain supervised counseling experience (1 year)"
+                    },
+                    {
+                        stage: "Junior Counselor",
+                        content: "Work under supervision (0-3 years)"
+                    },
+                    {
+                        stage: "Education Counselor",
+                        content: "Independent counseling practice (4-8 years)"
+                    },
+                    {
+                        stage: "Senior Counselor",
+                        content: "Lead counseling programs (9+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "RCI Licensed Counselor",
+                        link: "https://www.rehabcouncil.nic.in/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Career Counseling Specialization",
+                        link: "https://www.coursera.org/specializations/career-counseling"
+                    },
+                    {
+                        type: "Book",
+                        title: "Theories of Counseling and Psychotherapy",
+                        link: "https://www.amazon.in/Theories-Counseling-Psychotherapy-Systems-Strategies/dp/013265799X"
+                    },
+                    {
+                        type: "Organization",
+                        title: "National Career Service Portal",
+                        link: "https://www.ncs.gov.in/"
+                    }
+                ],
+                outlook: "Education counseling growing faster than average with increased focus on student mental health and career readiness. Demand rising in schools and colleges."
+            },
+            "principal": {
+                title: "Principal",
+                image: "{{ url_for('static', filename='images/principal.jpg') }}",
+                description: "Principals lead schools by managing staff, curriculum, and overall educational quality. They set academic goals, oversee budgets, ensure compliance with regulations, and serve as the public face of the institution.",
+                salary: "₹8-15 LPA (Small Schools), ₹15-30 LPA (Mid-size), ₹30-50+ LPA (Large/International)",
+                education: "Master's in Education Administration, B.Ed + Administrative Certification, Teaching Experience",
+                growth: "6% (average growth)",
+                experience: "Entry-level: 0-5 years, Mid-level: 6-10 years, Senior: 11+ years",
+                skills: [
+                    "Educational Leadership",
+                    "Strategic Planning",
+                    "Budget Management",
+                    "Staff Development",
+                    "Community Relations",
+                    "Policy Implementation",
+                    "Conflict Resolution",
+                    "Data-Driven Decision Making"
+                ],
+                employers: "Public/Private Schools, International Schools, Charter Schools, Educational Boards",
+                path: [
+                    {
+                        stage: "Teaching Experience",
+                        content: "5+ years of classroom teaching"
+                    },
+                    {
+                        stage: "Department Head",
+                        content: "Lead a subject department (2-3 years)"
+                    },
+                    {
+                        stage: "Assistant Principal",
+                        content: "Administrative role under principal (3-5 years)"
+                    },
+                    {
+                        stage: "Principal",
+                        content: "Lead a school (5-10 years)"
+                    },
+                    {
+                        stage: "District Administrator",
+                        content: "Oversee multiple schools (10+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "School Leadership Certification",
+                        link: "https://www.ncert.nic.in/departments/nie/dec/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Education Leadership Specialization",
+                        link: "https://www.coursera.org/specializations/education-leadership"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Principal by Michael Fullan",
+                        link: "https://www.amazon.in/Principal-Critical-Leader-Michael-Fullan/dp/1742397467"
+                    },
+                    {
+                        type: "Organization",
+                        title: "National Institute of Educational Planning and Administration",
+                        link: "https://www.niepa.ac.in/"
+                    }
+                ],
+                outlook: "Principal roles growing at average rate with steady turnover. Increasing demand for leaders with technology integration and diversity/inclusion expertise."
+            },
+            "corporate-trainer": {
+                title: "Corporate Trainer",
+                image: "{{ url_for('static', filename='images/corporate-trainer.jpg') }}",
+                description: "Corporate trainers develop and deliver professional development programs for organizations. They assess training needs, design curricula, facilitate workshops, and evaluate program effectiveness to enhance employee skills.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "Bachelor's degree + Training Certification, Industry Experience",
+                growth: "9% (average growth)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-8 years, Senior: 9+ years",
+                skills: [
+                    "Instructional Design",
+                    "Facilitation",
+                    "Needs Assessment",
+                    "Presentation Skills",
+                    "E-Learning Development",
+                    "Performance Evaluation",
+                    "Adult Learning Principles",
+                    "Industry Knowledge"
+                ],
+                employers: "Corporate L&D Departments, Consulting Firms, Training Companies, Government Agencies",
+                path: [
+                    {
+                        stage: "Industry Experience",
+                        content: "Gain expertise in specific field (2-3 years)"
+                    },
+                    {
+                        stage: "Training Certification",
+                        content: "Obtain professional training certification"
+                    },
+                    {
+                        stage: "Junior Trainer",
+                        content: "Deliver established programs (0-3 years)"
+                    },
+                    {
+                        stage: "Corporate Trainer",
+                        content: "Design and deliver training (4-8 years)"
+                    },
+                    {
+                        stage: "Training Manager",
+                        content: "Lead L&D department (9+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "ATD Certified Professional in Learning",
+                        link: "https://www.td.org/certification/cplp"
+                    },
+                    {
+                        type: "Course",
+                        title: "Instructional Design Specialization",
+                        link: "https://www.coursera.org/specializations/instructional-design"
+                    },
+                    {
+                        type: "Book",
+                        title: "Design for How People Learn by Julie Dirksen",
+                        link: "https://www.amazon.in/Design-How-People-Learn-Voices/dp/0321768434"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Society for Training & Development",
+                        link: "https://www.istd.co.in/"
+                    }
+                ],
+                outlook: "Corporate training growing at average rate with increasing focus on upskilling. Demand rising for digital skills trainers and leadership development specialists."
+            },
+            "online-instructor": {
+                title: "Online Instructor",
+                image: "{{ url_for('static', filename='images/online-instructor.jpg') }}",
+                description: "Online instructors teach courses through digital platforms and virtual learning environments. They develop e-learning content, facilitate discussions, assess student work, and provide feedback in online formats.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-30+ LPA (Senior/Content Creators)",
+                education: "Bachelor's degree + Subject Expertise, Online Teaching Certification",
+                growth: "15% (much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Learning Management Systems",
+                    "Content Creation",
+                    "Asynchronous Communication",
+                    "Engagement Strategies",
+                    "Assessment Design",
+                    "Multimedia Tools",
+                    "Time Management",
+                    "Technical Troubleshooting"
+                ],
+                employers: "Online Universities, MOOC Platforms, EdTech Companies, Corporate Training",
+                path: [
+                    {
+                        stage: "Subject Expertise",
+                        content: "Develop deep knowledge in teaching area"
+                    },
+                    {
+                        stage: "Technology Skills",
+                        content: "Learn LMS platforms and online tools"
+                    },
+                    {
+                        stage: "Junior Instructor",
+                        content: "Teach established courses (0-2 years)"
+                    },
+                    {
+                        stage: "Online Instructor",
+                        content: "Develop and teach courses (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Instructor",
+                        content: "Lead online programs, train faculty (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Online Teaching Certification",
+                        link: "https://www.coursera.org/learn/online-teaching"
+                    },
+                    {
+                        type: "Course",
+                        title: "e-Learning Ecologies",
+                        link: "https://www.coursera.org/learn/elearning"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Online Teaching Survival Guide",
+                        link: "https://www.amazon.in/Online-Teaching-Survival-Guide-Community/dp/1119147688"
+                    },
+                    {
+                        type: "Platform",
+                        title: "SWAYAM - Indian MOOC Platform",
+                        link: "https://swayam.gov.in/"
+                    }
+                ],
+                outlook: "Online instruction growing much faster than average with EdTech expansion. High demand for STEM instructors and course designers."
+            },
+            "curriculum-developer": {
+                title: "Curriculum Developer",
+                image: "{{ url_for('static', filename='images/curriculum-developer.jpg') }}",
+                description: "Curriculum developers design educational programs, learning materials, and assessment tools. They research educational standards, create instructional content, and evaluate program effectiveness.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-35+ LPA (Senior)",
+                education: "Master's in Education/Curriculum Design, Teaching Experience",
+                growth: "10% (faster than average)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-8 years, Senior: 9+ years",
+                skills: [
+                    "Instructional Design",
+                    "Educational Standards",
+                    "Assessment Development",
+                    "Research & Analysis",
+                    "Content Writing",
+                    "Project Management",
+                    "Technology Integration",
+                    "Collaboration"
+                ],
+                employers: "Publishers, EdTech Companies, School Districts, Government Agencies, NGOs",
+                path: [
+                    {
+                        stage: "Teaching Experience",
+                        content: "Classroom teaching background (3+ years)"
+                    },
+                    {
+                        stage: "Graduate Education",
+                        content: "Complete master's in curriculum/instruction"
+                    },
+                    {
+                        stage: "Junior Developer",
+                        content: "Assist with curriculum projects (0-3 years)"
+                    },
+                    {
+                        stage: "Curriculum Developer",
+                        content: "Lead content development (4-8 years)"
+                    },
+                    {
+                        stage: "Senior Developer",
+                        content: "Direct curriculum strategy (9+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Curriculum Design Certification",
+                        link: "https://www.ibe.unesco.org/en/training"
+                    },
+                    {
+                        type: "Course",
+                        title: "Curriculum Design for Higher Education",
+                        link: "https://www.coursera.org/learn/curriculum-design"
+                    },
+                    {
+                        type: "Book",
+                        title: "Understanding by Design by Wiggins & McTighe",
+                        link: "https://www.amazon.in/Understanding-Design-Expanded-Grant-Wiggins/dp/1416600353"
+                    },
+                    {
+                        type: "Organization",
+                        title: "National Council of Educational Research and Training",
+                        link: "https://ncert.nic.in/"
+                    }
+                ],
+                outlook: "Curriculum development growing faster than average with educational reforms and EdTech expansion. Demand rising for STEM curriculum specialists."
+            },
+            "librarian": {
+                title: "Librarian",
+                image: "{{ url_for('static', filename='images/librarian.jpg') }}",
+                description: "Librarians manage information resources and support research in educational settings. They organize collections, assist patrons, teach information literacy, and oversee library operations.",
+                salary: "₹3-6 LPA (Entry Level), ₹6-12 LPA (Mid Level), ₹12-20+ LPA (Senior)",
+                education: "Master's in Library Science (MLIS), Bachelor's + Library Certification",
+                growth: "5% (average growth)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-8 years, Senior: 9+ years",
+                skills: [
+                    "Cataloging & Classification",
+                    "Information Retrieval",
+                    "Research Assistance",
+                    "Collection Development",
+                    "Digital Resource Management",
+                    "Information Literacy Instruction",
+                    "Community Engagement",
+                    "Technology Integration"
+                ],
+                employers: "Schools, Colleges, Universities, Public Libraries, Research Institutions",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's degree + Master's in Library Science (MLIS)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain state/national library certification if required"
+                    },
+                    {
+                        stage: "Junior Librarian",
+                        content: "Assist with library operations (0-3 years)"
+                    },
+                    {
+                        stage: "Librarian",
+                        content: "Manage library services (4-8 years)"
+                    },
+                    {
+                        stage: "Senior Librarian",
+                        content: "Lead library systems, digital transformation (9+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Indian Library Association Certification",
+                        link: "https://www.ilaindia.net/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Digital Libraries Specialization",
+                        link: "https://www.coursera.org/specializations/digital-libraries"
+                    },
+                    {
+                        type: "Book",
+                        title: "Introduction to Modern Library Science",
+                        link: "https://www.amazon.in/Introduction-Modern-Library-Science-Satija/dp/8180521583"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Raja Rammohun Roy Library Foundation",
+                        link: "https://rrrlf.nic.in/"
+                    }
+                ],
+                outlook: "Librarian roles growing at average rate with shift to digital resources. Increasing demand for digital archivists and information specialists."
+            }
+        };
+
+        // Load career data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerKey = urlParams.get('career');
+
+        if (careerKey && eduCareerData[careerKey]) {
+            const career = eduCareerData[careerKey];
+            
+            // Set basic information
+            document.title = `${career.title} | CareerHub`;
+            document.getElementById("career-title").textContent = career.title;
+            document.getElementById("career-image").src = career.image;
+            document.getElementById("career-image").alt = career.title;
+            document.getElementById("career-description").textContent = career.description;
+            document.getElementById("career-salary").textContent = career.salary;
+            document.getElementById("career-education").textContent = career.education;
+            document.getElementById("career-growth").textContent = career.growth;
+            document.getElementById("career-experience").textContent = career.experience;
+            document.getElementById("career-employers").textContent = career.employers;
+            
+            // Populate skills
+            const skillsContainer = document.getElementById("skills-container");
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement("div");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Populate career path
+            const careerPath = document.getElementById("career-path");
+            career.path.forEach((stage, index) => {
+                const pathItem = document.createElement("div");
+                pathItem.className = "path-item";
+                
+                const pathContent = document.createElement("div");
+                pathContent.className = "path-content";
+                
+                const stageTitle = document.createElement("h4");
+                stageTitle.textContent = `${index + 1}. ${stage.stage}`;
+                
+                const stageDesc = document.createElement("p");
+                stageDesc.textContent = stage.content;
+                
+                pathContent.appendChild(stageTitle);
+                pathContent.appendChild(stageDesc);
+                pathItem.appendChild(pathContent);
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Populate resources
+            const resourcesContainer = document.getElementById("resources-container");
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement("div");
+                resourceCard.className = "resource-card";
+                
+                const resourceTitle = document.createElement("h4");
+                resourceTitle.innerHTML = `<i class="fas ${getResourceIcon(resource.type)}"></i> ${resource.type}: ${resource.title}`;
+                
+                const resourceLink = document.createElement("a");
+                resourceLink.href = resource.link;
+                resourceLink.target = "_blank";
+                resourceLink.textContent = "Explore Resource →";
+                
+                resourceCard.appendChild(resourceTitle);
+                resourceCard.appendChild(resourceLink);
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            const jobOutlook = document.getElementById("job-outlook");
+            jobOutlook.innerHTML = `<h3><i class="fas fa-chart-line"></i> Market Outlook</h3><p>${career.outlook}</p>`;
+            
+        } else {
+            document.querySelector(".career-container").innerHTML = `
+                <div style="text-align: center; padding: 5rem 0;">
+                    <h2 style="color: var(--education); margin-bottom: 1rem;">Education Career Not Found</h2>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">The requested education career path could not be found.</p>
+                    <button class="cta-btn" onclick="window.location.href='/education'">Browse Education Careers</button>
+                </div>
+            `;
+        }
+
+        function getResourceIcon(type) {
+            switch(type.toLowerCase()) {
+                case 'course': return 'fa-graduation-cap';
+                case 'book': return 'fa-book';
+                case 'platform': return 'fa-laptop-code';
+                case 'certification': return 'fa-certificate';
+                case 'documentation': return 'fa-file-alt';
+                case 'community': return 'fa-users';
+                case 'tool': return 'fa-tools';
+                case 'blog': return 'fa-blog';
+                case 'exam': return 'fa-file-signature';
+                case 'organization': return 'fa-university';
+                default: return 'fa-link';
+            }
+        }
+    </script>
+</body>
+</html>

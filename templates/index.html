@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerHub | Professional Career Guidance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+            --card1: #ec4899;
+            --card2: #8b5cf6;
+            --card3: #6366f1;
+            --card4: #10b981;
+            --card5: #f59e0b;
+            --card6: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            padding: 12rem 6% 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(37, 99, 235, 0.1));
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            position: relative;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        /* Career Hub Section */
+        .career-hub {
+            padding: 6rem 6%;
+            position: relative;
+        }
+
+        .career-hub::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../static/images/pattern-dark.svg') center/cover;
+            opacity: 0.03;
+            z-index: -1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hub-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hub-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(37, 99, 235, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .hub-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hub-card:hover::before {
+            opacity: 1;
+        }
+
+        .hub-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hub-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hub-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Category Colors */
+        .hub-card:nth-child(6n+1) { border-color: var(--card1); }
+        .hub-card:nth-child(6n+2) { border-color: var(--card2); }
+        .hub-card:nth-child(6n+3) { border-color: var(--card3); }
+        .hub-card:nth-child(6n+4) { border-color: var(--card4); }
+        .hub-card:nth-child(6n+5) { border-color: var(--card5); }
+        .hub-card:nth-child(6n+6) { border-color: var(--card6); }
+
+        .hub-card:nth-child(6n+1):hover { box-shadow: 0 15px 30px rgba(236, 72, 153, 0.2); }
+        .hub-card:nth-child(6n+2):hover { box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2); }
+        .hub-card:nth-child(6n+3):hover { box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2); }
+        .hub-card:nth-child(6n+4):hover { box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2); }
+        .hub-card:nth-child(6n+5):hover { box-shadow: 0 15px 30px rgba(245, 158, 11, 0.2); }
+        .hub-card:nth-child(6n+6):hover { box-shadow: 0 15px 30px rgba(239, 68, 68, 0.2); }
+
+        /* Quiz Section */
+        .quiz {
+            padding: 6rem 6%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(139, 92, 246, 0.1));
+            position: relative;
+        }
+
+        .quiz-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+
+        .quiz-step {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+
+        .quiz-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-step i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .quiz-step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-step p {
+            color: #94a3b8;
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 6%;
+            position: relative;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .contact-info {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(10px);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-form {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+            outline: none;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 6%;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.8);
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 6%;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            text-align: center;
+            animation: modalFadeIn 0.3s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--light);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+
+        .login-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .login-options button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 1rem 0;
+            position: relative;
+            color: #94a3b8;
+        }
+
+        .or-divider::before,
+        .or-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .or-divider::before {
+            left: 0;
+        }
+
+        .or-divider::after {
+            right: 0;
+        }
+
+        .manual-login,
+        .manual-signup {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .manual-login input,
+        .manual-signup input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.5rem;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .manual-login input:focus,
+        .manual-signup input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 8rem 5% 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="window.location.href='/'">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div id="authButtons">
+            <button class="cta-btn" onclick="openModal()">Get Started</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transform Your Career Journey with AI Guidance</h1>
+            <p>Discover your perfect career path using our advanced AI assessment and personalized counseling services.</p>
+            <button class="cta-btn" onclick="handleHeroButton()">Take Free Assessment</button>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="section-header">
+            <h2>Why Choose CareerHub?</h2>
+            <p>Join thousands of users who have found their ideal career path with our platform</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Happy Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Career Experts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Support</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="career-hub" id="career-hub">
+        <div class="section-header">
+            <h2>Our Career Services</h2>
+            <p>Comprehensive tools and resources to guide your career journey</p>
+        </div>
+        
+        <div class="hub-cards">
+            <div class="hub-card">
+                <i class="fas fa-road"></i>
+                <h3>Career Planning</h3>
+                <p>Create a personalized career roadmap tailored to your skills and aspirations.</p>
+                <button class="cta-btn" style="width: 100%; padding: 0.6rem;">Learn More</button>
+            </div>
+            
+            <div class="hub-card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Skill Development</h3>
+                <p>Identify skill gaps and access resources to enhance your professional capabilities.</p>
+                <button class="cta-btn" style="width: 100%; padding: 0.6rem;">Learn More</button>
+            </div>
+            
+            <div class="hub-card">
+                <i class="fas fa-briefcase"></i>
+                <h3>Job Matching</h3>
+                <p>Get matched with ideal job opportunities based on your profile and preferences.</p>
+                <button class="cta-btn" style="width: 100%; padding: 0.6rem;">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="quiz" id="quiz">
+        <div class="section-header">
+            <h2>Take Our Career Quiz</h2>
+            <p>Discover your ideal career path in just a few minutes</p>
+        </div>
+        
+        <div class="quiz-steps">
+            <div class="quiz-step">
+                <i class="fas fa-question-circle"></i>
+                <h3>Step 1: Answer Questions</h3>
+                <p>Complete our quick assessment to understand your career preferences.</p>
+            </div>
+            <div class="quiz-step">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Step 2: Get Insights</h3>
+                <p>Receive detailed analysis of your skills and career potential.</p>
+            </div>
+            <div class="quiz-step">
+                <i class="fas fa-road"></i>
+                <h3>Step 3: Explore Paths</h3>
+                <p>Discover career options tailored to your unique profile.</p>
+            </div>
+        </div>
+        
+        <button class="cta-btn" style="margin-top: 2rem;" onclick="handleHeroButton()">Start Quiz Now</button>
+    </section>
+    
+    <section class="contact" id="contact">
+        <div class="section-header">
+            <h2>Contact Us</h2>
+            <p>Have questions? Get in touch with our career experts</p>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Let's Connect</h3>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Visit Us</h4>
+                            <p>123 Career Street<br>Tech City, IN 123456</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>+91 98765 43210<br>Mon-Fri, 10AM - 7PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email Us</h4>
+                            <p>contact@careerhub.com<br>support@careerhub.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://x.com/home" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/_kaifz/?igsh=bW13a28ycmZxdGo5#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+    
+            <form class="contact-form" id="contactForm">
+                <h3>Send a Message</h3>
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit" class="cta-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/explore">Explore Careers</a>
+            <a href="/quiz">Career Quiz</a>
+            <a href="#">About Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#contact">Contact</a>
+        </div>
+        
+        <p class="copyright">&copy; 2025 CareerHub. All rights reserved.</p>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            
+            <!-- Login View -->
+            <div id="loginView">
+                <h2>Welcome Back</h2>
+                <div class="login-options">
+                    <button class="cta-btn" onclick="googleLogin()">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <div class="or-divider">OR</div>
+                    <form class="manual-login" id="loginForm">
+                        <input type="email" name="email" placeholder="Email Address" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <button type="submit" class="cta-btn">Login</button>
+                    </form>
+                    <p>Don't have an account? <a href="#" onclick="showView('signup')">Sign up</a></p>
+                </div>
+            </div>
+            
+            <!-- Signup View -->
+            <div id="signupView" style="display:none">
+                <h2>Create Account</h2>
+                <form class="manual-signup" id="signupForm">
+                    <input type="text" name="fullName" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                    <input type="password" name="password" placeholder="Create Password" required>
+                    <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+                    <button type="submit" class="cta-btn">Sign Up</button>
+                </form>
+                <p>Already have an account? <a href="#" onclick="showView('login')">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== SCROLL ANIMATION =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.hub-card, .quiz-step, .section-header, .stat-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ===== AUTH SYSTEM =====
+        const authModal = document.getElementById('authModal');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const authButtonsContainer = document.getElementById('authButtons');
+
+        // Enhancement 1: Token Expiry Handling
+        async function updateAuthUI() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                authButtonsContainer.innerHTML = '<button class="cta-btn" onclick="openModal()">Get Started</button>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/dashboard', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error();
+
+                const data = await response.json();
+                const userInitial = data.user.email.charAt(0).toUpperCase();
+                localStorage.setItem('userInitial', userInitial);
+
+                authButtonsContainer.innerHTML = `
+                    <div class="user-dropdown">
+                        <div class="user-btn">
+                            <div class="user-avatar">${userInitial}</div>
+                        </div>
+                        <div class="dropdown-content">
+                            <a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                            <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+                            <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                logout(); // Remove token if expired
+            }
+        }
+
+        // Modal Controls
+        function showView(view) {
+            document.getElementById('loginView').style.display = view === 'login' ? 'block' : 'none';
+            document.getElementById('signupView').style.display = view === 'signup' ? 'block' : 'none';
+            
+            // Clear any existing error messages
+            const errorMsg = document.querySelector('.error-message');
+            if (errorMsg) errorMsg.remove();
+        }
+
+        function openModal(view = 'login') {
+            authModal.style.display = 'flex';
+            showView(view);
+        }
+
+        function closeModal() {
+            authModal.style.display = 'none';
+            loginForm.reset();
+            signupForm.reset();
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                closeModal();
+            }
+        });
+
+        // Enhancement 3: Redirect to Intended Page After Login
+        function handleHeroButton() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                window.location.href = '/quiz';
+            } else {
+                sessionStorage.setItem('redirectAfterLogin', '/quiz');
+                openModal();
+            }
+        }
+
+        // Logout Function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userInitial');
+            updateAuthUI();
+            showAlert('Logged out successfully', 'info');
+        }
+
+        // Social Login Placeholder
+        function googleLogin() {
+            showAlert('Google login would be implemented here', 'info');
+        }
+
+        // UI Utilities
+        function showAlert(message, type) {
+            const alertBox = document.createElement('div');
+            alertBox.className = `alert ${type}`;
+            alertBox.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                ${message}
+            `;
+            document.body.appendChild(alertBox);
+
+            setTimeout(() => {
+                alertBox.classList.add('fade-out');
+                setTimeout(() => alertBox.remove(), 300);
+            }, 3000);
+        }
+
+        function showError(message) {
+            // Remove existing error message
+            const existingError = document.querySelector('.error-message');
+            if (existingError) existingError.remove();
+
+            const errorElement = document.createElement('div');
+            errorElement.className = 'error-message';
+            errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            
+            const currentView = document.activeElement.closest('form');
+            currentView.insertBefore(errorElement, currentView.lastElementChild);
+        }
+
+        // Form Handlers
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: data.email,
+                        password: data.password
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'Login failed');
+                }
+
+                // Store token and user initial
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('userInitial', data.email.charAt(0).toUpperCase());
+                
+                showAlert('Login successful!', 'success');
+                closeModal();
+                
+                // Enhancement 3: Redirect after login
+                const redirectPath = sessionStorage.getItem('redirectAfterLogin');
+                sessionStorage.removeItem('redirectAfterLogin');
+                
+                if (redirectPath) {
+                    window.location.href = redirectPath;
+                } else {
+                    updateAuthUI();
+                }
+            } catch (error) {
+                showError(error.message);
+                console.error('Login error:', error);
+            }
+        });
+
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            // Client-side validation
+            if (data.password !== data.confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        full_name: data.fullName,
+                        email: data.email,
+                        password: data.password
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'Registration failed');
+                }
+
+                showAlert('Account created successfully! Please login.', 'success');
+                showView('login');
+            } catch (error) {
+                showError(error.message);
+                console.error('Registration error:', error);
+            }
+        });
+
+        // Enhancement 2: Contact Form Restriction for Logged-in Users
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                showAlert("Please log in to send a message", "info");
+                return;
+            }
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || 'Failed to send message');
+                }
+                
+                showAlert('Message sent successfully! We will get back to you soon.', 'success');
+                e.target.reset();
+            } catch (error) {
+                showAlert(error.message || 'Failed to send message. Please try again.', 'error');
+                console.error('Contact form error:', error);
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+        });
+    </script>
+</body>
+</html>

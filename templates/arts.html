@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arts & Design Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --creative: #a855f7;
+            --artistic: #e879f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/arts-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(168, 85, 247, 0.2), rgba(232, 121, 249, 0.2));
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--creative), var(--artistic));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .field-intro {
+            padding: 3rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-size: 2rem;
+            color: var(--creative);
+            margin-bottom: 1.5rem;
+        }
+
+        .field-intro h3 {
+            font-size: 1.5rem;
+            color: var(--artistic);
+            margin: 2rem 0 1rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: rgba(168, 85, 247, 0.1);
+            border-left: 4px solid var(--creative);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul.feature-list li::before {
+            content: '🎨';
+            position: absolute;
+            left: 0;
+        }
+
+        .career-cards-container {
+            padding: 2rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.2);
+            border-color: var(--creative);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .career-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .career-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--artistic);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--creative);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .learn-more:hover {
+            background: var(--creative);
+            color: var(--light);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 6%;
+            margin: 3rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--creative);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--creative);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-palette"></i> Arts & Design Careers</h1>
+        <p>Where creativity meets innovation - explore careers that shape culture and visual expression</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About the Arts Field</h2>
+        <p>The arts encompass diverse creative disciplines that communicate ideas, emotions, and cultural perspectives through visual, tactile, and digital mediums. From traditional fine arts to cutting-edge digital design, this field offers endless opportunities for creative expression and professional growth.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Creative Spectrum:</strong> Fine arts, digital media, commercial design, fashion, and multimedia. Careers range from independent studio artists to creative directors at global brands, with growing opportunities in digital spaces like NFTs and virtual reality.</p>
+        </div>
+
+        <h3>Who Should Pursue Arts?</h3>
+        <p>This field is perfect for individuals who:</p>
+        <ul class="feature-list">
+            <li>Have strong visual imagination and creative problem-solving skills</li>
+            <li>Enjoy expressing ideas through visual/tactile mediums</li>
+            <li>Are passionate about cultural expression and aesthetic communication</li>
+            <li>Thrive in both independent and collaborative creative environments</li>
+            <li>Want to shape visual culture and consumer experiences</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+        <p>The Bureau of Labor Statistics projects varied growth across art careers:</p>
+        <ul class="feature-list">
+            <li><strong>Digital designers:</strong> +23% growth by 2030</li>
+            <li><strong>Multimedia artists:</strong> +16% growth</li>
+            <li><strong>Art directors:</strong> +11% growth</li>
+            <li><strong>Fine artists:</strong> +6% growth</li>
+        </ul>
+        <p>The digital transformation has created new opportunities in UX/UI design, motion graphics, and immersive media, while traditional art forms continue to evolve with contemporary markets.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Fine Arts -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/painter.jpg') }}" alt="Painter">
+            <div class="card-content">
+                <h3><i class="fas fa-brush"></i> Painter</h3>
+                <p>Create visual art using various painting techniques and mediums, from oils to digital painting.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$30k-$100k+</span>
+                    <span class="stat-pill">Portfolio-based</span>
+                    <span class="stat-pill">BFA common</span>
+                </div>
+                <a href="/arts-career?career=painter" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/sculptor.jpg') }}" alt="Sculptor">
+            <div class="card-content">
+                <h3><i class="fas fa-monument"></i> Sculptor</h3>
+                <p>Create three-dimensional artworks using materials like clay, metal, stone, or mixed media.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$35k-$90k</span>
+                    <span class="stat-pill">Studio/Commission</span>
+                    <span class="stat-pill">MFA beneficial</span>
+                </div>
+                <a href="/arts-career?career=sculptor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Design Fields -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/graphic.jpg') }}" alt="Graphic Designer">
+            <div class="card-content">
+                <h3><i class="fas fa-object-group"></i> Graphic Designer</h3>
+                <p>Create visual concepts to communicate ideas for branding, advertising, and digital media.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$85k</span>
+                    <span class="stat-pill">High Demand</span>
+                    <span class="stat-pill">BFA/BA</span>
+                </div>
+                <a href="/arts-career?career=graphic-designer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/illustrator.jpg') }}" alt="Illustrator">
+            <div class="card-content">
+                <h3><i class="fas fa-pencil-alt"></i> Illustrator</h3>
+                <p>Create original images for books, magazines, products, and digital media.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$120k</span>
+                    <span class="stat-pill">Freelance common</span>
+                    <span class="stat-pill">Portfolio key</span>
+                </div>
+                <a href="/arts-career?career=illustrator" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Digital Arts -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/multimedia.jpg') }}" alt="Multimedia Artist">
+            <div class="card-content">
+                <h3><i class="fas fa-laptop-code"></i> Multimedia Artist</h3>
+                <p>Create digital art, animations, and interactive content for various media platforms.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$110k</span>
+                    <span class="stat-pill">+16% Growth</span>
+                    <span class="stat-pill">Tech skills</span>
+                </div>
+                <a href="/arts-career?career=multimedia-artist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/art-director.jpg') }}" alt="Art Director">
+            <div class="card-content">
+                <h3><i class="fas fa-eye"></i> Art Director</h3>
+                <p>Lead visual style and creative vision for publications, products, or campaigns.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$70k-$150k+</span>
+                    <span class="stat-pill">Leadership</span>
+                    <span class="stat-pill">5+ yrs exp</span>
+                </div>
+                <a href="/arts-career?career=art-director" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Applied Arts -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/fashion.jpg') }}" alt="Fashion Designer">
+            <div class="card-content">
+                <h3><i class="fas fa-tshirt"></i> Fashion Designer</h3>
+                <p>Create original clothing, accessories, and footwear designs for production.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$130k</span>
+                    <span class="stat-pill">Global Industry</span>
+                    <span class="stat-pill">BFA in Fashion</span>
+                </div>
+                <a href="/arts-career?career=fashion-designer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/textile.jpg') }}" alt="Textile Designer">
+            <div class="card-content">
+                <h3><i class="fas fa-border-style"></i> Textile Designer</h3>
+                <p>Create patterns and designs for fabrics used in fashion, furnishings, and products.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$95k</span>
+                    <span class="stat-pill">Manufacturing</span>
+                    <span class="stat-pill">Technical skills</span>
+                </div>
+                <a href="/arts-career?career=textile-designer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Photography -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/photographer.jpg') }}" alt="Photographer">
+            <div class="card-content">
+                <h3><i class="fas fa-camera"></i> Photographer</h3>
+                <p>Capture and edit images for commercial, artistic, or journalistic purposes.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$35k-$100k+</span>
+                    <span class="stat-pill">Specialized niches</span>
+                    <span class="stat-pill">Portfolio vital</span>
+                </div>
+                <a href="/arts-career?career=photographer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Emerging Fields -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/ux-designer.jpg') }}" alt="UX/UI Designer">
+            <div class="card-content">
+                <h3><i class="fas fa-mobile-alt"></i> UX/UI Designer</h3>
+                <p>Design user experiences and interfaces for digital products and services.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$65k-$140k</span>
+                    <span class="stat-pill">+22% Growth</span>
+                    <span class="stat-pill">Tech crossover</span>
+                </div>
+                <a href="/arts-career?career=ux-designer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Arts Career FAQs</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>Do I need a formal degree to succeed in arts careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>While formal education can be valuable, the arts field is unique:</p>
+                    <ul>
+                        <li><strong>Commercial arts:</strong> Degrees often expected (graphic design, UX/UI)</li>
+                        <li><strong>Fine arts:</strong> Portfolio typically outweighs formal education</li>
+                        <li><strong>Specialized fields:</strong> Certifications may be required (art therapy, conservation)</li>
+                        <li><strong>Emerging media:</strong> Often self-taught or bootcamp-trained</li>
+                    </ul>
+                    <p>Many artists combine formal training with continuous skill development.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How has digital technology changed art careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>The digital revolution has transformed the field:</p>
+                    <ul>
+                        <li><strong>New mediums:</strong> Digital painting, 3D modeling, AR/VR art</li>
+                        <li><strong>Distribution:</strong> NFTs, online galleries, social media platforms</li>
+                        <li><strong>Tools:</strong> AI-assisted creation, digital sculpting, procedural generation</li>
+                        <li><strong>Markets:</strong> Global freelance opportunities, digital collectibles</li>
+                    </ul>
+                    <p>Traditional skills remain valuable but often integrate with digital tools.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What's the income potential in arts careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Earnings vary dramatically by specialization and career path:</p>
+                    <ul>
+                        <li><strong>Commercial artists:</strong> $45k-$120k (graphic designers, art directors)</li>
+                        <li><strong>Fine artists:</strong> $20k-$200k+ (highly variable, gallery representation)</li>
+                        <li><strong>Digital artists:</strong> $50k-$150k (animation, game design)</li>
+                        <li><strong>Freelancers:</strong> Project-based, often $30-$150/hr</li>
+                        <li><strong>Top-tier:</strong> Celebrity artists/designers can earn millions</li>
+                    </ul>
+                    <p>Many artists combine multiple income streams (teaching, commissions, licensing).</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How do artists build successful careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Key strategies for sustainable art careers:</p>
+                    <ul>
+                        <li><strong>Portfolio development:</strong> Quality work samples are essential</li>
+                        <li><strong>Networking:</strong> Gallery shows, conventions, online communities</li>
+                        <li><strong>Business skills:</strong> Marketing, contracts, financial management</li>
+                        <li><strong>Specialization:</strong> Developing a recognizable style or niche</li>
+                        <li><strong>Adaptability:</strong> Learning new tools and market trends</li>
+                        <li><strong>Online presence:</strong> Professional website and social media</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq").forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

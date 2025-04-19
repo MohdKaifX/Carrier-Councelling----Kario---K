@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Quiz | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+            --gray: #94a3b8;
+            --darker: #020617;
+            --card1: #ec4899;
+            --card2: #8b5cf6;
+            --card3: #6366f1;
+            --card4: #10b981;
+            --card5: #f59e0b;
+            --card6: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: url('../static/images/pattern-dark.svg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Header Styles (consistent with explore.html) */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* User dropdown styles - consistent with profile.html */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content a {
+            color: var(--light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+        }
+
+        .dropdown-content a i {
+            margin-right: 8px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .user-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8rem 6% 4rem;
+        }
+
+        /* Hero Section for Quiz */
+        .quiz-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .quiz-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quiz-hero p {
+            color: var(--gray);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Quiz Section - Modern Card Design */
+        .quiz-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(37, 99, 235, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .quiz-section:hover::before {
+            opacity: 1;
+        }
+
+        .quiz-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quiz-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .quiz-section h2 i {
+            font-size: 1.5rem;
+        }
+
+        #question {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        /* Options Styling - Modern Cards */
+        #options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        #options button {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #options button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            background: rgba(37, 99, 235, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        #options button.selected {
+            background: rgba(37, 99, 235, 0.3);
+            border-color: var(--primary);
+            color: var(--light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        #options button.selected i {
+            color: var(--accent);
+        }
+
+        #options button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        #options button i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Text Input for Open Questions */
+        #open-response {
+            width: 100%;
+            min-height: 120px;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #open-response:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Navigation Buttons - Modern Style */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .nav-buttons button {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #prev-btn {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #prev-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        #next-btn, #submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+        }
+
+        #next-btn:hover:not(:disabled), #submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Improved Submit Button */
+        #submit-btn {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, var(--card4), var(--card2));
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        #submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, var(--card4), var(--card3));
+        }
+
+        #submit-btn i {
+            font-size: 1.3rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Chat Section - Modern Design */
+        .chat-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            margin-top: 2rem;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(37, 99, 235, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .chat-section:hover::before {
+            opacity: 1;
+        }
+
+        .chat-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            padding-right: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Custom Scrollbar */
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 1.25rem 1.5rem;
+            border-radius: 1.25rem;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        .user-message::before {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .ai-message {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        .ai-message::before {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        #chat-message {
+            flex: 1;
+            padding: 1.1rem 1.5rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #chat-message:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+        }
+
+        #send-btn {
+            padding: 1.1rem 1.75rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Loading States */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Login Prompt */
+        .login-prompt {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-prompt h2 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .login-prompt p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        .login-prompt a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-prompt a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 6rem 4% 3rem;
+            }
+
+            .quiz-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .quiz-section, .chat-section {
+                padding: 1.75rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .quiz-section h2 {
+                font-size: 1.5rem;
+            }
+
+            #question {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="window.location.href='/'">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">    
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz" class="active">Career Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div id="authButtons">
+            <button class="cta-btn" onclick="openModal()">Get Started</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="quiz-hero">
+            <h1>Career Profiling Quiz</h1>
+            <p>Discover your ideal career path with our personalized assessment</p>
+        </div>
+        
+        <div class="quiz-section" id="quiz-section">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <h2><i class="fas fa-brain"></i> Question <span id="question-number">1</span></h2>
+            <p id="question">Loading...</p>
+            <div id="options"></div>
+            <div class="nav-buttons">
+                <button id="prev-btn" onclick="prevQuestion()" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" disabled>
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <button id="submit-btn" onclick="startCareerChat()" class="hidden">
+                <i class="fas fa-comments"></i> Start Counseling Session
+            </button>
+        </div>
+        
+        <div class="chat-section" id="chat-section">
+            <h2><i class="fas fa-comments"></i> Career Counseling</h2>
+            <div class="chat-container" id="chat-container">
+                <div class="message ai-message">Hello! I'm your AI Career Counselor. Based on your quiz answers, I'll help you explore career options and create personalized roadmaps.</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-message" placeholder="Ask me anything about careers, skills, or roadmaps...">
+                <button id="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced questions with different types
+        const questions = [
+            { 
+                question: "What is your educational background?", 
+                type: "open",
+                placeholder: "e.g., High school, Computer Science degree, self-taught..."
+            },
+            { 
+                question: "What are your top 3 skills or strengths?", 
+                type: "open",
+                placeholder: "e.g., Programming, Communication, Problem-solving..."
+            },
+            { 
+                question: "What type of work environment do you prefer?", 
+                options: ["Office", "Remote", "Hybrid", "Outdoor", "Flexible"] 
+            },
+            { 
+                question: "Which of these activities energize you most?", 
+                type: "multi",
+                options: ["Solving technical problems", "Helping people", "Creating art/designs", 
+                          "Analyzing data", "Managing projects", "Teaching others"] 
+            },
+            { 
+                question: "What are your primary career goals?", 
+                type: "open",
+                placeholder: "e.g., High salary, work-life balance, creative fulfillment..."
+            },
+            { 
+                question: "How many years of experience do you have in your field?", 
+                options: ["None (student)", "1-2 years", "3-5 years", "5+ years"] 
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userResponses = {};
+        let chatHistory = [];
+        let isChatActive = false;
+
+        // Initialize the quiz
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show quiz section with animation
+            setTimeout(() => {
+                document.getElementById('quiz-section').classList.add('visible');
+            }, 100);
+            
+            loadQuestion();
+            updateProgressBar();
+            
+            // Allow pressing Enter in chat input
+            document.getElementById('chat-message').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Check auth state and update UI
+            updateAuthUI();
+        });
+
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('question-number').textContent = currentQuestionIndex + 1;
+        }
+
+        async function verifyToken(token) {
+            try {
+                const response = await fetch('/api/auth/dashboard', {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    return { valid: true, user: data.user };
+                }
+                return { valid: false };
+            } catch (error) {
+                console.error('Token verification error:', error);
+                return { valid: false };
+            }
+        }
+
+        function createUserDropdown(user) {
+            const userInitial = user.email ? user.email.charAt(0).toUpperCase() : 'U';
+            
+            const dropdownHTML = `
+                <div class="user-dropdown">
+                    <div class="user-btn">
+                        <div class="user-avatar">${userInitial}</div>
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="profile"><i class="fas fa-user"></i> Profile</a>
+                        <a href="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('authButtons').innerHTML = dropdownHTML;
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userInitial');
+            updateAuthUI();
+            window.location.href = '/';
+        }
+
+        async function updateAuthUI() {
+            const token = localStorage.getItem('token');
+            const authButtons = document.getElementById('authButtons');
+            
+            if (token) {
+                try {
+                    const verification = await verifyToken(token);
+                    if (verification.valid) {
+                        createUserDropdown(verification.user);
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error verifying token:', error);
+                }
+                // If token is invalid, remove it
+                localStorage.removeItem('token');
+            }
+            
+            // Default to login button
+            authButtons.innerHTML = '<button class="cta-btn" onclick="openModal()">Get Started</button>';
+        }
+
+        function openModal() {
+            window.parent.postMessage({ action: 'openAuthModal' }, '*');
+        }
+
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert ${type}`;
+            alert.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+                ${message}
+            `;
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.classList.add('fade-out');
+                setTimeout(() => alert.remove(), 300);
+            }, 3000);
+        }
+
+        function loadQuestion() {
+            const questionEl = document.getElementById("question");
+            const optionsEl = document.getElementById("options");
+            const nextBtn = document.getElementById("next-btn");
+            const prevBtn = document.getElementById("prev-btn");
+            const submitBtn = document.getElementById("submit-btn");
+
+            questionEl.textContent = questions[currentQuestionIndex].question;
+            optionsEl.innerHTML = "";
+            
+            // Handle different question types
+            const currentQuestion = questions[currentQuestionIndex];
+            
+            if (currentQuestion.type === "open") {
+                // Create text input for open-ended questions
+                const input = document.createElement("textarea");
+                input.id = "open-response";
+                input.placeholder = currentQuestion.placeholder || "Please enter your response...";
+                
+                // Load previous response if exists
+                if (userResponses[currentQuestionIndex]) {
+                    input.value = userResponses[currentQuestionIndex];
+                }
+                
+                optionsEl.appendChild(input);
+                
+                // Validate open-ended response
+                input.addEventListener('input', () => {
+                    nextBtn.disabled = input.value.trim().length < 3;
+                    userResponses[currentQuestionIndex] = input.value.trim();
+                });
+                
+                // Initially disable next if no response
+                nextBtn.disabled = !userResponses[currentQuestionIndex] || userResponses[currentQuestionIndex].length < 3;
+            } 
+            else if (currentQuestion.type === "multi") {
+                // Create multi-select options
+                currentQuestion.options.forEach((option, i) => {
+                    const button = document.createElement("button");
+                    button.innerHTML = `<i class="far fa-square"></i> ${option}`;
+                    
+                    // Track selected state
+                    if (userResponses[currentQuestionIndex] && userResponses[currentQuestionIndex].includes(option)) {
+                        button.classList.add("selected");
+                        button.innerHTML = `<i class="far fa-check-square"></i> ${option}`;
+                    }
+                    
+                    button.onclick = () => {
+                        // Initialize array if not exists
+                        if (!userResponses[currentQuestionIndex]) {
+                            userResponses[currentQuestionIndex] = [];
+                        }
+                        
+                        // Toggle selection
+                        const index = userResponses[currentQuestionIndex].indexOf(option);
+                        if (index === -1) {
+                            userResponses[currentQuestionIndex].push(option);
+                            button.classList.add("selected");
+                            button.innerHTML = `<i class="far fa-check-square"></i> ${option}`;
+                        } else {
+                            userResponses[currentQuestionIndex].splice(index, 1);
+                            button.classList.remove("selected");
+                            button.innerHTML = `<i class="far fa-square"></i> ${option}`;
+                        }
+                        
+                        // Enable next if at least one selected
+                        nextBtn.disabled = userResponses[currentQuestionIndex].length === 0;
+                    };
+                    
+                    optionsEl.appendChild(button);
+                });
+                
+                // Initially disable next if no selections
+                nextBtn.disabled = !userResponses[currentQuestionIndex] || userResponses[currentQuestionIndex].length === 0;
+            } 
+            else {
+                // Default single-select options
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement("button");
+                    button.innerHTML = `<i class="far fa-circle"></i> ${option}`;
+                    
+                    if (userResponses[currentQuestionIndex] === option) {
+                        button.classList.add("selected");
+                        button.innerHTML = `<i class="fas fa-dot-circle"></i> ${option}`;
+                    }
+                    
+                    button.onclick = () => {
+                        document.querySelectorAll("#options button").forEach(btn => {
+                            btn.classList.remove("selected");
+                            btn.innerHTML = btn.innerHTML.replace('fas fa-dot-circle', 'far fa-circle');
+                        });
+                        button.classList.add("selected");
+                        button.innerHTML = `<i class="fas fa-dot-circle"></i> ${option}`;
+                        userResponses[currentQuestionIndex] = option;
+                        nextBtn.disabled = false;
+                    };
+                    
+                    optionsEl.appendChild(button);
+                });
+                
+                // Initially disable next if no selection
+                nextBtn.disabled = !userResponses[currentQuestionIndex];
+            }
+            
+            // Navigation buttons state
+            prevBtn.disabled = currentQuestionIndex === 0;
+            submitBtn.classList.toggle("hidden", currentQuestionIndex !== questions.length - 1);
+            // Hide next button on last question
+            nextBtn.style.display = (currentQuestionIndex === questions.length - 1) ? "none" : "inline-block";
+
+            updateProgressBar();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+                // Scroll to top of question
+                document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+                // Scroll to top of question
+                document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        async function startCareerChat() {
+            const token = localStorage.getItem("token");
+            
+            if (!token) {
+                document.getElementById("quiz-section").innerHTML = `
+                    <div class="login-prompt">
+                        <h2><i class="fas fa-lock"></i> Login Required</h2>
+                        <p>Please login to start your personalized career counseling session.</p>
+                        <button class="cta-btn" onclick="openModal()">Login or Sign Up</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Check all questions are answered
+            for (let i = 0; i < questions.length; i++) {
+                if (!userResponses[i] || 
+                    (Array.isArray(userResponses[i]) && userResponses[i].length === 0)) {
+                    showAlert(`Please answer question ${i + 1} before continuing.`, 'error');
+                    currentQuestionIndex = i;
+                    loadQuestion();
+                    return;
+                }
+            }
+            
+            // Show loading state
+            document.getElementById("quiz-section").innerHTML = `
+                <h2><i class="fas fa-spinner fa-spin"></i> Analyzing Your Responses</h2>
+                <p>Preparing personalized career recommendations based on your answers...</p>
+                <div class="loader"></div>
+            `;
+            
+            try {
+                // Prepare the initial prompt for AI
+                let prompt = `Act as a professional career counselor. The user has provided these responses:\n\n`;
+                
+                questions.forEach((q, i) => {
+                    prompt += `Q: ${q.question}\nA: ${Array.isArray(userResponses[i]) ? 
+                        userResponses[i].join(", ") : userResponses[i]}\n\n`;
+                });
+                
+                prompt += `Based on these responses, please:
+                1. Analyze the user's strengths, interests, and preferences
+                2. Suggest 3-5 suitable career paths with brief explanations
+                3. Be ready to discuss each option in detail and provide roadmaps
+                4. Ask clarifying questions if needed
+                
+                Start by greeting the user and providing your initial analysis and recommendations.`;
+                
+                // Store the initial prompt in chat history
+                chatHistory.push({ role: "system", content: "You are an expert career counselor helping a user explore career options." });
+                chatHistory.push({ role: "user", content: prompt });
+                
+                // Show chat interface with animation
+                document.getElementById("quiz-section").classList.remove("visible");
+                setTimeout(() => {
+                    document.getElementById("quiz-section").style.display = "none";
+                    document.getElementById("chat-section").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("chat-section").classList.add("visible");
+                    }, 50);
+                }, 400);
+                
+                isChatActive = true;
+                
+                // Get initial AI response
+                await getAIResponse();
+                
+            } catch (error) {
+                console.error("Error starting career chat:", error);
+                document.getElementById("quiz-section").innerHTML = `
+                    <h2><i class="fas fa-exclamation-triangle"></i> Error</h2>
+                    <p>Something went wrong while starting your career counseling session.</p>
+                    <button class="cta-btn" onclick="window.location.reload()">Try Again</button>
+                `;
+            }
+        }
+        
+        async function sendMessage() {
+            const messageInput = document.getElementById("chat-message");
+            const message = messageInput.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessageToChat(message, "user");
+            messageInput.value = "";
+            
+            // Add to chat history
+            chatHistory.push({ role: "user", content: message });
+            
+            // Get AI response
+            await getAIResponse();
+        }
+        
+        function addMessageToChat(message, sender) {
+            const chatContainer = document.getElementById("chat-container");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", `${sender}-message`);
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        async function getAIResponse() {
+            const chatContainer = document.getElementById("chat-container");
+            const sendBtn = document.getElementById("send-btn");
+            
+            // Show typing indicator
+            const typingIndicator = document.createElement("div");
+            typingIndicator.classList.add("message", "ai-message");
+            typingIndicator.innerHTML = `<i class="fas fa-ellipsis-h"></i> <em>AI counselor is typing...</em>`;
+            chatContainer.appendChild(typingIndicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Disable send button during request
+            sendBtn.disabled = true;
+            
+            try {
+                const token = localStorage.getItem("token");
+                
+                const response = await fetch("http://localhost:5000/api/chat-quiz", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ 
+                        prompt: chatHistory[chatHistory.length - 1].content,
+                        history: chatHistory.slice(0, -1) // Send previous messages as context
+                    })
+                });
+                
+                if (response.status === 401) {
+                    localStorage.removeItem("token");
+                    window.location.href = "/";
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (!response.ok) throw new Error(result.message || "Failed to get response");
+                
+                // Remove typing indicator
+                chatContainer.removeChild(typingIndicator);
+                
+                // Add AI response to chat
+                addMessageToChat(result.reply, "ai");
+                
+                // Add to chat history
+                chatHistory.push({ role: "assistant", content: result.reply });
+                
+            } catch (error) {
+                console.error("Chat error:", error);
+                
+                // Remove typing indicator
+                chatContainer.removeChild(typingIndicator);
+                
+                // Show error message
+                addMessageToChat("Sorry, I encountered an error. Please try again.", "ai");
+            } finally {
+                sendBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

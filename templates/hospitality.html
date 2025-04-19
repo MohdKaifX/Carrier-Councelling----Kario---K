@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel & Hospitality Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --hospitality: #10b981;
+            --travel: #0ea5e9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/hospitality-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(16, 185, 129, 0.2), rgba(14, 165, 233, 0.2));
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--hospitality), var(--travel));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .field-intro {
+            padding: 3rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-size: 2rem;
+            color: var(--hospitality);
+            margin-bottom: 1.5rem;
+        }
+
+        .field-intro h3 {
+            font-size: 1.5rem;
+            color: var(--travel);
+            margin: 2rem 0 1rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--hospitality);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul.feature-list li::before {
+            content: '✈️';
+            position: absolute;
+            left: 0;
+        }
+
+        .career-cards-container {
+            padding: 2rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+            border-color: var(--hospitality);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .career-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .career-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--travel);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--hospitality);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .learn-more:hover {
+            background: var(--hospitality);
+            color: var(--light);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 6%;
+            margin: 3rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--hospitality);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--hospitality);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-umbrella-beach"></i> Travel & Hospitality Careers</h1>
+        <p>Where service meets adventure - explore careers that create memorable experiences around the globe</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About the Hospitality Field</h2>
+        <p>The hospitality and tourism industry encompasses diverse service-oriented careers focused on creating exceptional experiences for travelers, diners, and event attendees. From luxury resorts to local restaurants, this dynamic field offers opportunities to work in exciting locations worldwide while developing valuable customer service and management skills.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Industry Spectrum:</strong> Lodging, food service, event planning, tourism services, and transportation. Careers range from front-line guest services to executive management, with growing opportunities in sustainable tourism and experiential travel.</p>
+        </div>
+
+        <h3>Who Should Pursue Hospitality?</h3>
+        <p>This field is perfect for individuals who:</p>
+        <ul class="feature-list">
+            <li>Enjoy working with people and providing excellent service</li>
+            <li>Thrive in fast-paced, dynamic environments</li>
+            <li>Have strong communication and problem-solving skills</li>
+            <li>Are interested in travel, culture, and culinary arts</li>
+            <li>Want to create memorable experiences for others</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+        <p>The Bureau of Labor Statistics projects steady growth across hospitality careers:</p>
+        <ul class="feature-list">
+            <li><strong>Lodging managers:</strong> +18% growth by 2030</li>
+            <li><strong>Meeting/event planners:</strong> +15% growth</li>
+            <li><strong>Food service managers:</strong> +10% growth</li>
+            <li><strong>Travel agents:</strong> +5% growth</li>
+        </ul>
+        <p>The post-pandemic travel boom and growing demand for unique experiences are driving opportunities in luxury travel, eco-tourism, and culinary tourism.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Hotel Careers -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/hotel-manager.jpg') }}" alt="Hotel Manager">
+            <div class="card-content">
+                <h3><i class="fas fa-hotel"></i> Hotel Manager</h3>
+                <p>Oversee all aspects of hotel operations including staff management, guest services, and financial performance.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$150k+</span>
+                    <span class="stat-pill">Global opportunities</span>
+                    <span class="stat-pill">Hospitality degree</span>
+                </div>
+                <a href="/hospitality-career?career=hotel-manager" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/concierge.jpg') }}" alt="Concierge">
+            <div class="card-content">
+                <h3><i class="fas fa-bell-concierge"></i> Concierge</h3>
+                <p>Provide personalized services and local recommendations to hotel guests, ensuring exceptional stays.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$30k-$70k</span>
+                    <span class="stat-pill">Guest relations</span>
+                    <span class="stat-pill">Local expertise</span>
+                </div>
+                <a href="/hospitality-career?career=concierge" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Food Service -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/chef.jpg') }}" alt="Chef">
+            <div class="card-content">
+                <h3><i class="fas fa-utensils"></i> Chef</h3>
+                <p>Create culinary masterpieces, manage kitchen operations, and develop menus for restaurants or hotels.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$120k+</span>
+                    <span class="stat-pill">Culinary school</span>
+                    <span class="stat-pill">High-pressure</span>
+                </div>
+                <a href="/hospitality-career?career=chef" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/restaurant-manager.jpg') }}" alt="Restaurant Manager">
+            <div class="card-content">
+                <h3><i class="fas fa-store"></i> Restaurant Manager</h3>
+                <p>Oversee daily operations, staff, and customer service in dining establishments.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$90k</span>
+                    <span class="stat-pill">Customer focus</span>
+                    <span class="stat-pill">Flexible hours</span>
+                </div>
+                <a href="/hospitality-career?career=restaurant-manager" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Travel Services -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/travel-agent.jpg') }}" alt="Travel Agent">
+            <div class="card-content">
+                <h3><i class="fas fa-plane"></i> Travel Agent</h3>
+                <p>Plan and book customized travel experiences, from flights to luxury vacations.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$35k-$100k</span>
+                    <span class="stat-pill">Commission-based</span>
+                    <span class="stat-pill">Destination expert</span>
+                </div>
+                <a href="/hospitality-career?career=travel-agent" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/tour-guide.jpg') }}" alt="Tour Guide">
+            <div class="card-content">
+                <h3><i class="fas fa-map-marked-alt"></i> Tour Guide</h3>
+                <p>Lead educational and entertaining tours through cultural, historical, or natural attractions.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$25k-$70k</span>
+                    <span class="stat-pill">Seasonal variations</span>
+                    <span class="stat-pill">Local knowledge</span>
+                </div>
+                <a href="/hospitality-career?career=tour-guide" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Event Planning -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/event-planner.jpg') }}" alt="Event Planner">
+            <div class="card-content">
+                <h3><i class="fas fa-calendar-check"></i> Event Planner</h3>
+                <p>Coordinate all aspects of professional events, from corporate meetings to weddings.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$110k</span>
+                    <span class="stat-pill">Detail-oriented</span>
+                    <span class="stat-pill">Vendor networks</span>
+                </div>
+                <a href="/hospitality-career?career=event-planner" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Transportation -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/airline-customer-service.jpg') }}" alt="Airline Customer Service">
+            <div class="card-content">
+                <h3><i class="fas fa-headset"></i> Airline Customer Service</h3>
+                <p>Assist passengers with check-in, boarding, and resolving travel issues at airports.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$30k-$65k</span>
+                    <span class="stat-pill">Shift work</span>
+                    <span class="stat-pill">Travel benefits</span>
+                </div>
+                <a href="/hospitality-career?career=airline-customer-service" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Cruise Industry -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/cruise-director.jpg') }}" alt="Cruise Director">
+            <div class="card-content">
+                <h3><i class="fas fa-ship"></i> Cruise Director</h3>
+                <p>Plan and oversee entertainment, activities, and guest experiences aboard cruise ships.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$120k</span>
+                    <span class="stat-pill">At-sea living</span>
+                    <span class="stat-pill">Entertainment</span>
+                </div>
+                <a href="/hospitality-career?career=cruise-director" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Lodging Operations -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/lodging-operations.jpg') }}" alt="Lodging Operations Supervisor">
+            <div class="card-content">
+                <h3><i class="fas fa-bed"></i> Lodging Operations Supervisor</h3>
+                <p>Manage front desk, housekeeping, and maintenance operations for hotels and resorts.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$80k</span>
+                    <span class="stat-pill">24/7 operations</span>
+                    <span class="stat-pill">Team leadership</span>
+                </div>
+                <a href="/hospitality-career?career=lodging-operations" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Hospitality Career FAQs</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>What education is needed for hospitality careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Educational requirements vary by position:</p>
+                    <ul>
+                        <li><strong>Management roles:</strong> Bachelor's in hospitality management preferred</li>
+                        <li><strong>Culinary positions:</strong> Culinary school or apprenticeship</li>
+                        <li><strong>Entry-level:</strong> Often start with high school diploma + training</li>
+                        <li><strong>Specialized roles:</strong> Certifications (e.g., sommelier, event planning)</li>
+                    </ul>
+                    <p>Many professionals combine formal education with hands-on experience.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What are the biggest challenges in hospitality careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Common challenges include:</p>
+                    <ul>
+                        <li><strong>Irregular hours:</strong> Evenings, weekends, and holidays often required</li>
+                        <li><strong>High-pressure situations:</strong> Dealing with demanding customers</li>
+                        <li><strong>Physical demands:</strong> Long hours on your feet</li>
+                        <li><strong>Seasonal fluctuations:</strong> Particularly in tourism destinations</li>
+                    </ul>
+                    <p>The rewards include meeting diverse people and creating memorable experiences.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What's the career progression like in hospitality?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Typical career paths include:</p>
+                    <ul>
+                        <li><strong>Food service:</strong> Server → Supervisor → Manager → F&B Director</li>
+                        <li><strong>Hotels:</strong> Front desk → Department manager → General manager</li>
+                        <li><strong>Travel:</strong> Agent → Senior agent → Agency manager/owner</li>
+                        <li><strong>Events:</strong> Assistant → Coordinator → Planner → Director</li>
+                    </ul>
+                    <p>Many professionals move between sectors (hotels to cruise lines, etc.) for diverse experience.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What skills are most valuable in hospitality?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Key skills for success:</p>
+                    <ul>
+                        <li><strong>Customer service:</strong> Anticipating and exceeding guest needs</li>
+                        <li><strong>Communication:</strong> Clear verbal and written skills</li>
+                        <li><strong>Problem-solving:</strong> Handling unexpected situations calmly</li>
+                        <li><strong>Cultural awareness:</strong> Working with diverse guests and staff</li>
+                        <li><strong>Multitasking:</strong> Managing multiple priorities efficiently</li>
+                        <li><strong>Technical skills:</strong> Property management systems, reservation software</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq").forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

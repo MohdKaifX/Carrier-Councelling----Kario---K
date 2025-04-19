@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Environmental Career Details | CareerHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #10b981;
+      --secondary: #34d399;
+      --accent: #6ee7b7;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --error: #ff6b6b;
+      --success: #4CAF50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      padding: 1.5rem 6%;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .cta-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Career Details Styles */
+    .career-container {
+      padding: 10rem 6% 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .career-header {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 4rem;
+      align-items: center;
+    }
+
+    .career-image {
+      width: 400px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 2px solid var(--primary);
+    }
+
+    .career-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .career-description {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .career-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .highlight-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .highlight-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+    }
+
+    .highlight-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .highlight-card p {
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin: 3rem 0 2rem;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .skill-tag {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .career-path {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .path-item {
+      display: flex;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    .path-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .path-item::before {
+      content: '';
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: var(--primary);
+      opacity: 0.3;
+    }
+
+    .path-item::after {
+      content: '';
+      position: absolute;
+      left: 0.75rem;
+      top: 0.5rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .path-content h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--light);
+    }
+
+    .path-content p {
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .resources-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .resource-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+      border-color: var(--primary);
+    }
+
+    .resource-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .resource-card a {
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    .resource-card a:hover {
+      text-decoration: underline;
+      color: var(--accent);
+    }
+
+    .back-to-env {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .back-to-env:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1024px) {
+      .career-header {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      
+      .career-image {
+        width: 100%;
+        max-width: 500px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .career-container {
+        padding-top: 8rem;
+      }
+      
+      .career-title {
+        font-size: 2.2rem;
+      }
+      
+      .highlight-card {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .career-title {
+        font-size: 1.8rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+      CareerHub
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/explore">Explore</a></li>
+        <li><a href="/#career-hub">Career Hub</a></li>
+        <li><a href="/quiz">Quiz</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="cta-btn" onclick="window.location.href='/environment'">Back to Environmental Careers</button>
+  </header>
+
+  <div class="career-container">
+    <div class="career-header">
+      <img id="career-image" class="career-image" src="" alt="Career Image">
+      <div>
+        <h1 id="career-title" class="career-title">Environmental Career Details</h1>
+        <p id="career-description" class="career-description"></p>
+        
+        <div class="career-highlights">
+          <div class="highlight-card">
+            <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+            <p id="career-salary"></p>
+          </div>
+          <div class="highlight-card">
+            <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+            <p id="career-education"></p>
+          </div>
+          <div class="highlight-card">
+            <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+            <p id="career-growth"></p>
+          </div>
+          <div class="highlight-card">
+            <h3><i class="fas fa-clock"></i> Experience Level</h3>
+            <p id="career-experience"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title"><i class="fas fa-leaf"></i> Key Skills Required</h2>
+    <div id="skills-container" class="skills-container"></div>
+
+    <h2 class="section-title"><i class="fas fa-building"></i> Top Employers</h2>
+    <p id="career-companies" class="career-description"></p>
+
+    <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+    <div id="career-path" class="career-path"></div>
+
+    <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+    <div id="resources-container" class="resources-container"></div>
+
+    <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+    <div id="job-outlook" class="highlight-card"></div>
+
+    <a href="/environment" class="back-to-env">
+      <i class="fas fa-arrow-left"></i> Back to Environmental Careers
+    </a>
+  </div>
+
+  <script>
+    // Environmental Career Data (for all sub-cards in environment.html)
+    const envCareerData = {
+      "environmental-scientist": {
+        title: "Environmental Scientist",
+        image: "{{ url_for('static', filename='images/environmental-scientist.jpg') }}",
+        description: "Environmental scientists conduct research to identify, control, or eliminate sources of pollutants or hazards affecting the environment or public health. They collect and analyze air, water, and soil samples to assess environmental conditions and develop solutions to environmental problems.",
+        salary: "$50,000 - $120,000 depending on experience and sector",
+        education: "Bachelor's degree in environmental science or related field (biology, chemistry, physics). Master's degree preferred for advanced positions.",
+        growth: "8% growth projected (2022-2032), faster than average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Environmental sampling techniques",
+          "Data analysis and statistics",
+          "GIS mapping",
+          "Environmental regulations knowledge",
+          "Scientific writing",
+          "Field research methods",
+          "Laboratory skills",
+          "Project management"
+        ],
+        companies: "Environmental consulting firms, Government agencies (EPA, USGS), Research institutions, Non-profits, Corporations with sustainability departments",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete bachelor's degree in environmental science or related field"
+          },
+          {
+            stage: "Internship",
+            content: "Gain field experience through internships or research assistant positions"
+          },
+          {
+            stage: "Field Technician",
+            content: "Entry-level position collecting samples and data (1-2 years)"
+          },
+          {
+            stage: "Environmental Scientist",
+            content: "Conduct independent research and analysis (3-5 years)"
+          },
+          {
+            stage: "Senior Scientist/Project Manager",
+            content: "Lead research projects and teams (5+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "National Association of Environmental Professionals",
+            link: "https://www.naep.org/"
+          },
+          {
+            type: "Course",
+            title: "Environmental Science 101 (Coursera)",
+            link: "https://www.coursera.org/learn/environmental-science"
+          },
+          {
+            type: "Book",
+            title: "Environmental Science: Earth as a Living Planet",
+            link: "https://www.amazon.com/Environmental-Science-Living-Planet-Botkin/dp/1118427327"
+          },
+          {
+            type: "Certification",
+            title: "Certified Environmental Scientist (NES)",
+            link: "https://www.nat-env-sci.org/"
+          }
+        ],
+        outlook: "Growing demand due to increased public interest in environmental issues and stricter environmental regulations. Climate change research is creating new opportunities. Strongest job growth in consulting services and state/local government."
+      },
+      "ecologist": {
+        title: "Ecologist",
+        image: "{{ url_for('static', filename='images/ecologist.jpg') }}",
+        description: "Ecologists study ecosystems, species interactions, and biodiversity patterns in natural environments. They conduct field research to understand how organisms interact with their environments and each other, often working to conserve or restore ecosystems.",
+        salary: "$45,000 - $110,000 depending on specialization and sector",
+        education: "Bachelor's degree in ecology, biology, or environmental science. Advanced research positions typically require a master's or PhD.",
+        growth: "7% growth projected (2022-2032), about as fast as average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Field research methods",
+          "Species identification",
+          "Statistical analysis",
+          "GIS and remote sensing",
+          "Scientific writing",
+          "Habitat assessment",
+          "Population modeling",
+          "Conservation planning"
+        ],
+        companies: "Government agencies (USFWS, NPS), Environmental consulting firms, Universities, Non-profit conservation organizations, Zoos and aquariums",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete bachelor's degree in ecology or related field"
+          },
+          {
+            stage: "Field Experience",
+            content: "Gain practical experience through internships or seasonal positions"
+          },
+          {
+            stage: "Research Assistant",
+            content: "Assist with ecological studies and data collection (1-2 years)"
+          },
+          {
+            stage: "Ecologist",
+            content: "Design and lead ecological research projects (3-5 years)"
+          },
+          {
+            stage: "Senior Ecologist",
+            content: "Manage large-scale ecological programs (5+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "Ecological Society of America",
+            link: "https://www.esa.org/"
+          },
+          {
+            type: "Course",
+            title: "Introduction to Ecology (edX)",
+            link: "https://www.edx.org/course/introduction-to-ecology"
+          },
+          {
+            type: "Book",
+            title: "Ecology: Concepts and Applications",
+            link: "https://www.amazon.com/Ecology-Concepts-Applications-Manuel-Molles/dp/1260542164"
+          },
+          {
+            type: "Journal",
+            title: "Journal of Ecology",
+            link: "https://besjournals.onlinelibrary.wiley.com/journal/13652745"
+          }
+        ],
+        outlook: "Steady demand for ecologists in conservation and environmental consulting. Climate change research is creating new opportunities. Competition can be strong for academic and government positions."
+      },
+      "conservationist": {
+        title: "Conservationist",
+        image: "{{ url_for('static', filename='images/conservationist.jpg') }}",
+        description: "Conservationists develop and implement strategies to protect natural habitats and endangered species. They work to manage natural resources sustainably, often balancing ecological needs with human use of the environment.",
+        salary: "$40,000 - $95,000 depending on organization and experience",
+        education: "Bachelor's degree in environmental science, biology, or natural resource management. Advanced degrees helpful for leadership roles.",
+        growth: "7% growth projected (2022-2032), about as fast as average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Habitat restoration techniques",
+          "Conservation planning",
+          "Community engagement",
+          "Grant writing",
+          "Policy knowledge",
+          "Field research",
+          "Project management",
+          "GIS applications"
+        ],
+        companies: "Non-profit organizations (Nature Conservancy, WWF), Government agencies (USFWS, BLM), Land trusts, Zoos and botanical gardens, International conservation groups",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete bachelor's degree in conservation or related field"
+          },
+          {
+            stage: "Internship",
+            content: "Gain experience with conservation organizations"
+          },
+          {
+            stage: "Field Technician",
+            content: "Implement conservation projects in the field (1-2 years)"
+          },
+          {
+            stage: "Conservation Specialist",
+            content: "Develop and manage conservation programs (3-5 years)"
+          },
+          {
+            stage: "Conservation Director",
+            content: "Lead organizational conservation strategy (5+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "Society for Conservation Biology",
+            link: "https://conbio.org/"
+          },
+          {
+            type: "Course",
+            title: "Conservation Biology (Coursera)",
+            link: "https://www.coursera.org/learn/conservation-biology"
+          },
+          {
+            type: "Book",
+            title: "The Conservation Revolution",
+            link: "https://www.amazon.com/Conservation-Revolution-Radical-Ideas-Saving/dp/1788737710"
+          },
+          {
+            type: "Journal",
+            title: "Conservation Biology Journal",
+            link: "https://conbio.onlinelibrary.wiley.com/journal/15231739"
+          }
+        ],
+        outlook: "Steady demand in government and non-profit sectors. Climate change and biodiversity loss are increasing focus on conservation. Funding-dependent positions may experience fluctuations."
+      },
+      "climate-analyst": {
+        title: "Climate Analyst",
+        image: "{{ url_for('static', filename='images/climate-analyst.jpg') }}",
+        description: "Climate analysts interpret climate data to predict trends and advise on mitigation strategies. They use historical data and climate models to assess risks and develop adaptation plans for organizations and communities.",
+        salary: "$60,000 - $130,000 depending on sector and experience",
+        education: "Bachelor's degree in atmospheric sciences, environmental science, or related field. Master's degree often required for advanced positions.",
+        growth: "12% growth projected (2022-2032), much faster than average",
+        experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+        skills: [
+          "Climate modeling",
+          "Data analysis",
+          "Statistical methods",
+          "GIS applications",
+          "Risk assessment",
+          "Policy analysis",
+          "Scientific communication",
+          "Programming (Python, R)"
+        ],
+        companies: "Government agencies (NOAA, NASA), Research institutions, Environmental consulting firms, Insurance companies, Corporate sustainability departments",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete degree in climate science or related field"
+          },
+          {
+            stage: "Research Assistant",
+            content: "Gain experience with climate data analysis"
+          },
+          {
+            stage: "Climate Analyst",
+            content: "Interpret climate data and develop reports (2-4 years)"
+          },
+          {
+            stage: "Senior Analyst",
+            content: "Lead climate risk assessments and modeling (4-6 years)"
+          },
+          {
+            stage: "Climate Scientist",
+            content: "Conduct original research and advise policy (6+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "American Meteorological Society",
+            link: "https://www.ametsoc.org/"
+          },
+          {
+            type: "Course",
+            title: "Climate Change Science (edX)",
+            link: "https://www.edx.org/course/climate-change-the-science"
+          },
+          {
+            type: "Book",
+            title: "The Thinking Person's Guide to Climate Change",
+            link: "https://www.amazon.com/Thinking-Persons-Guide-Climate-Change/dp/1937548787"
+          },
+          {
+            type: "Dataset",
+            title: "NOAA Climate Data",
+            link: "https://www.ncdc.noaa.gov/"
+          }
+        ],
+        outlook: "Rapid growth expected due to increasing focus on climate change impacts. Strong demand in both public and private sectors for professionals who can translate climate data into actionable strategies."
+      },
+      "wildlife-biologist": {
+        title: "Wildlife Biologist",
+        image: "{{ url_for('static', filename='images/wildlife-biologist.jpg') }}",
+        description: "Wildlife biologists study animal behavior and populations to inform conservation efforts. They conduct field research, track animal movements, assess habitats, and develop management plans to protect wildlife species.",
+        salary: "$45,000 - $100,000 depending on specialization and employer",
+        education: "Bachelor's degree in wildlife biology, zoology, or ecology. Advanced positions often require master's or PhD.",
+        growth: "5% growth projected (2022-2032), slower than average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Field research techniques",
+          "Species identification",
+          "Population monitoring",
+          "Habitat assessment",
+          "GPS/GIS applications",
+          "Scientific writing",
+          "Wildlife tracking",
+          "Conservation planning"
+        ],
+        companies: "Government agencies (USFWS, state DNR), Universities, Zoos and aquariums, Environmental consulting firms, Non-profit conservation organizations",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete bachelor's degree in wildlife biology or related field"
+          },
+          {
+            stage: "Field Technician",
+            content: "Gain hands-on experience with wildlife research"
+          },
+          {
+            stage: "Wildlife Biologist",
+            content: "Conduct independent research and monitoring (2-4 years)"
+          },
+          {
+            stage: "Senior Biologist",
+            content: "Lead wildlife management programs (4-6 years)"
+          },
+          {
+            stage: "Wildlife Program Manager",
+            content: "Oversee conservation initiatives (6+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "The Wildlife Society",
+            link: "https://wildlife.org/"
+          },
+          {
+            type: "Course",
+            title: "Wildlife Conservation (Coursera)",
+            link: "https://www.coursera.org/learn/wildlife-conservation"
+          },
+          {
+            type: "Book",
+            title: "Wildlife Ecology, Conservation, and Management",
+            link: "https://www.amazon.com/Wildlife-Ecology-Conservation-Management-Sutherland/dp/1118291076"
+          },
+          {
+            type: "Journal",
+            title: "Journal of Wildlife Management",
+            link: "https://wildlife.onlinelibrary.wiley.com/journal/19372817"
+          }
+        ],
+        outlook: "Competitive field with more applicants than positions. Strongest opportunities in environmental consulting and government. Specialized skills (GIS, statistics) can improve job prospects."
+      },
+      "environmental-engineer": {
+        title: "Environmental Engineer",
+        image: "{{ url_for('static', filename='images/environmental-engineer.jpg') }}",
+        description: "Environmental engineers design systems for waste management, pollution control, and sustainable development. They apply engineering principles to solve environmental problems, developing solutions for water treatment, air pollution control, and site remediation.",
+        salary: "$70,000 - $150,000 depending on specialization and experience",
+        education: "Bachelor's degree in environmental or civil engineering. Professional Engineer (PE) license required for higher-level positions.",
+        growth: "10% growth projected (2022-2032), faster than average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Water/wastewater treatment",
+          "Air pollution control",
+          "Site remediation",
+          "Environmental regulations",
+          "CAD and modeling software",
+          "Project management",
+          "Technical writing",
+          "Systems design"
+        ],
+        companies: "Engineering consulting firms, Government agencies (EPA, state DEQ), Manufacturing companies, Waste management firms, Energy companies",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete ABET-accredited engineering degree"
+          },
+          {
+            stage: "EIT Certification",
+            content: "Pass Fundamentals of Engineering (FE) exam"
+          },
+          {
+            stage: "Junior Engineer",
+            content: "Work under PE supervision (2-4 years)"
+          },
+          {
+            stage: "PE License",
+            content: "Pass Principles and Practice of Engineering (PE) exam"
+          },
+          {
+            stage: "Senior Engineer",
+            content: "Lead engineering projects (5+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "American Academy of Environmental Engineers",
+            link: "https://www.aaees.org/"
+          },
+          {
+            type: "Course",
+            title: "Environmental Engineering Fundamentals (edX)",
+            link: "https://www.edx.org/course/environmental-engineering-fundamentals"
+          },
+          {
+            type: "Book",
+            title: "Introduction to Environmental Engineering",
+            link: "https://www.amazon.com/Introduction-Environmental-Engineering-Davis-Cornwell/dp/0073401145"
+          },
+          {
+            type: "Certification",
+            title: "Board Certified Environmental Engineer",
+            link: "https://www.aaees.org/certification/"
+          }
+        ],
+        outlook: "Strong demand due to aging infrastructure and increasing environmental regulations. Water treatment and renewable energy sectors offer particularly good opportunities."
+      },
+      "forester": {
+        title: "Forester",
+        image: "{{ url_for('static', filename='images/forester.jpg') }}",
+        description: "Foresters manage forest resources for conservation, recreation, and sustainable timber production. They develop forest management plans, monitor forest health, and oversee timber harvesting operations while ensuring sustainable practices.",
+        salary: "$50,000 - $110,000 depending on employer and experience",
+        education: "Bachelor's degree in forestry, natural resource management, or environmental science. State licensure may be required.",
+        growth: "5% growth projected (2022-2032), slower than average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Forest inventory techniques",
+          "GIS applications",
+          "Timber cruising",
+          "Wildfire management",
+          "Silviculture practices",
+          "Conservation planning",
+          "Land use regulations",
+          "Public education"
+        ],
+        companies: "Government agencies (US Forest Service, state forestry departments), Timber companies, Conservation organizations, Consulting firms, Universities",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete SAF-accredited forestry degree"
+          },
+          {
+            stage: "Field Technician",
+            content: "Gain practical experience in forest management"
+          },
+          {
+            stage: "Forester",
+            content: "Develop and implement forest management plans (2-4 years)"
+          },
+          {
+            stage: "Senior Forester",
+            content: "Oversee large forest tracts or programs (4-6 years)"
+          },
+          {
+            stage: "Forest Manager",
+            content: "Lead forestry operations and strategy (6+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "Society of American Foresters",
+            link: "https://www.eforester.org/"
+          },
+          {
+            type: "Course",
+            title: "Sustainable Forest Management (Coursera)",
+            link: "https://www.coursera.org/learn/forest-management"
+          },
+          {
+            type: "Book",
+            title: "Introduction to Forestry and Natural Resources",
+            link: "https://www.amazon.com/Introduction-Forestry-Natural-Resources-Gary/dp/0128190021"
+          },
+          {
+            type: "Certification",
+            title: "Certified Forester",
+            link: "https://www.eforester.org/Certification/"
+          }
+        ],
+        outlook: "Steady demand in government and private sector. Urban forestry and climate change adaptation are growing specialty areas. Competition can be strong for federal positions."
+      },
+      "sustainability-specialist": {
+        title: "Sustainability Specialist",
+        image: "{{ url_for('static', filename='images/sustainability-specialist.jpg') }}",
+        description: "Sustainability specialists develop and implement green initiatives for corporations and organizations. They assess environmental impacts, recommend sustainable practices, and track progress toward sustainability goals.",
+        salary: "$55,000 - $130,000 depending on industry and experience",
+        education: "Bachelor's degree in environmental science, sustainability, or related field. Master's degree helpful for advancement.",
+        growth: "15% growth projected (2022-2032), much faster than average",
+        experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+        skills: [
+          "Sustainability reporting",
+          "Life cycle assessment",
+          "Carbon footprint analysis",
+          "Stakeholder engagement",
+          "ESG principles",
+          "Corporate sustainability",
+          "Data analysis",
+          "Project management"
+        ],
+        companies: "Corporations across industries, Consulting firms, Government agencies, Universities, Non-profit organizations",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete degree in sustainability or related field"
+          },
+          {
+            stage: "Internship",
+            content: "Gain experience with sustainability initiatives"
+          },
+          {
+            stage: "Sustainability Coordinator",
+            content: "Assist with sustainability programs (1-2 years)"
+          },
+          {
+            stage: "Sustainability Specialist",
+            content: "Develop and implement sustainability strategies (3-5 years)"
+          },
+          {
+            stage: "Sustainability Director",
+            content: "Lead organizational sustainability efforts (5+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "International Society of Sustainability Professionals",
+            link: "https://www.sustainabilityprofessionals.org/"
+          },
+          {
+            type: "Course",
+            title: "Corporate Sustainability (edX)",
+            link: "https://www.edx.org/course/corporate-sustainability"
+          },
+          {
+            type: "Book",
+            title: "The Business Guide to Sustainability",
+            link: "https://www.amazon.com/Business-Guide-Sustainability-Practical-Organizations/dp/1138690553"
+          },
+          {
+            type: "Certification",
+            title: "Sustainability Excellence Associate",
+            link: "https://www.sustainabilityprofessionals.org/certification"
+          }
+        ],
+        outlook: "Rapid growth as more companies adopt sustainability initiatives. Strong demand in corporate sector, particularly in manufacturing, tech, and consumer goods industries."
+      },
+      "urban-planner": {
+        title: "Urban Planner",
+        image: "{{ url_for('static', filename='images/urban-planner.jpg') }}",
+        description: "Urban planners design sustainable communities with green spaces and eco-friendly infrastructure. They develop land use plans, zoning regulations, and transportation systems to create livable, environmentally responsible cities.",
+        salary: "$60,000 - $120,000 depending on location and experience",
+        education: "Master's degree in urban planning or related field. AICP certification preferred for advancement.",
+        growth: "7% growth projected (2022-2032), about as fast as average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Land use planning",
+          "Zoning regulations",
+          "GIS applications",
+          "Community engagement",
+          "Transportation planning",
+          "Environmental impact assessment",
+          "Urban design principles",
+          "Policy development"
+        ],
+        companies: "Local and regional governments, Planning consulting firms, Real estate developers, Non-profit organizations, Federal agencies (HUD, DOT)",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete master's degree in urban planning"
+          },
+          {
+            stage: "Planning Intern",
+            content: "Gain practical experience in planning department"
+          },
+          {
+            stage: "Assistant Planner",
+            content: "Support planning projects and research (1-2 years)"
+          },
+          {
+            stage: "Urban Planner",
+            content: "Lead planning initiatives and studies (3-5 years)"
+          },
+          {
+            stage: "Planning Director",
+            content: "Oversee comprehensive planning programs (5+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "American Planning Association",
+            link: "https://www.planning.org/"
+          },
+          {
+            type: "Course",
+            title: "Sustainable Urban Development (edX)",
+            link: "https://www.edx.org/course/sustainable-urban-development"
+          },
+          {
+            type: "Book",
+            title: "The Smart Growth Manual",
+            link: "https://www.amazon.com/Smart-Growth-Manual-Andres-Duany/dp/0071376754"
+          },
+          {
+            type: "Certification",
+            title: "AICP Certification",
+            link: "https://www.planning.org/certification/"
+          }
+        ],
+        outlook: "Steady demand for planners with sustainability expertise. Climate resilience planning and transit-oriented development are growing focus areas. Municipal governments remain primary employers."
+      },
+      "environmental-policy-analyst": {
+        title: "Environmental Policy Analyst",
+        image: "{{ url_for('static', filename='images/environmental-policy.jpg') }}",
+        description: "Environmental policy analysts research and develop regulations to address environmental challenges at all levels. They evaluate existing policies, analyze environmental data, and make recommendations to government agencies, NGOs, or private organizations.",
+        salary: "$55,000 - $140,000 depending on sector and experience",
+        education: "Bachelor's degree in environmental policy, political science, or related field. Master's degree often required for advancement.",
+        growth: "9% growth projected (2022-2032), faster than average",
+        experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+        skills: [
+          "Policy analysis",
+          "Legislative research",
+          "Stakeholder engagement",
+          "Environmental law",
+          "Data interpretation",
+          "Technical writing",
+          "Cost-benefit analysis",
+          "Public speaking"
+        ],
+        companies: "Government agencies (EPA, state DEQ), Think tanks, Non-profit organizations, Consulting firms, Corporate sustainability departments",
+        path: [
+          {
+            stage: "Education",
+            content: "Complete degree in environmental policy or related field"
+          },
+          {
+            stage: "Research Assistant",
+            content: "Gain experience with policy research (1-2 years)"
+          },
+          {
+            stage: "Policy Analyst",
+            content: "Conduct policy research and draft recommendations (3-5 years)"
+          },
+          {
+            stage: "Senior Analyst",
+            content: "Lead policy initiatives and advocacy efforts (5-7 years)"
+          },
+          {
+            stage: "Policy Director",
+            content: "Develop organizational policy strategy (7+ years)"
+          }
+        ],
+        resources: [
+          {
+            type: "Organization",
+            title: "Environmental Law Institute",
+            link: "https://www.eli.org/"
+          },
+          {
+            type: "Course",
+            title: "Environmental Policy (Coursera)",
+            link: "https://www.coursera.org/learn/environmental-policy"
+          },
+          {
+            type: "Book",
+            title: "Environmental Policy: New Directions for the Twenty-First Century",
+            link: "https://www.amazon.com/Environmental-Policy-Directions-Twenty-First-Century/dp/1506369636"
+          },
+          {
+            type: "Journal",
+            title: "Environmental Policy and Governance",
+            link: "https://onlinelibrary.wiley.com/journal/17569338"
+          }
+        ],
+        outlook: "Growing demand as environmental issues become more prominent in policy debates. Climate change policy and environmental justice are particularly active areas. Strongest opportunities in government and advocacy organizations."
+      }
+    };
+
+    // Get career parameter from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const careerId = urlParams.get('career');
+
+    // Load career data
+    if (careerId && envCareerData[careerId]) {
+      const career = envCareerData[careerId];
+      
+      // Set basic info
+      document.getElementById('career-title').textContent = career.title;
+      document.getElementById('career-image').src = career.image;
+      document.getElementById('career-image').alt = career.title;
+      document.getElementById('career-description').textContent = career.description;
+      
+      // Set highlights
+      document.getElementById('career-salary').textContent = career.salary;
+      document.getElementById('career-education').textContent = career.education;
+      document.getElementById('career-growth').textContent = career.growth;
+      document.getElementById('career-experience').textContent = career.experience;
+      
+      // Set skills
+      const skillsContainer = document.getElementById('skills-container');
+      career.skills.forEach(skill => {
+        const skillTag = document.createElement('div');
+        skillTag.className = 'skill-tag';
+        skillTag.textContent = skill;
+        skillsContainer.appendChild(skillTag);
+      });
+      
+      // Set companies
+      document.getElementById('career-companies').textContent = career.companies;
+      
+      // Set career path
+      const careerPath = document.getElementById('career-path');
+      career.path.forEach(stage => {
+        const pathItem = document.createElement('div');
+        pathItem.className = 'path-item';
+        pathItem.innerHTML = `
+          <div class="path-content">
+            <h4>${stage.stage}</h4>
+            <p>${stage.content}</p>
+          </div>
+        `;
+        careerPath.appendChild(pathItem);
+      });
+      
+      // Set resources
+      const resourcesContainer = document.getElementById('resources-container');
+      career.resources.forEach(resource => {
+        const resourceCard = document.createElement('div');
+        resourceCard.className = 'resource-card';
+        resourceCard.innerHTML = `
+          <h4><i class="fas fa-${resource.type === 'Course' ? 'graduation-cap' : 
+                                   resource.type === 'Book' ? 'book' : 
+                                   resource.type === 'Certification' ? 'certificate' : 
+                                   resource.type === 'School' ? 'university' : 
+                                   resource.type === 'Competition' ? 'trophy' : 
+                                   resource.type === 'Association' ? 'users' : 
+                                   resource.type === 'Platform' ? 'laptop' : 
+                                   resource.type === 'Journal' ? 'newspaper' :
+                                   resource.type === 'Dataset' ? 'database' :
+                                   resource.type === 'Organization' ? 'building' : 'info-circle'}"></i> ${resource.type}: ${resource.title}</h4>
+          <a href="${resource.link}" target="_blank">View Resource <i class="fas fa-external-link-alt"></i></a>
+        `;
+        resourcesContainer.appendChild(resourceCard);
+      });
+      
+      // Set job outlook
+      document.getElementById('job-outlook').innerHTML = `
+        <h3><i class="fas fa-chart-line"></i> Market Outlook</h3>
+        <p>${career.outlook}</p>
+      `;
+    } else {
+      // Redirect if invalid career ID
+      window.location.href = '/environment';
+    }
+
+    // Animation for elements
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.highlight-card, .path-item, .resource-card')
+           .forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

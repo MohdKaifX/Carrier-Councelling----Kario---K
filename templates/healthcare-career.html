@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #2563eb;
+            --accent: #60a5fa;
+            --medical: #3b82f6;
+            --clinical: #2563eb;
+            --wellness: #60a5fa;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--medical), var(--wellness));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--medical);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--medical);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--medical);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--medical);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--medical);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+            border-color: var(--medical);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--medical);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-healthcare {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--medical);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-healthcare:hover {
+            color: var(--wellness);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/healthcare'">Back to Healthcare</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Healthcare Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Employers</h2>
+        <p id="career-employers" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/healthcare" class="back-to-healthcare">
+            <i class="fas fa-arrow-left"></i> Back to Healthcare Careers
+        </a>
+    </div>
+
+    <script>
+        // Healthcare Career Data (for all sub-cards in healthcare.html)
+        const healthcareCareerData = {
+            "doctor": {
+                title: "Physician",
+                image: "{{ url_for('static', filename='images/doctor.jpg') }}",
+                description: "Physicians diagnose and treat illnesses, injuries, and other health conditions. They examine patients, take medical histories, prescribe medications, and order diagnostic tests. Physicians may specialize in various fields like cardiology, neurology, pediatrics, or general practice.",
+                salary: "$200k-$500k+ (varies by specialty)",
+                education: "4-year bachelor's + 4-year medical school + 3-7 year residency",
+                growth: "4% (average growth expected)",
+                experience: "Residency: 3-7 years, Fellowship: 1-3 years (for specialists)",
+                skills: [
+                    "Diagnosis & Treatment",
+                    "Patient Care",
+                    "Medical Knowledge",
+                    "Communication",
+                    "Critical Thinking",
+                    "Empathy",
+                    "Attention to Detail",
+                    "Decision Making"
+                ],
+                employers: "Hospitals, Private Practices, Clinics, Academic Medical Centers, Government Facilities",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete pre-med bachelor's degree (4 years)"
+                    },
+                    {
+                        stage: "Medical School",
+                        content: "Earn MD or DO degree (4 years)"
+                    },
+                    {
+                        stage: "Residency",
+                        content: "Specialty training (3-7 years depending on field)"
+                    },
+                    {
+                        stage: "Fellowship",
+                        content: "Optional sub-specialty training (1-3 years)"
+                    },
+                    {
+                        stage: "Practice",
+                        content: "Begin independent practice or join group/hospital"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Exam",
+                        title: "MCAT Preparation Resources",
+                        link: "https://students-residents.aamc.org/applying-medical-school/taking-mcat-exam/"
+                    },
+                    {
+                        type: "Book",
+                        title: "First Aid for the USMLE Step 1",
+                        link: "https://www.amazon.com/First-Aid-USMLE-Step-2023/dp/1264285264"
+                    },
+                    {
+                        type: "Organization",
+                        title: "American Medical Association",
+                        link: "https://www.ama-assn.org/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "New England Journal of Medicine",
+                        link: "https://www.nejm.org/"
+                    }
+                ],
+                outlook: "Physician demand remains steady with 4% projected growth. Primary care physicians and geriatric specialists are particularly needed. Rural areas face significant physician shortages."
+            },
+            "nurse": {
+                title: "Registered Nurse",
+                image: "{{ url_for('static', filename='images/nurse.jpg') }}",
+                description: "Registered nurses provide and coordinate patient care, educate patients and the public about various health conditions, and provide advice and emotional support to patients and their family members. RNs work in hospitals, physicians' offices, home healthcare services, and nursing care facilities.",
+                salary: "$70k-$120k (varies by specialty and location)",
+                education: "ADN (2 years) or BSN (4 years) + NCLEX-RN exam",
+                growth: "9% (faster than average)",
+                experience: "New grad to 1 year for entry-level, 2-4 years for specialty roles",
+                skills: [
+                    "Patient Assessment",
+                    "Medication Administration",
+                    "Wound Care",
+                    "Patient Education",
+                    "Critical Thinking",
+                    "Communication",
+                    "Empathy",
+                    "Teamwork"
+                ],
+                employers: "Hospitals, Clinics, Nursing Homes, Home Healthcare, Schools, Government Agencies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete ADN or BSN program (2-4 years)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Pass NCLEX-RN exam"
+                    },
+                    {
+                        stage: "Staff Nurse",
+                        content: "Begin practice in general nursing role (1-2 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Obtain certification in specialty area (1-2 years)"
+                    },
+                    {
+                        stage: "Advanced Practice",
+                        content: "Optional: Become NP, CRNA, or other APRN (2-3 years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Exam",
+                        title: "NCLEX-RN Preparation",
+                        link: "https://www.ncsbn.org/nclex.htm"
+                    },
+                    {
+                        type: "Organization",
+                        title: "American Nurses Association",
+                        link: "https://www.nursingworld.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Saunders Comprehensive Review for the NCLEX-RN",
+                        link: "https://www.amazon.com/Saunders-Comprehensive-Review-NCLEX-RN-Examination/dp/0323358415"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Specialty Certifications",
+                        link: "https://www.nursingworld.org/our-certifications/"
+                    }
+                ],
+                outlook: "Nursing jobs growing 9% with increasing healthcare needs. High demand in critical care, geriatrics, and rural areas. Advanced practice roles growing even faster."
+            },
+            "pharmacist": {
+                title: "Pharmacist",
+                image: "{{ url_for('static', filename='images/pharmacist.jpg') }}",
+                description: "Pharmacists dispense prescription medications to patients and offer expertise in the safe use of prescriptions. They also provide advice on how to lead a healthy lifestyle, conduct health and wellness screenings, provide immunizations, and oversee the medications given to patients.",
+                salary: "$120k-$160k (varies by setting)",
+                education: "Doctor of Pharmacy (PharmD) + licensure exams",
+                growth: "2% (slower than average)",
+                experience: "1 year residency common for clinical roles",
+                skills: [
+                    "Medication Knowledge",
+                    "Dosage Calculation",
+                    "Patient Counseling",
+                    "Drug Interactions",
+                    "Attention to Detail",
+                    "Communication",
+                    "Inventory Management",
+                    "Regulatory Compliance"
+                ],
+                employers: "Retail Pharmacies, Hospitals, Pharmaceutical Companies, Government, Mail-Order Pharmacies",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete pre-pharmacy requirements (2-4 years)"
+                    },
+                    {
+                        stage: "Pharmacy School",
+                        content: "Earn PharmD degree (4 years)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Pass NAPLEX and MPJE exams"
+                    },
+                    {
+                        stage: "Residency",
+                        content: "Optional 1-2 year residency for specialization"
+                    },
+                    {
+                        stage: "Practice",
+                        content: "Begin career in retail, hospital, or specialty pharmacy"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Exam",
+                        title: "NAPLEX Preparation",
+                        link: "https://nabp.pharmacy/programs/naplex/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "American Pharmacists Association",
+                        link: "https://www.pharmacist.com/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of the American Pharmacists Association",
+                        link: "https://www.japha.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Pharmacy Student Survival Guide",
+                        link: "https://www.amazon.com/Pharmacy-Student-Survival-Third-Guides/dp/1260461845"
+                    }
+                ],
+                outlook: "Pharmacist growth slower than average at 2% due to automation and mail-order pharmacies. Clinical pharmacist roles in hospitals growing faster. Immunization and MTM services creating new opportunities."
+            },
+            "physiotherapist": {
+                title: "Physical Therapist",
+                image: "{{ url_for('static', filename='images/physio.jpg') }}",
+                description: "Physical therapists help injured or ill people improve movement and manage pain. They are often an important part of rehabilitation and treatment of patients with chronic conditions or injuries. PTs develop individualized care plans to improve mobility, reduce pain, restore function, and prevent disability.",
+                salary: "$85k-$120k (varies by specialty)",
+                education: "Doctor of Physical Therapy (DPT) degree + licensure",
+                growth: "18% (much faster than average)",
+                experience: "1 year residency optional for specialization",
+                skills: [
+                    "Movement Analysis",
+                    "Therapeutic Exercise",
+                    "Manual Therapy",
+                    "Patient Assessment",
+                    "Rehabilitation Planning",
+                    "Communication",
+                    "Empathy",
+                    "Knowledge of Anatomy"
+                ],
+                employers: "Hospitals, Private Practices, Rehabilitation Centers, Nursing Homes, Sports Facilities, Schools",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete pre-PT bachelor's degree (4 years)"
+                    },
+                    {
+                        stage: "PT School",
+                        content: "Earn DPT degree (3 years)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Pass National Physical Therapy Exam"
+                    },
+                    {
+                        stage: "Residency",
+                        content: "Optional 1-year residency for specialization"
+                    },
+                    {
+                        stage: "Practice",
+                        content: "Begin clinical practice in chosen setting"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American Physical Therapy Association",
+                        link: "https://www.apta.org/"
+                    },
+                    {
+                        type: "Exam",
+                        title: "NPTE Preparation",
+                        link: "https://www.fsbpt.org/Secondary-Pages/Exam-Candidates"
+                    },
+                    {
+                        type: "Book",
+                        title: "Therapeutic Exercise: Foundations and Techniques",
+                        link: "https://www.amazon.com/Therapeutic-Exercise-Foundations-Technics-Kisner/dp/0803658505"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Physical Therapy Journal",
+                        link: "https://academic.oup.com/ptj"
+                    }
+                ],
+                outlook: "PT jobs growing much faster than average (18%) due to aging population and focus on mobility. Specializations in geriatrics, neurology, and orthopedics particularly in demand."
+            },
+            "radiologist": {
+                title: "Radiologic Technologist",
+                image: "{{ url_for('static', filename='images/radiologist.jpg') }}",
+                description: "Radiologic technologists perform diagnostic imaging examinations like X-rays, CT scans, and MRIs. They prepare patients for procedures, operate imaging equipment, position patients correctly, and follow safety procedures to protect themselves and patients from unnecessary radiation.",
+                salary: "$60k-$100k (varies by modality)",
+                education: "Associate's degree (most common) or bachelor's degree + certification",
+                growth: "7% (faster than average)",
+                experience: "1-2 years for entry-level, additional for specialization",
+                skills: [
+                    "Equipment Operation",
+                    "Patient Positioning",
+                    "Radiation Safety",
+                    "Image Quality Assessment",
+                    "Patient Care",
+                    "Attention to Detail",
+                    "Anatomy Knowledge",
+                    "Communication"
+                ],
+                employers: "Hospitals, Diagnostic Imaging Centers, Outpatient Clinics, Physicians' Offices",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete accredited radiography program (2-4 years)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Pass ARRT certification exam"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Obtain state license (requirements vary)"
+                    },
+                    {
+                        stage: "General Radiography",
+                        content: "Begin career performing X-rays (1-2 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Train in CT, MRI, mammography or other modalities"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American Society of Radiologic Technologists",
+                        link: "https://www.asrt.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "ARRT Certification",
+                        link: "https://www.arrt.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Bontrager's Textbook of Radiographic Positioning",
+                        link: "https://www.amazon.com/Bontragers-Textbook-Radiographic-Positioning-Related/dp/0323653671"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Radiologic Technology Journal",
+                        link: "https://www.asrt.org/main/publications-resources/radiologic-technology-journal"
+                    }
+                ],
+                outlook: "Radiologic technologist jobs growing 7% with increasing diagnostic needs. MRI and CT technologists particularly in demand. Opportunities in mobile imaging and outpatient centers."
+            },
+            "lab-technician": {
+                title: "Medical Lab Scientist",
+                image: "{{ url_for('static', filename='images/lab.jpg') }}",
+                description: "Medical laboratory scientists (also called clinical laboratory scientists) perform complex tests on patient samples to detect diseases and other conditions. They analyze body fluids, tissues, and cells to help diagnose and treat diseases. MLS professionals work in hospitals, reference labs, and research facilities.",
+                salary: "$55k-$90k (varies by setting and experience)",
+                education: "Bachelor's degree in medical technology or life sciences + certification",
+                growth: "11% (faster than average)",
+                experience: "1 year internship often part of education",
+                skills: [
+                    "Laboratory Techniques",
+                    "Microscopy",
+                    "Quality Control",
+                    "Data Analysis",
+                    "Attention to Detail",
+                    "Problem Solving",
+                    "Equipment Maintenance",
+                    "Safety Protocols"
+                ],
+                employers: "Hospitals, Diagnostic Labs, Research Facilities, Public Health Labs, Pharmaceutical Companies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete NAACLS-accredited program (4 years)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Pass ASCP or AMT certification exam"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Obtain state license if required"
+                    },
+                    {
+                        stage: "Generalist",
+                        content: "Work in core lab areas (chemistry, hematology, etc.)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on microbiology, molecular biology, or other specialty"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American Society for Clinical Pathology",
+                        link: "https://www.ascp.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "ASCP Certification",
+                        link: "https://www.ascp.org/content/board-of-certification/get-credentialed"
+                    },
+                    {
+                        type: "Book",
+                        title: "Clinical Laboratory Science Review",
+                        link: "https://www.amazon.com/Clinical-Laboratory-Science-Review-Robert/dp/0803668276"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Clinical Laboratory Science Journal",
+                        link: "https://www.ascls.org/clinical-laboratory-science"
+                    }
+                ],
+                outlook: "Medical lab scientist jobs growing 11% with increasing diagnostic testing needs. Molecular diagnostics and genetics testing creating new opportunities. Shortage of qualified professionals in many areas."
+            },
+            "surgeon": {
+                title: "Surgeon",
+                image: "{{ url_for('static', filename='images/surgeon.jpg') }}",
+                description: "Surgeons perform operations to treat diseases, injuries, and deformities. They examine patients, make diagnoses, and determine the best surgical procedures. Surgeons may specialize in areas like orthopedics, neurosurgery, cardiovascular, or general surgery.",
+                salary: "$300k-$700k+ (varies widely by specialty)",
+                education: "4-year bachelor's + 4-year medical school + 5-7 year residency",
+                growth: "3% (average growth)",
+                experience: "Residency: 5-7 years, Fellowship: 1-3 years for subspecialties",
+                skills: [
+                    "Surgical Techniques",
+                    "Precision & Dexterity",
+                    "Decision Making",
+                    "Crisis Management",
+                    "Anatomy Knowledge",
+                    "Communication",
+                    "Leadership",
+                    "Attention to Detail"
+                ],
+                employers: "Hospitals, Academic Medical Centers, Specialty Clinics, Private Practices",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete pre-med bachelor's degree (4 years)"
+                    },
+                    {
+                        stage: "Medical School",
+                        content: "Earn MD or DO degree (4 years)"
+                    },
+                    {
+                        stage: "General Surgery Residency",
+                        content: "Complete 5-year general surgery residency"
+                    },
+                    {
+                        stage: "Fellowship",
+                        content: "Optional 1-3 year fellowship for specialization"
+                    },
+                    {
+                        stage: "Board Certification",
+                        content: "Become board certified in specialty"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American College of Surgeons",
+                        link: "https://www.facs.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Schwartz's Principles of Surgery",
+                        link: "https://www.amazon.com/Schwartzs-Principles-Surgery-Eleventh-edition/dp/1259835353"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of the American College of Surgeons",
+                        link: "https://www.journalacs.org/"
+                    },
+                    {
+                        type: "Exam",
+                        title: "ABS Certification",
+                        link: "https://www.absurgery.org/"
+                    }
+                ],
+                outlook: "Surgeon demand growing at average rate (3%). Shortages in rural areas and certain specialties like trauma surgery. Minimally invasive techniques creating new opportunities."
+            },
+            "dentist": {
+                title: "Dentist",
+                image: "{{ url_for('static', filename='images/dentist.jpg') }}",
+                description: "Dentists diagnose and treat problems with patients' teeth, gums, and related parts of the mouth. They provide advice and instruction on taking care of teeth and gums and on diet choices that affect oral health. Dentists may specialize in areas like orthodontics, oral surgery, or pediatric dentistry.",
+                salary: "$150k-$300k (varies by specialty and practice type)",
+                education: "Bachelor's degree + 4-year dental school (DDS or DMD)",
+                growth: "6% (faster than average)",
+                experience: "1-2 years residency for specialists",
+                skills: [
+                    "Oral Health Assessment",
+                    "Restorative Procedures",
+                    "Preventive Care",
+                    "Patient Education",
+                    "Manual Dexterity",
+                    "Business Management",
+                    "Communication",
+                    "Attention to Detail"
+                ],
+                employers: "Private Practices, Dental Clinics, Hospitals, Public Health, Academic Institutions",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete pre-dental bachelor's degree (4 years)"
+                    },
+                    {
+                        stage: "Dental School",
+                        content: "Earn DDS or DMD degree (4 years)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Pass National Board Dental Examinations"
+                    },
+                    {
+                        stage: "General Practice",
+                        content: "Begin practice or join existing practice"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Optional 1-4 year residency for specialties"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American Dental Association",
+                        link: "https://www.ada.org/"
+                    },
+                    {
+                        type: "Exam",
+                        title: "DAT Preparation",
+                        link: "https://www.ada.org/en/education-careers/dental-admission-test"
+                    },
+                    {
+                        type: "Book",
+                        title: "Contemporary Fixed Prosthodontics",
+                        link: "https://www.amazon.com/Contemporary-Fixed-Prosthodontics-Stephen-Rosenstiel/dp/0323080118"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of the American Dental Association",
+                        link: "https://jada.ada.org/"
+                    }
+                ],
+                outlook: "Dentist jobs growing 6% with increasing focus on oral health. Cosmetic dentistry and implantology growing specialties. Shortages in rural and underserved areas."
+            },
+            "psychologist": {
+                title: "Clinical Psychologist",
+                image: "{{ url_for('static', filename='images/psychologist.jpg') }}",
+                description: "Clinical psychologists assess, diagnose, and treat mental, emotional, and behavioral disorders. They use psychological evaluations and psychotherapy to help patients manage or overcome mental health issues. Clinical psychologists work in hospitals, mental health clinics, private practices, and academic settings.",
+                salary: "$80k-$150k (varies by setting and experience)",
+                education: "Doctoral degree (PhD or PsyD) in psychology + licensure",
+                growth: "8% (faster than average)",
+                experience: "1-2 year internship during doctoral program",
+                skills: [
+                    "Psychological Assessment",
+                    "Psychotherapy",
+                    "Diagnosis",
+                    "Research Methods",
+                    "Active Listening",
+                    "Empathy",
+                    "Communication",
+                    "Ethical Practice"
+                ],
+                employers: "Hospitals, Mental Health Clinics, Private Practices, Universities, Government Agencies",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete bachelor's in psychology or related field (4 years)"
+                    },
+                    {
+                        stage: "Graduate School",
+                        content: "Earn PhD or PsyD in clinical psychology (4-6 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Complete clinical internship (1-2 years)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Pass EPPP exam and meet state requirements"
+                    },
+                    {
+                        stage: "Practice",
+                        content: "Begin clinical practice or academic position"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American Psychological Association",
+                        link: "https://www.apa.org/"
+                    },
+                    {
+                        type: "Exam",
+                        title: "EPPP Preparation",
+                        link: "https://www.asppb.net/page/EPPPOverview"
+                    },
+                    {
+                        type: "Book",
+                        title: "DSM-5 Diagnostic Manual",
+                        link: "https://www.amazon.com/Diagnostic-Statistical-Manual-Disorders-DSM-5/dp/0890425558"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of Clinical Psychology",
+                        link: "https://onlinelibrary.wiley.com/journal/10974679"
+                    }
+                ],
+                outlook: "Clinical psychologist jobs growing 8% with increasing mental health awareness. Integrated care models creating new opportunities. Specializations in neuropsychology and health psychology in demand."
+            },
+            "public-health": {
+                title: "Public Health Specialist",
+                image: "{{ url_for('static', filename='images/public-health.jpg') }}",
+                description: "Public health specialists develop programs and policies to improve community health outcomes. They analyze health data, identify health risks, and implement interventions to prevent disease and promote wellness. Public health professionals work in government agencies, nonprofits, healthcare organizations, and international health.",
+                salary: "$60k-$120k (varies by role and experience)",
+                education: "Master of Public Health (MPH) most common, some roles require DrPH or PhD",
+                growth: "12% (faster than average)",
+                experience: "2-3 years for entry-level, more for leadership roles",
+                skills: [
+                    "Epidemiology",
+                    "Health Policy",
+                    "Program Planning",
+                    "Data Analysis",
+                    "Community Engagement",
+                    "Health Education",
+                    "Research Methods",
+                    "Cultural Competency"
+                ],
+                employers: "Government Agencies, Nonprofits, Hospitals, Universities, International Organizations",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete bachelor's in public health or related field (4 years)"
+                    },
+                    {
+                        stage: "Graduate Education",
+                        content: "Earn MPH or related master's degree (2 years)"
+                    },
+                    {
+                        stage: "Entry-Level",
+                        content: "Begin as program coordinator or analyst (2-3 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on epidemiology, health policy, or global health"
+                    },
+                    {
+                        stage: "Leadership",
+                        content: "Advance to director or executive roles (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American Public Health Association",
+                        link: "https://www.apha.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Essentials of Public Health",
+                        link: "https://www.amazon.com/Essentials-Public-Health-Bernard-Turnock/dp/1284156561"
+                    },
+                    {
+                        type: "Journal",
+                        title: "American Journal of Public Health",
+                        link: "https://ajph.aphapublications.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified in Public Health (CPH)",
+                        link: "https://www.nbphe.org/"
+                    }
+                ],
+                outlook: "Public health jobs growing 12% with increasing focus on population health. Pandemic response has highlighted need for public health infrastructure. Opportunities in epidemiology, health policy, and global health."
+            },
+            "healthcare-admin": {
+                title: "Healthcare Administrator",
+                image: "{{ url_for('static', filename='images/admin.jpg') }}",
+                description: "Healthcare administrators plan, direct, and coordinate medical and health services. They might manage an entire facility, specific clinical area, or medical practice for a group of physicians. Healthcare administrators work to improve efficiency and quality in delivering healthcare services.",
+                salary: "$90k-$200k (varies by facility size and role)",
+                education: "Master's in Health Administration (MHA) or MBA with healthcare focus",
+                growth: "32% (much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Healthcare Systems",
+                    "Financial Management",
+                    "Strategic Planning",
+                    "Regulatory Compliance",
+                    "Leadership",
+                    "Data Analysis",
+                    "Process Improvement",
+                    "Communication"
+                ],
+                employers: "Hospitals, Healthcare Systems, Nursing Homes, Outpatient Centers, Insurance Companies",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete bachelor's in healthcare admin or related field (4 years)"
+                    },
+                    {
+                        stage: "Entry-Level",
+                        content: "Start as department coordinator or assistant (1-2 years)"
+                    },
+                    {
+                        stage: "Graduate Education",
+                        content: "Earn MHA or MBA with healthcare focus (2 years)"
+                    },
+                    {
+                        stage: "Management",
+                        content: "Become department manager or assistant administrator (3-5 years)"
+                    },
+                    {
+                        stage: "Executive",
+                        content: "Advance to C-suite roles like CEO or COO (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American College of Healthcare Executives",
+                        link: "https://www.ache.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Healthcare Administration: Managing Organized Delivery Systems",
+                        link: "https://www.amazon.com/Healthcare-Administration-Managing-Organized-Delivery/dp/1284156561"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of Healthcare Management",
+                        link: "https://www.ache.org/publications/journals"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Fellow of the American College of Healthcare Executives (FACHE)",
+                        link: "https://www.ache.org/certification/fache"
+                    }
+                ],
+                outlook: "Healthcare administration jobs growing much faster than average (32%) due to healthcare system expansion and complexity. Strong demand for leaders with financial and operational expertise."
+            },
+            "optometrist": {
+                title: "Optometrist",
+                image: "{{ url_for('static', filename='images/optometrist.jpg') }}",
+                description: "Optometrists examine eyes for vision problems and prescribe corrective lenses. They diagnose and treat visual conditions like nearsightedness, farsightedness, and astigmatism. Optometrists also test for and manage eye diseases like glaucoma and provide pre- and post-operative care.",
+                salary: "$120k-$200k (varies by practice type and location)",
+                education: "Bachelor's degree + 4-year Doctor of Optometry (OD) program",
+                growth: "10% (faster than average)",
+                experience: "1 year residency optional for specialization",
+                skills: [
+                    "Eye Examinations",
+                    "Vision Testing",
+                    "Contact Lens Fitting",
+                    "Disease Diagnosis",
+                    "Patient Education",
+                    "Business Management",
+                    "Communication",
+                    "Attention to Detail"
+                ],
+                employers: "Private Practices, Retail Optical Chains, Hospitals, Clinics, Academic Institutions",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete pre-optometry bachelor's degree (4 years)"
+                    },
+                    {
+                        stage: "Optometry School",
+                        content: "Earn OD degree (4 years)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Pass National Board of Examiners in Optometry exams"
+                    },
+                    {
+                        stage: "Residency",
+                        content: "Optional 1-year residency for specialization"
+                    },
+                    {
+                        stage: "Practice",
+                        content: "Begin practice or join existing practice"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Organization",
+                        title: "American Optometric Association",
+                        link: "https://www.aoa.org/"
+                    },
+                    {
+                        type: "Exam",
+                        title: "OAT Preparation",
+                        link: "https://www.ada.org/en/oat"
+                    },
+                    {
+                        type: "Book",
+                        title: "Clinical Optics",
+                        link: "https://www.amazon.com/Clinical-Optics-Andrew-Keenan/dp/0702071686"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Optometry and Vision Science",
+                        link: "https://journals.lww.com/optvissci/pages/default.aspx"
+                    }
+                ],
+                outlook: "Optometrist jobs growing 10% with increasing vision care needs. Opportunities in specialty contact lenses, pediatric optometry, and low vision rehabilitation. Corporate practices expanding rapidly."
+            }
+        };
+
+        // Get career parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerId = urlParams.get('career');
+
+        // Load career data
+        if (careerId && healthcareCareerData[careerId]) {
+            const career = healthcareCareerData[careerId];
+            
+            // Set basic info
+            document.getElementById('career-title').textContent = career.title;
+            document.getElementById('career-image').src = career.image;
+            document.getElementById('career-image').alt = career.title;
+            document.getElementById('career-description').textContent = career.description;
+            
+            // Set highlights
+            document.getElementById('career-salary').textContent = career.salary;
+            document.getElementById('career-education').textContent = career.education;
+            document.getElementById('career-growth').textContent = career.growth;
+            document.getElementById('career-experience').textContent = career.experience;
+            
+            // Set skills
+            const skillsContainer = document.getElementById('skills-container');
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Set employers
+            document.getElementById('career-employers').textContent = career.employers;
+            
+            // Set career path
+            const careerPath = document.getElementById('career-path');
+            career.path.forEach(stage => {
+                const pathItem = document.createElement('div');
+                pathItem.className = 'path-item';
+                pathItem.innerHTML = `
+                    <div class="path-content">
+                        <h4>${stage.stage}</h4>
+                        <p>${stage.content}</p>
+                    </div>
+                `;
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Set resources
+            const resourcesContainer = document.getElementById('resources-container');
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <h4><i class="fas fa-${resource.type === 'Course' ? 'graduation-cap' : 
+                                         resource.type === 'Book' ? 'book' : 
+                                         resource.type === 'Certification' ? 'certificate' : 
+                                         resource.type === 'School' ? 'university' : 
+                                         resource.type === 'Competition' ? 'trophy' : 
+                                         resource.type === 'Association' ? 'users' : 
+                                         resource.type === 'Platform' ? 'laptop' : 
+                                         resource.type === 'Journal' ? 'newspaper' :
+                                         resource.type === 'Exam' ? 'file-alt' :
+                                         resource.type === 'Organization' ? 'building' : 'info-circle'}"></i> ${resource.type}: ${resource.title}</h4>
+                    <a href="${resource.link}" target="_blank">View Resource <i class="fas fa-external-link-alt"></i></a>
+                `;
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            document.getElementById('job-outlook').innerHTML = `
+                <h3><i class="fas fa-chart-line"></i> Market Outlook</h3>
+                <p>${career.outlook}</p>
+            `;
+        } else {
+            // Redirect if invalid career ID
+            window.location.href = '/healthcare';
+        }
+
+        // Animation for elements
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.highlight-card, .path-item, .resource-card')
+               .forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>        

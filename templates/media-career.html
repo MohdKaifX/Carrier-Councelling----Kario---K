@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --media: #ec4899;
+            --communication: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--media), var(--communication));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--media);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--media);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(236, 72, 153, 0.1);
+            color: var(--media);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--media);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--media);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2);
+            border-color: var(--media);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--media);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-media {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--media);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-media:hover {
+            color: var(--communication);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/media'">Back to Media Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Media Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/media" class="back-to-media">
+            <i class="fas fa-arrow-left"></i> Back to Media Careers
+        </a>
+    </div>
+
+    <script>
+        // Media Career Data (for all sub-cards in media.html)
+        const mediaCareerData = {
+            "journalist": {
+                title: "Journalist",
+                image: "{{ url_for('static', filename='images/journalist.jpg') }}",
+                description: "Journalists research, investigate, and report news stories across print, digital, and broadcast media. They gather information through interviews, research, and observation, then present it in a clear, accurate, and engaging manner for the public.",
+                salary: "$35,000 - $100,000+ (varies by market size and experience)",
+                education: "Bachelor's degree in Journalism, Communications, or related field",
+                growth: "-9% (2022-2032) for traditional journalism, +15% for digital journalism",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Research & fact-checking",
+                    "Interviewing techniques",
+                    "News writing & editing",
+                    "Multimedia storytelling",
+                    "Deadline management",
+                    "Ethics & media law",
+                    "Social media engagement",
+                    "Data journalism"
+                ],
+                companies: "New York Times, Washington Post, BBC, CNN, Reuters, Associated Press, local news organizations",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete a journalism degree or related program (4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience through internships at media outlets (6 months - 1 year)"
+                    },
+                    {
+                        stage: "Reporter",
+                        content: "Entry-level position covering general assignments (1-3 years)"
+                    },
+                    {
+                        stage: "Specialist Reporter",
+                        content: "Focus on specific beats (politics, business, tech, etc.) (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Journalist/Editor",
+                        content: "Lead coverage areas or manage teams (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Journalism Fundamentals (Poynter)",
+                        link: "https://www.poynter.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Elements of Journalism",
+                        link: "https://www.amazon.com/Elements-Journalism-What-People-Should/dp/0804136785"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Society of Professional Journalists",
+                        link: "https://www.spj.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Nieman Journalism Lab",
+                        link: "https://www.niemanlab.org/"
+                    }
+                ],
+                outlook: "Traditional journalism roles are declining (-9%), but digital journalism opportunities are growing (+15%). Multimedia skills and data journalism expertise are increasingly valuable. Freelance and niche journalism opportunities are expanding."
+            },
+            "news-anchor": {
+                title: "News Anchor",
+                image: "{{ url_for('static', filename='images/news-anchor.jpg') }}",
+                description: "News anchors present news stories on television broadcasts, conduct interviews with guests, and moderate discussions. They serve as the public face of news programs, delivering information with credibility, clarity, and professionalism.",
+                salary: "$50,000 - $200,000+ (varies by market size and experience)",
+                education: "Bachelor's degree in Journalism, Communications, or Broadcasting",
+                growth: "-3% (2022-2032) due to consolidation in broadcast industry",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-7 years, Senior: 8+ years",
+                skills: [
+                    "On-camera presence",
+                    "Clear diction & pronunciation",
+                    "Live broadcasting",
+                    "Interviewing skills",
+                    "News writing for broadcast",
+                    "Teleprompter use",
+                    "Crisis reporting",
+                    "Social media engagement"
+                ],
+                companies: "CNN, Fox News, MSNBC, BBC, CBS, ABC, NBC, local TV stations",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in journalism or communications (4 years)"
+                    },
+                    {
+                        stage: "Reporter",
+                        content: "Start as field reporter in small market (1-3 years)"
+                    },
+                    {
+                        stage: "Weekend Anchor",
+                        content: "Progress to anchoring shifts in small/medium markets (2-4 years)"
+                    },
+                    {
+                        stage: "Main Anchor",
+                        content: "Become primary anchor in larger markets (5-8 years)"
+                    },
+                    {
+                        stage: "Network Anchor",
+                        content: "National-level anchoring (10+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Broadcast Journalism (Udemy)",
+                        link: "https://www.udemy.com/topic/broadcast-journalism/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Anchor Chair",
+                        link: "https://www.amazon.com/Anchor-Chair-Secrets-Television-News/dp/1589793424"
+                    },
+                    {
+                        type: "Organization",
+                        title: "National Association of Broadcasters",
+                        link: "https://www.nab.org/"
+                    },
+                    {
+                        type: "Workshop",
+                        title: "Voice & Presentation Training",
+                        link: "https://www.voiceandvisioninc.com/"
+                    }
+                ],
+                outlook: "Broadcast news anchor positions are declining slightly (-3%) due to industry consolidation, but opportunities exist in digital streaming news platforms. Multi-platform skills (TV + digital) are increasingly important."
+            },
+            "public-relations": {
+                title: "Public Relations Specialist",
+                image: "{{ url_for('static', filename='images/public-relations.jpg') }}",
+                description: "Public relations specialists manage organizational reputation, media relations, and strategic communications. They craft press releases, organize events, handle crisis communications, and build relationships with media outlets to shape public perception.",
+                salary: "$50,000 - $120,000 (varies by industry and experience)",
+                education: "Bachelor's degree in PR, Communications, Journalism, or Marketing",
+                growth: "+8% (2022-2032), faster than average",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Media relations",
+                    "Press release writing",
+                    "Crisis communication",
+                    "Event planning",
+                    "Social media strategy",
+                    "Brand messaging",
+                    "Stakeholder engagement",
+                    "Analytics & reporting"
+                ],
+                companies: "Edelman, Weber Shandwick, FleishmanHillard, Ketchum, in-house PR departments",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in PR or related field (4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience through PR agency or corporate internships (6 months - 1 year)"
+                    },
+                    {
+                        stage: "PR Assistant",
+                        content: "Entry-level position supporting PR campaigns (1-2 years)"
+                    },
+                    {
+                        stage: "PR Specialist",
+                        content: "Lead specific PR initiatives (3-5 years)"
+                    },
+                    {
+                        stage: "PR Manager/Director",
+                        content: "Develop and oversee PR strategies (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "APR (Accredited in Public Relations)",
+                        link: "https://www.praccreditation.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Public Relations Strategies and Tactics",
+                        link: "https://www.amazon.com/Public-Relations-Strategies-Tactics-11th/dp/0205963864"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Public Relations Society of America",
+                        link: "https://www.prsa.org/"
+                    },
+                    {
+                        type: "Blog",
+                        title: "PR Daily",
+                        link: "https://www.prdaily.com/"
+                    }
+                ],
+                outlook: "PR specialist roles growing 8% with increasing need for reputation management. Digital PR skills and crisis communication expertise are particularly valuable. Healthcare and tech PR are strong growth areas."
+            },
+            "content-creator": {
+                title: "Content Creator",
+                image: "{{ url_for('static', filename='images/content-creator.jpg') }}",
+                description: "Content creators develop engaging written, visual, and multimedia content for digital platforms. They produce blogs, videos, social media posts, and other materials to inform, entertain, or market to specific audiences.",
+                salary: "$30,000 - $150,000+ (varies widely by platform and following)",
+                education: "No formal requirement; portfolio and demonstrated skills most important",
+                growth: "+30% (2022-2032), much faster than average",
+                experience: "Entry-level: 0-1 year, Mid-level: 2-3 years, Senior: 4+ years",
+                skills: [
+                    "Content strategy",
+                    "Writing & editing",
+                    "Video production",
+                    "Social media platforms",
+                    "SEO optimization",
+                    "Graphic design basics",
+                    "Analytics interpretation",
+                    "Audience engagement"
+                ],
+                companies: "BuzzFeed, Vice, Vox Media, independent creators, brand content teams",
+                path: [
+                    {
+                        stage: "Skill Development",
+                        content: "Build content creation skills through practice and courses"
+                    },
+                    {
+                        stage: "Portfolio Building",
+                        content: "Create sample work and personal projects"
+                    },
+                    {
+                        stage: "Freelance/Staff",
+                        content: "Start with freelance gigs or entry-level content roles"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on specific content types or industries"
+                    },
+                    {
+                        stage: "Senior Creator/Manager",
+                        content: "Lead content teams or build personal brand"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Content Marketing Certification (HubSpot)",
+                        link: "https://academy.hubspot.com/courses/content-marketing"
+                    },
+                    {
+                        type: "Book",
+                        title: "Everybody Writes",
+                        link: "https://www.amazon.com/Everybody-Writes-Go-Creating-Ridiculously/dp/1118905555"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Canva for Content Creation",
+                        link: "https://www.canva.com/"
+                    },
+                    {
+                        type: "Community",
+                        title: "Content Creator Groups",
+                        link: "https://www.facebook.com/groups/contentcreatorcommunity/"
+                    }
+                ],
+                outlook: "Content creation roles growing rapidly (+30%) with digital expansion. Video content and short-form platforms driving demand. Branded content and influencer marketing offer significant opportunities."
+            },
+            "editor": {
+                title: "Editor",
+                image: "{{ url_for('static', filename='images/editor.jpg') }}",
+                description: "Editors review, refine, and prepare content for publication across various media formats. They ensure accuracy, clarity, and consistency in written materials, working with writers to improve content quality and meet publication standards.",
+                salary: "$45,000 - $110,000 (varies by industry and publication size)",
+                education: "Bachelor's degree in English, Journalism, or related field",
+                growth: "-5% (2022-2032) for traditional editing, +10% for digital content editing",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Grammar & style",
+                    "Content organization",
+                    "Fact-checking",
+                    "SEO understanding",
+                    "CMS proficiency",
+                    "Collaboration",
+                    "Attention to detail",
+                    "Project management"
+                ],
+                companies: "Book publishers, magazines, newspapers, online media, corporate communications",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in relevant field (4 years)"
+                    },
+                    {
+                        stage: "Assistant Editor",
+                        content: "Entry-level editing and proofreading (1-2 years)"
+                    },
+                    {
+                        stage: "Associate Editor",
+                        content: "More substantive editing responsibilities (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Editor",
+                        content: "Lead editorial projects and teams (6-8 years)"
+                    },
+                    {
+                        stage: "Editor-in-Chief",
+                        content: "Oversee entire publication (10+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Guide",
+                        title: "AP Stylebook",
+                        link: "https://www.apstylebook.com/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Editing Mastery (Udemy)",
+                        link: "https://www.udemy.com/course/editing-mastery/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "American Society of Journalists and Authors",
+                        link: "https://asja.org/"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Grammarly for Editors",
+                        link: "https://www.grammarly.com/"
+                    }
+                ],
+                outlook: "Traditional editing roles declining slightly (-5%) but digital content editing growing (+10%). Technical editing and SEO content editing are strong growth areas."
+            },
+            "advertising-specialist": {
+                title: "Advertising Specialist",
+                image: "{{ url_for('static', filename='images/advertising-specialist.jpg') }}",
+                description: "Advertising specialists develop and implement creative campaigns to promote products and services. They work with clients to understand marketing objectives, create compelling ad content, and manage media placements across various channels.",
+                salary: "$50,000 - $130,000 (varies by agency size and experience)",
+                education: "Bachelor's degree in Advertising, Marketing, or related field",
+                growth: "+10% (2022-2032), about as fast as average",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Creative concepting",
+                    "Copywriting",
+                    "Media planning",
+                    "Campaign analytics",
+                    "Client presentation",
+                    "Digital ad platforms",
+                    "Brand strategy",
+                    "Market research"
+                ],
+                companies: "WPP, Omnicom, Publicis, Interpublic Group, independent agencies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in advertising or marketing (4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain agency experience (6 months - 1 year)"
+                    },
+                    {
+                        stage: "Junior Specialist",
+                        content: "Support campaign development (1-2 years)"
+                    },
+                    {
+                        stage: "Advertising Specialist",
+                        content: "Lead campaign elements (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Specialist/Manager",
+                        content: "Oversee accounts and teams (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Google Ads Certification",
+                        link: "https://skillshop.exceedlms.com/student/path/18141-google-ads-certifications"
+                    },
+                    {
+                        type: "Book",
+                        title: "Ogilvy on Advertising",
+                        link: "https://www.amazon.com/Ogilvy-Advertising-David/dp/039472903X"
+                    },
+                    {
+                        type: "Organization",
+                        title: "American Advertising Federation",
+                        link: "https://www.aaf.org/"
+                    },
+                    {
+                        type: "Award Show",
+                        title: "Cannes Lions Archive",
+                        link: "https://www.canneslions.com/"
+                    }
+                ],
+                outlook: "Advertising specialist roles growing 10% with digital transformation. Programmatic advertising and data-driven creative are key growth areas. Healthcare and tech advertising are particularly strong."
+            },
+            "social-media-manager": {
+                title: "Social Media Manager",
+                image: "{{ url_for('static', filename='images/social-media-manager.jpg') }}",
+                description: "Social media managers develop strategies and create content to grow brand presence on social platforms. They analyze engagement data, interact with audiences, and implement campaigns to achieve marketing objectives across social channels.",
+                salary: "$45,000 - $100,000 (varies by company size and industry)",
+                education: "Bachelor's degree in Marketing, Communications, or related field",
+                growth: "+20% (2022-2032), much faster than average",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Platform expertise",
+                    "Content creation",
+                    "Community management",
+                    "Analytics interpretation",
+                    "Paid social advertising",
+                    "Crisis response",
+                    "Trend awareness",
+                    "Brand voice development"
+                ],
+                companies: "All major brands, digital agencies, media companies, nonprofits",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in relevant field (4 years)"
+                    },
+                    {
+                        stage: "Assistant Role",
+                        content: "Start with social media coordination (1-2 years)"
+                    },
+                    {
+                        stage: "Social Media Manager",
+                        content: "Lead platform strategies (3-4 years)"
+                    },
+                    {
+                        stage: "Senior Manager",
+                        content: "Oversee teams and budgets (5+ years)"
+                    },
+                    {
+                        stage: "Director of Social",
+                        content: "Set organizational strategy (8+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Meta Blueprint",
+                        link: "https://www.facebookblueprint.com/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Social Media Marketing Course (HubSpot)",
+                        link: "https://academy.hubspot.com/courses/social-media-marketing"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Hootsuite Academy",
+                        link: "https://education.hootsuite.com/"
+                    },
+                    {
+                        type: "Blog",
+                        title: "Social Media Examiner",
+                        link: "https://www.socialmediaexaminer.com/"
+                    }
+                ],
+                outlook: "Social media manager roles growing rapidly (+20%) as brands increase digital presence. Video content strategy and paid social expertise are particularly valuable skills."
+            },
+            "videographer": {
+                title: "Videographer",
+                image: "{{ url_for('static', filename='images/videographer.jpg') }}",
+                description: "Videographers plan, shoot, and edit video content for various media platforms and clients. They work with equipment like cameras, lighting, and audio gear to produce professional-quality video content for news, marketing, entertainment, and more.",
+                salary: "$40,000 - $100,000 (varies by industry and freelance rates)",
+                education: "No formal requirement; portfolio and technical skills most important",
+                growth: "+12% (2022-2032), faster than average",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Camera operation",
+                    "Lighting setup",
+                    "Audio recording",
+                    "Video editing",
+                    "Storyboarding",
+                    "Color correction",
+                    "Equipment maintenance",
+                    "Client collaboration"
+                ],
+                companies: "TV stations, production companies, marketing agencies, corporate video departments",
+                path: [
+                    {
+                        stage: "Skill Development",
+                        content: "Learn videography through courses or self-teaching"
+                    },
+                    {
+                        stage: "Portfolio Building",
+                        content: "Create sample work and personal projects"
+                    },
+                    {
+                        stage: "Assistant/Intern",
+                        content: "Gain professional experience (1-2 years)"
+                    },
+                    {
+                        stage: "Videographer",
+                        content: "Handle complete productions (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Videographer/Director",
+                        content: "Lead creative direction (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Cinematography Masterclass (Udemy)",
+                        link: "https://www.udemy.com/course/cinematography-course/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Filmmaker's Handbook",
+                        link: "https://www.amazon.com/Filmmakers-Handbook-Comprehensive-Digital-Filmmaking/dp/0452297281"
+                    },
+                    {
+                        type: "Software",
+                        title: "Adobe Premiere Pro Tutorials",
+                        link: "https://helpx.adobe.com/premiere-pro/tutorials.html"
+                    },
+                    {
+                        type: "Community",
+                        title: "Videographer Forums",
+                        link: "https://www.dvxuser.com/"
+                    }
+                ],
+                outlook: "Videographer roles growing 12% with increasing video content demand. Corporate video and live streaming expertise are particularly valuable. Drone videography is an emerging specialty."
+            },
+            "radio-jockey": {
+                title: "Radio Jockey",
+                image: "{{ url_for('static', filename='images/radio-jockey.jpg') }}",
+                description: "Radio jockeys host radio programs, conduct interviews, and engage with listeners. They create entertaining and informative content for broadcast, manage music playlists, and interact with audiences through calls and social media.",
+                salary: "$30,000 - $90,000 (varies by market size and show popularity)",
+                education: "No formal requirement; voice training and experience most important",
+                growth: "-2% (2022-2032), slight decline due to digital competition",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Voice modulation",
+                    "Live broadcasting",
+                    "Interviewing",
+                    "Audio editing",
+                    "Script writing",
+                    "Music knowledge",
+                    "Social media engagement",
+                    "Improvisation"
+                ],
+                companies: "iHeartMedia, Cumulus Media, Entercom, SiriusXM, local radio stations",
+                path: [
+                    {
+                        stage: "Training",
+                        content: "Develop voice skills through practice or courses"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain station experience (6 months - 1 year)"
+                    },
+                    {
+                        stage: "Weekend/Overnight Host",
+                        content: "Start with off-peak shifts (1-2 years)"
+                    },
+                    {
+                        stage: "Drive Time Host",
+                        content: "Progress to prime time slots (3-5 years)"
+                    },
+                    {
+                        stage: "Program Director",
+                        content: "Manage station content (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Radio Broadcasting (Udemy)",
+                        link: "https://www.udemy.com/course/radio-broadcasting/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Radio Production",
+                        link: "https://www.amazon.com/Radio-Production-Robert-McLeish/dp/1138124824"
+                    },
+                    {
+                        type: "Organization",
+                        title: "National Association of Broadcasters",
+                        link: "https://www.nab.org/"
+                    },
+                    {
+                        type: "Software",
+                        title: "Audacity Audio Editor",
+                        link: "https://www.audacityteam.org/"
+                    }
+                ],
+                outlook: "Traditional radio roles declining slightly (-2%) but podcasting and digital audio creating new opportunities. Multi-platform audio content skills are increasingly valuable."
+            },
+            "media-researcher": {
+                title: "Media Researcher",
+                image: "{{ url_for('static', filename='images/media-researcher.jpg') }}",
+                description: "Media researchers gather and analyze information to support content creation and production. They conduct background research, fact-check materials, and provide insights that inform news stories, documentaries, and other media projects.",
+                salary: "$40,000 - $85,000 (varies by employer and experience)",
+                education: "Bachelor's degree in Journalism, Communications, or related field",
+                growth: "+5% (2022-2032), about as fast as average",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Fact-checking",
+                    "Data analysis",
+                    "Source verification",
+                    "Database searching",
+                    "Market trends",
+                    "Legal compliance"
+                ],
+                companies: "News organizations, production companies, documentary filmmakers, market research firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in journalism, research methods, or related field"
+                    },
+                    {
+                        stage: "Research Assistant",
+                        content: "Entry-level position supporting senior researchers (1-2 years)"
+                    },
+                    {
+                        stage: "Media Researcher",
+                        content: "Lead research projects independently (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Researcher",
+                        content: "Develop research methodologies and strategies (6+ years)"
+                    },
+                    {
+                        stage: "Research Director",
+                        content: "Oversee research departments (8+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Investigative Research Methods",
+                        link: "https://www.poynter.org/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Fact Checker's Bible",
+                        link: "https://www.amazon.com/Fact-Checkers-Bible-Getting-Right/dp/0385721064"
+                    },
+                    {
+                        type: "Tool",
+                        title: "LexisNexis Research Platform",
+                        link: "https://www.lexisnexis.com/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Investigative Reporters and Editors",
+                        link: "https://www.ire.org/"
+                    }
+                ],
+                outlook: "Media researcher roles growing moderately (+5%) with increasing need for fact-checking and data-driven content. Specialists in data visualization and investigative research techniques are in high demand."
+            }
+        };
+
+        // Load career data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerKey = urlParams.get('career');
+
+        if (careerKey && mediaCareerData[careerKey]) {
+            const career = mediaCareerData[careerKey];
+            
+            // Set basic information
+            document.title = `${career.title} | CareerHub`;
+            document.getElementById("career-title").textContent = career.title;
+            document.getElementById("career-image").src = career.image;
+            document.getElementById("career-image").alt = career.title;
+            document.getElementById("career-description").textContent = career.description;
+            document.getElementById("career-salary").textContent = career.salary;
+            document.getElementById("career-education").textContent = career.education;
+            document.getElementById("career-growth").textContent = career.growth;
+            document.getElementById("career-experience").textContent = career.experience;
+            document.getElementById("career-companies").textContent = career.companies;
+            
+            // Populate skills
+            const skillsContainer = document.getElementById("skills-container");
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement("div");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Populate career path
+            const careerPath = document.getElementById("career-path");
+            career.path.forEach((stage, index) => {
+                const pathItem = document.createElement("div");
+                pathItem.className = "path-item";
+                
+                const pathContent = document.createElement("div");
+                pathContent.className = "path-content";
+                
+                const stageTitle = document.createElement("h4");
+                stageTitle.textContent = `${index + 1}. ${stage.stage}`;
+                
+                const stageDesc = document.createElement("p");
+                stageDesc.textContent = stage.content;
+                
+                pathContent.appendChild(stageTitle);
+                pathContent.appendChild(stageDesc);
+                pathItem.appendChild(pathContent);
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Populate resources
+            const resourcesContainer = document.getElementById("resources-container");
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement("div");
+                resourceCard.className = "resource-card";
+                
+                const resourceTitle = document.createElement("h4");
+                resourceTitle.innerHTML = `<i class="fas ${getResourceIcon(resource.type)}"></i> ${resource.type}: ${resource.title}`;
+                
+                const resourceLink = document.createElement("a");
+                resourceLink.href = resource.link;
+                resourceLink.target = "_blank";
+                resourceLink.textContent = "Explore Resource →";
+                
+                resourceCard.appendChild(resourceTitle);
+                resourceCard.appendChild(resourceLink);
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            const jobOutlook = document.getElementById("job-outlook");
+            jobOutlook.innerHTML = `<h3><i class="fas fa-chart-line"></i> Market Outlook</h3><p>${career.outlook}</p>`;
+            
+        } else {
+            document.querySelector(".career-container").innerHTML = `
+                <div style="text-align: center; padding: 5rem 0;">
+                    <h2 style="color: var(--media); margin-bottom: 1rem;">Media Career Not Found</h2>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">The requested media career path could not be found.</p>
+                    <button class="cta-btn" onclick="window.location.href='/media'">Browse Media Careers</button>
+                </div>
+            `;
+        }
+
+        function getResourceIcon(type) {
+            switch(type.toLowerCase()) {
+                case 'course': return 'fa-graduation-cap';
+                case 'book': return 'fa-book';
+                case 'platform': return 'fa-laptop';
+                case 'certification': return 'fa-certificate';
+                case 'organization': return 'fa-users';
+                case 'tool': return 'fa-tools';
+                case 'software': return 'fa-laptop-code';
+                case 'guide': return 'fa-book-open';
+                case 'blog': return 'fa-blog';
+                case 'award show': return 'fa-trophy';
+                case 'workshop': return 'fa-chalkboard-teacher';
+                case 'community': return 'fa-users';
+                default: return 'fa-link';
+            }
+        }
+    </script>
+</body>
+</html>

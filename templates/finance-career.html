@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #2563eb;
+            --accent: #60a5fa;
+            --finance-blue: #3b82f6;
+            --finance-dark: #1e40af;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--finance-blue), var(--finance-dark));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--finance-blue), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .highlight-card h3 {
+            color: var(--finance-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--finance-blue);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--finance-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--finance-blue);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--finance-blue);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+            border-color: var(--finance-blue);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--finance-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-finance {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--finance-blue);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-finance:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/finance'">Back to Finance Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Finance Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/finance" class="back-to-finance">
+            <i class="fas fa-arrow-left"></i> Back to Finance Careers
+        </a>
+    </div>
+
+    <script>
+        // Finance Career Data (for all sub-cards in finance.html)
+        const financeCareerData = {
+            "financial-analyst": {
+                title: "Financial Analyst",
+                image: "{{ url_for('static', filename='images/financial-analyst.jpg') }}",
+                description: "Financial analysts evaluate financial data to guide investment decisions and business strategies. They analyze market trends, company performance, and economic conditions to provide recommendations for individuals and organizations.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "B.Com/MBA in Finance + CFA/FRM Certifications (Optional)",
+                growth: "9% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Financial Modeling",
+                    "Excel/Financial Software",
+                    "Data Analysis",
+                    "Valuation Techniques",
+                    "Accounting Principles",
+                    "Risk Assessment",
+                    "Presentation Skills",
+                    "Industry Research"
+                ],
+                companies: "Goldman Sachs, JP Morgan, Morgan Stanley, HDFC, ICICI, Indian banks, fintech startups, investment firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in commerce/finance/related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience through financial internships (6-12 months)"
+                    },
+                    {
+                        stage: "Junior Analyst",
+                        content: "Assist with financial research and reporting (1-2 years)"
+                    },
+                    {
+                        stage: "Financial Analyst",
+                        content: "Conduct independent analyses and make recommendations (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Analyst/Manager",
+                        content: "Lead teams and strategic financial decisions (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Chartered Financial Analyst (CFA)",
+                        link: "https://www.cfainstitute.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Financial Markets (Yale on Coursera)",
+                        link: "https://www.coursera.org/learn/financial-markets-global"
+                    },
+                    {
+                        type: "Book",
+                        title: "Investment Banking by Rosenbaum & Pearl",
+                        link: "https://www.amazon.in/Investment-Banking-Valuation-Leveraged-Buyouts/dp/111845611X"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Wall Street Prep Training",
+                        link: "https://www.wallstreetprep.com/"
+                    }
+                ],
+                outlook: "Financial analyst roles growing steadily at 9% with increasing complexity in financial markets. Particularly strong demand in fintech and investment sectors. Professionals with CFA certifications and data analysis skills have better prospects."
+            },
+            "economist": {
+                title: "Economist",
+                image: "{{ url_for('static', filename='images/economist.jpg') }}",
+                description: "Economists research economic trends, analyze data, and advise on policy and business decisions. They work in government, academia, and private sector to understand and predict economic phenomena.",
+                salary: "₹8-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "MA/MSc in Economics (2 years), PhD for advanced research positions",
+                growth: "13% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Economic Theory",
+                    "Statistical Analysis",
+                    "Research Methodology",
+                    "Data Interpretation",
+                    "Policy Analysis",
+                    "Econometric Modeling",
+                    "Report Writing",
+                    "Presentation Skills"
+                ],
+                companies: "RBI, NITI Aayog, World Bank, IMF, Universities, Research Institutions, Think Tanks",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete bachelor's in economics or related field"
+                    },
+                    {
+                        stage: "Graduate Studies",
+                        content: "Pursue master's degree in economics (2 years)"
+                    },
+                    {
+                        stage: "Research Assistant",
+                        content: "Gain research experience (1-2 years)"
+                    },
+                    {
+                        stage: "Economist",
+                        content: "Conduct independent economic research (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Economist",
+                        content: "Lead research teams and policy recommendations (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Microeconomics Principles (Coursera)",
+                        link: "https://www.coursera.org/learn/microeconomics-part1"
+                    },
+                    {
+                        type: "Book",
+                        title: "Principles of Economics by N. Gregory Mankiw",
+                        link: "https://www.amazon.in/Principles-Economics-7th-N-Gregory-Mankiw/dp/9385932288"
+                    },
+                    {
+                        type: "Software",
+                        title: "Stata Statistical Software",
+                        link: "https://www.stata.com/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Economic and Political Weekly",
+                        link: "https://www.epw.in/"
+                    }
+                ],
+                outlook: "Economist roles growing 13% with increasing need for data-driven policy decisions. Strong demand in financial institutions and government agencies. Specializations in behavioral economics and development economics are particularly valuable."
+            },
+            "accountant": {
+                title: "Accountant",
+                image: "{{ url_for('static', filename='images/accountant.jpg') }}",                description: "Accountants prepare financial statements, ensure compliance with regulations, and analyze financial operations. They work across industries to maintain accurate financial records and support business decisions.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-30+ LPA (Senior)",
+                education: "B.Com (3 years) + CA/CPA/CMA (3-5 years)",
+                growth: "6% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Accounting Principles",
+                    "Financial Reporting",
+                    "Tax Preparation",
+                    "Audit Procedures",
+                    "Bookkeeping",
+                    "ERP Software",
+                    "Regulatory Compliance",
+                    "Attention to Detail"
+                ],
+                companies: "Big 4 Accounting Firms (PwC, EY, Deloitte, KPMG), Corporate Finance Departments, Banks, Government",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in commerce or accounting"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Pursue CA, CPA, or CMA qualifications"
+                    },
+                    {
+                        stage: "Junior Accountant",
+                        content: "Handle basic bookkeeping and reporting (1-2 years)"
+                    },
+                    {
+                        stage: "Accountant",
+                        content: "Manage full accounting cycles (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Accountant/Controller",
+                        content: "Oversee financial operations (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Chartered Accountancy (CA)",
+                        link: "https://www.icai.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Financial Accounting Fundamentals (edX)",
+                        link: "https://www.edx.org/course/financial-accounting-fundamentals"
+                    },
+                    {
+                        type: "Book",
+                        title: "Accounting All-in-One For Dummies",
+                        link: "https://www.amazon.in/Accounting-All-One-Dummies-Kenneth-Boyd/dp/1118758001"
+                    },
+                    {
+                        type: "Software",
+                        title: "Tally ERP 9",
+                        link: "https://tallysolutions.com/tally-erp9/"
+                    }
+                ],
+                outlook: "Accounting roles growing steadily at 6% with consistent demand across industries. Professionals with CPA/CA qualifications and expertise in financial software have excellent prospects. Automation is changing but not eliminating these roles."
+            },
+            "auditor": {
+                title: "Auditor",
+                image: "{{ url_for('static', filename='images/auditor.jpg') }}",
+                description: "Auditors examine financial records to ensure accuracy and compliance with laws and regulations. They identify risks, assess financial operations, and recommend improvements to internal controls.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "B.Com (3 years) + CA/CPA/CIA (3-5 years)",
+                growth: "7% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Audit Standards",
+                    "Risk Assessment",
+                    "Internal Controls",
+                    "Financial Analysis",
+                    "Regulatory Knowledge",
+                    "Attention to Detail",
+                    "Communication",
+                    "Ethical Judgment"
+                ],
+                companies: "Big 4 Accounting Firms, Internal Audit Departments, Government Agencies, RBI, SEBI",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in commerce or accounting"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Pursue CA, CPA, or CIA qualifications"
+                    },
+                    {
+                        stage: "Junior Auditor",
+                        content: "Assist with audit procedures (1-2 years)"
+                    },
+                    {
+                        stage: "Auditor",
+                        content: "Lead audit engagements (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Auditor/Manager",
+                        content: "Oversee audit teams and strategy (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Certified Internal Auditor (CIA)",
+                        link: "https://www.theiia.org/certifications/certified-internal-auditor/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Auditing I: Conceptual Foundations (Coursera)",
+                        link: "https://www.coursera.org/learn/auditing"
+                    },
+                    {
+                        type: "Book",
+                        title: "Principles of Auditing by Rick Hayes",
+                        link: "https://www.amazon.in/Principles-Auditing-Introduction-International-Standards/dp/0077169500"
+                    },
+                    {
+                        type: "Standard",
+                        title: "International Standards on Auditing",
+                        link: "https://www.ifac.org/publications-resources/international-standards-auditing-assurance-and-ethics-handbook"
+                    }
+                ],
+                outlook: "Auditing roles growing at 7% with increasing regulatory complexity. High demand in financial services and corporate governance. Professionals with IT audit skills have particularly strong prospects."
+            },
+            "investment-banker": {
+                title: "Investment Banker",
+                image: "{{ url_for('static', filename='images/investment-banker.jpg') }}",
+                description: "Investment bankers help corporations and governments raise capital through IPOs, bond offerings, and private placements. They also advise on mergers, acquisitions, and other financial transactions.",
+                salary: "₹12-25 LPA (Entry Level), ₹25-50 LPA (Mid Level), ₹50-100+ LPA (Senior)",
+                education: "MBA in Finance from top institution (2 years) + CFA (Optional)",
+                growth: "10% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Financial Modeling",
+                    "Valuation Techniques",
+                    "Deal Structuring",
+                    "Pitch Preparation",
+                    "Market Analysis",
+                    "Negotiation",
+                    "Client Management",
+                    "Regulatory Knowledge"
+                ],
+                companies: "Goldman Sachs, Morgan Stanley, JP Morgan, Citibank, Credit Suisse, Indian investment banks",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in finance/economics + MBA from top school"
+                    },
+                    {
+                        stage: "Analyst Program",
+                        content: "2-3 year intensive training program at investment bank"
+                    },
+                    {
+                        stage: "Associate",
+                        content: "Take on more responsibility in deal execution (2-3 years)"
+                    },
+                    {
+                        stage: "Vice President",
+                        content: "Manage deal teams and client relationships (4-6 years)"
+                    },
+                    {
+                        stage: "Director/Managing Director",
+                        content: "Originate deals and lead business units (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Investment Banking by Joshua Rosenbaum",
+                        link: "https://www.amazon.in/Investment-Banking-Valuation-Leveraged-Buyouts/dp/111845611X"
+                    },
+                    {
+                        type: "Course",
+                        title: "Investment Banking Preparation (Wall Street Prep)",
+                        link: "https://www.wallstreetprep.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Chartered Financial Analyst (CFA)",
+                        link: "https://www.cfainstitute.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Bloomberg Terminal Training",
+                        link: "https://www.bloomberg.com/professional/solution/bloomberg-terminal/"
+                    }
+                ],
+                outlook: "Investment banking growing at 10% with strong deal activity in emerging markets. Highly competitive field where top MBA graduates have advantage. Boutique firms specializing in sectors like tech are growing rapidly."
+            },
+            "financial-planner": {
+                title: "Financial Planner",
+                image: "{{ url_for('static', filename='images/financial-planner.jpg') }}",
+                description: "Financial planners help individuals create comprehensive plans for wealth management, retirement, education funding, and risk management. They assess clients' financial situations and develop personalized strategies.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "B.Com/MBA in Finance + CFP Certification (1-2 years)",
+                growth: "15% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Financial Planning",
+                    "Retirement Planning",
+                    "Tax Planning",
+                    "Estate Planning",
+                    "Risk Management",
+                    "Client Communication",
+                    "Investment Knowledge",
+                    "Regulatory Compliance"
+                ],
+                companies: "Independent advisory firms, Banks (HDFC, ICICI), Insurance Companies, Wealth Management Firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in finance or related field"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain CFP or similar financial planning certification"
+                    },
+                    {
+                        stage: "Associate Planner",
+                        content: "Work under senior planners (1-2 years)"
+                    },
+                    {
+                        stage: "Financial Planner",
+                        content: "Manage client relationships independently (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Planner/Partner",
+                        content: "Build practice and mentor junior planners (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Certified Financial Planner (CFP)",
+                        link: "https://www.fpsb.org/certification/certified-financial-planner-cfp-certification/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Personal & Family Financial Planning (Coursera)",
+                        link: "https://www.coursera.org/learn/family-planning"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Psychology of Money by Morgan Housel",
+                        link: "https://www.amazon.in/Psychology-Money-Morgan-Housel/dp/9390166268"
+                    },
+                    {
+                        type: "Software",
+                        title: "Financial Planning Tools (eMoney, MoneyGuidePro)",
+                        link: "https://www.emoneyadvisor.com/"
+                    }
+                ],
+                outlook: "Financial planning roles growing 15% with increasing wealth and retirement planning needs. Strong demand for fee-only advisors as trust in commission-based models declines. Digital tools are enhancing but not replacing human advisors."
+            },
+            "actuary": {
+                title: "Actuary",
+                image: "{{ url_for('static', filename='images/actuary.jpg') }}",
+                description: "Actuaries use mathematics, statistics, and financial theory to assess risk in insurance and finance. They design policies, calculate premiums, and ensure financial stability for insurance products.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "BSc in Mathematics/Statistics + Actuarial Science Exams (5-7 years)",
+                growth: "18% (much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Probability & Statistics",
+                    "Risk Modeling",
+                    "Financial Mathematics",
+                    "Insurance Principles",
+                    "Data Analysis",
+                    "Regulatory Compliance",
+                    "Pricing Strategies",
+                    "Communication"
+                ],
+                companies: "Life Insurance Companies (LIC, HDFC Life), General Insurance Firms, Reinsurers, Consulting Firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in mathematics/statistics/actuarial science"
+                    },
+                    {
+                        stage: "Exam Progress",
+                        content: "Pass initial actuarial exams while gaining work experience"
+                    },
+                    {
+                        stage: "Actuarial Analyst",
+                        content: "Develop models and perform calculations (1-3 years)"
+                    },
+                    {
+                        stage: "Associate Actuary",
+                        content: "Take on more complex projects (3-6 years)"
+                    },
+                    {
+                        stage: "Fellow/Chief Actuary",
+                        content: "Lead actuarial functions (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Exam",
+                        title: "Institute of Actuaries of India Exams",
+                        link: "https://www.actuariesindia.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Actuarial Science Fundamentals (edX)",
+                        link: "https://www.edx.org/course/actuarial-science"
+                    },
+                    {
+                        type: "Book",
+                        title: "Actuarial Mathematics for Life Contingent Risks",
+                        link: "https://www.amazon.in/Actuarial-Mathematics-Life-Contingent-Risks/dp/0521118255"
+                    },
+                    {
+                        type: "Software",
+                        title: "Actuarial Modeling Software (Prophet, AXIS)",
+                        link: "https://www.genesissolutions.com/software/prophet/"
+                    }
+                ],
+                outlook: "Actuarial roles growing rapidly at 18% with insurance sector expansion. High demand in health insurance and emerging risks like cyber. Professionals who complete fellowship exams have excellent career prospects."
+            },
+            "tax-advisor": {
+                title: "Tax Advisor",
+                image: "{{ url_for('static', filename='images/tax-advisor.jpg') }}",
+                description: "Tax advisors specialize in tax law to help individuals and businesses minimize liabilities and ensure compliance. They prepare returns, plan strategies, and represent clients in disputes with tax authorities.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "B.Com/LLB + CA/CPA/Enrolled Agent (3-5 years)",
+                growth: "8% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Tax Law Knowledge",
+                    "Tax Preparation",
+                    "Planning Strategies",
+                    "Research Skills",
+                    "Client Communication",
+                    "Attention to Detail",
+                    "Accounting Software",
+                    "Regulatory Updates"
+                ],
+                companies: "Big 4 Accounting Firms, Law Firms, Corporate Tax Departments, Independent Practices",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in commerce/law"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain CA, CPA, or enrolled agent qualification"
+                    },
+                    {
+                        stage: "Junior Tax Associate",
+                        content: "Prepare returns and assist with research (1-2 years)"
+                    },
+                    {
+                        stage: "Tax Advisor",
+                        content: "Develop strategies and handle complex cases (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Advisor/Partner",
+                        content: "Lead tax practice and client relationships (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Chartered Accountancy (CA)",
+                        link: "https://www.icai.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Taxation and Accounting for Decision-Making (edX)",
+                        link: "https://www.edx.org/course/taxation-and-accounting-for-decision-making"
+                    },
+                    {
+                        type: "Book",
+                        title: "Principles of Taxation Law by Kerrie Sadiq",
+                        link: "https://www.amazon.in/Principles-Taxation-Law-Kerrie-Sadiq/dp/0455237843"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Income Tax Department of India",
+                        link: "https://www.incometaxindia.gov.in/"
+                    }
+                ],
+                outlook: "Tax advisory growing at 8% with increasing regulatory complexity. Strong demand for international tax expertise and GST specialists. Technology is automating compliance but increasing need for strategic advice."
+            },
+            "portfolio-manager": {
+                title: "Portfolio Manager",
+                image: "{{ url_for('static', filename='images/portfolio-manager.jpg') }}",
+                description: "Portfolio managers oversee investment portfolios and make strategic decisions for individuals or institutions. They analyze markets, select securities, and monitor performance to achieve financial objectives.",
+                salary: "₹10-20 LPA (Entry Level), ₹20-40 LPA (Mid Level), ₹40-80+ LPA (Senior)",
+                education: "MBA in Finance + CFA (3-4 years)",
+                growth: "12% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Investment Analysis",
+                    "Asset Allocation",
+                    "Risk Management",
+                    "Performance Evaluation",
+                    "Client Communication",
+                    "Market Research",
+                    "Financial Modeling",
+                    "Regulatory Compliance"
+                ],
+                companies: "Mutual Funds (SBI, HDFC), Hedge Funds, Pension Funds, Wealth Management Firms, Family Offices",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in finance + MBA from top school"
+                    },
+                    {
+                        stage: "Research Analyst",
+                        content: "Analyze securities and make recommendations (1-2 years)"
+                    },
+                    {
+                        stage: "Associate PM",
+                        content: "Assist with portfolio construction (2-3 years)"
+                    },
+                    {
+                        stage: "Portfolio Manager",
+                        content: "Manage investment strategies (4-6 years)"
+                    },
+                    {
+                        stage: "Senior PM/CIO",
+                        content: "Lead investment teams and strategy (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Chartered Financial Analyst (CFA)",
+                        link: "https://www.cfainstitute.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Investment Management Specialization (Coursera)",
+                        link: "https://www.coursera.org/specializations",
+                        title: "Investment Management Specialization (Coursera)",
+                        link: "https://www.coursera.org/specializations/investment-management"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Intelligent Investor by Benjamin Graham",
+                        link: "https://www.amazon.in/Intelligent-Investor-Definitive-Investing-Essentials/dp/0060555661"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Bloomberg Terminal",
+                        link: "https://www.bloomberg.com/professional/solution/bloomberg-terminal/"
+                    }
+                ],
+                outlook: "Portfolio management growing at 12% with increasing wealth and institutional assets. Strong demand for ESG (Environmental, Social, Governance) investing expertise. Performance track record is critical for advancement."
+            },
+            "credit-analyst": {
+                title: "Credit Analyst",
+                image: "{{ url_for('static', filename='images/credit-analyst.jpg') }}",
+                description: "Credit analysts evaluate the creditworthiness of individuals or businesses applying for loans. They assess financial statements, market conditions, and risk factors to make lending recommendations.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "B.Com/MBA in Finance + CFA/FRM (Optional)",
+                growth: "8% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Financial Statement Analysis",
+                    "Risk Assessment",
+                    "Industry Research",
+                    "Credit Scoring Models",
+                    "Loan Structuring",
+                    "Regulatory Compliance",
+                    "Attention to Detail",
+                    "Communication"
+                ],
+                companies: "Banks (SBI, HDFC, ICICI), Credit Rating Agencies (CRISIL, ICRA), NBFCs, Fintech Lenders",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in finance or related field"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Consider CFA or FRM for advancement"
+                    },
+                    {
+                        stage: "Junior Analyst",
+                        content: "Assist with credit evaluations (1-2 years)"
+                    },
+                    {
+                        stage: "Credit Analyst",
+                        content: "Conduct independent credit assessments (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Analyst/Manager",
+                        content: "Oversee credit policies and teams (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Financial Risk Manager (FRM)",
+                        link: "https://www.garp.org/frm"
+                    },
+                    {
+                        type: "Course",
+                        title: "Credit Risk Management (Coursera)",
+                        link: "https://www.coursera.org/learn/credit-risk-management"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Handbook of Credit Risk Management",
+                        link: "https://www.amazon.in/Handbook-Credit-Risk-Management-Originating/dp/1118118395"
+                    },
+                    {
+                        type: "Platform",
+                        title: "RBI Guidelines on Credit",
+                        link: "https://www.rbi.org.in/"
+                    }
+                ],
+                outlook: "Credit analyst roles growing at 8% with expansion of lending markets. Increasing demand for fintech credit analysis skills. Professionals with sector-specific expertise have better prospects."
+            },
+            "treasury-analyst": {
+                title: "Treasury Analyst",
+                image: "{{ url_for('static', filename='images/treasury-analyst.jpg') }}",
+                description: "Treasury analysts manage an organization's liquidity, investments, and financial risk. They oversee cash flow, optimize working capital, and implement strategies to maximize returns on surplus funds.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "B.Com/MBA in Finance + CTP (Optional)",
+                growth: "10% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Cash Management",
+                    "Liquidity Planning",
+                    "Risk Management",
+                    "Financial Modeling",
+                    "Banking Relationships",
+                    "Foreign Exchange",
+                    "Investment Strategies",
+                    "Regulatory Compliance"
+                ],
+                companies: "Corporations, Banks, Financial Institutions, Government Agencies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in finance or related field"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Consider Certified Treasury Professional (CTP)"
+                    },
+                    {
+                        stage: "Junior Analyst",
+                        content: "Assist with cash management (1-2 years)"
+                    },
+                    {
+                        stage: "Treasury Analyst",
+                        content: "Manage daily treasury operations (3-5 years)"
+                    },
+                    {
+                        stage: "Treasury Manager/Director",
+                        content: "Develop treasury strategies (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Certified Treasury Professional (CTP)",
+                        link: "https://www.afponline.org/certification/ctp"
+                    },
+                    {
+                        type: "Course",
+                        title: "Corporate Finance Essentials (Coursera)",
+                        link: "https://www.coursera.org/learn/corporate-finance"
+                    },
+                    {
+                        type: "Book",
+                        title: "Treasury Management: The Practitioner's Guide",
+                        link: "https://www.amazon.in/Treasury-Management-Practitioners-Steven-Bragg/dp/0470603466"
+                    },
+                    {
+                        type: "Software",
+                        title: "Treasury Management Systems (Kyriba, Reval)",
+                        link: "https://www.kyriba.com/"
+                    }
+                ],
+                outlook: "Treasury roles growing at 10% with increasing corporate complexity. Strong demand for professionals with FX risk management and cash forecasting skills. Technology is transforming treasury operations."
+            },
+            "fintech-specialist": {
+                title: "FinTech Specialist",
+                image: "{{ url_for('static', filename='images/fintech-specialist.jpg') }}",
+                description: "FinTech specialists work at the intersection of finance and technology, developing and implementing innovative financial solutions. They may work in digital payments, blockchain, robo-advising, or other financial technologies.",
+                salary: "₹8-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "B.Tech/B.Com + FinTech Certifications (1-2 years)",
+                growth: "25% (much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Financial Technology",
+                    "Blockchain/DLT",
+                    "Digital Payments",
+                    "Programming Basics",
+                    "Data Analysis",
+                    "Regulatory Technology",
+                    "Product Development",
+                    "Innovation Management"
+                ],
+                companies: "Paytm, PhonePe, Razorpay, PolicyBazaar, Lendingkart, Traditional Banks' Digital Arms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in tech/finance or related field"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Gain FinTech skills through courses/projects"
+                    },
+                    {
+                        stage: "FinTech Analyst",
+                        content: "Work on FinTech implementations (1-2 years)"
+                    },
+                    {
+                        stage: "FinTech Specialist",
+                        content: "Lead digital finance initiatives (3-5 years)"
+                    },
+                    {
+                        stage: "FinTech Leader",
+                        content: "Drive innovation strategy (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "FinTech Specialization (Coursera)",
+                        link: "https://www.coursera.org/specializations/fintech"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Future of Finance: The Impact of FinTech",
+                        link: "https://www.amazon.in/Future-Finance-Impact-FinTech-Insurers/dp/3319915787"
+                    },
+                    {
+                        type: "Platform",
+                        title: "RBI's FinTech Initiatives",
+                        link: "https://www.rbi.org.in/"
+                    },
+                    {
+                        type: "Community",
+                        title: "FinTech Association of India",
+                        link: "https://fintechassociation.in/"
+                    }
+                ],
+                outlook: "FinTech roles growing rapidly at 25% with digital finance expansion. Strong demand for professionals with both finance and tech skills. UPI, digital lending, and insurtech are particularly hot areas."
+            }
+        };
+
+        // Load career data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerKey = urlParams.get('career');
+
+        if (careerKey && financeCareerData[careerKey]) {
+            const career = financeCareerData[careerKey];
+            
+            // Set basic information
+            document.title = `${career.title} | CareerHub`;
+            document.getElementById("career-title").textContent = career.title;
+            document.getElementById("career-image").src = career.image;
+            document.getElementById("career-image").alt = career.title;
+            document.getElementById("career-description").textContent = career.description;
+            document.getElementById("career-salary").textContent = career.salary;
+            document.getElementById("career-education").textContent = career.education;
+            document.getElementById("career-growth").textContent = career.growth;
+            document.getElementById("career-experience").textContent = career.experience;
+            document.getElementById("career-companies").textContent = career.companies;
+            
+            // Populate skills
+            const skillsContainer = document.getElementById("skills-container");
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement("div");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Populate career path
+            const careerPath = document.getElementById("career-path");
+            career.path.forEach((stage, index) => {
+                const pathItem = document.createElement("div");
+                pathItem.className = "path-item";
+                
+                const pathContent = document.createElement("div");
+                pathContent.className = "path-content";
+                
+                const stageTitle = document.createElement("h4");
+                stageTitle.textContent = `${index + 1}. ${stage.stage}`;
+                
+                const stageDesc = document.createElement("p");
+                stageDesc.textContent = stage.content;
+                
+                pathContent.appendChild(stageTitle);
+                pathContent.appendChild(stageDesc);
+                pathItem.appendChild(pathContent);
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Populate resources
+            const resourcesContainer = document.getElementById("resources-container");
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement("div");
+                resourceCard.className = "resource-card";
+                
+                const resourceTitle = document.createElement("h4");
+                resourceTitle.innerHTML = `<i class="fas ${getResourceIcon(resource.type)}"></i> ${resource.type}: ${resource.title}`;
+                
+                const resourceLink = document.createElement("a");
+                resourceLink.href = resource.link;
+                resourceLink.target = "_blank";
+                resourceLink.textContent = "Explore Resource →";
+                
+                resourceCard.appendChild(resourceTitle);
+                resourceCard.appendChild(resourceLink);
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            const jobOutlook = document.getElementById("job-outlook");
+            jobOutlook.innerHTML = `<h3><i class="fas fa-chart-line"></i> Market Outlook</h3><p>${career.outlook}</p>`;
+            
+        } else {
+            document.querySelector(".career-container").innerHTML = `
+                <div style="text-align: center; padding: 5rem 0;">
+                    <h2 style="color: var(--finance-blue); margin-bottom: 1rem;">Finance Career Not Found</h2>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">The requested finance career path could not be found.</p>
+                    <button class="cta-btn" onclick="window.location.href='/finance'">Browse Finance Careers</button>
+                </div>
+            `;
+        }
+
+        function getResourceIcon(type) {
+            switch(type.toLowerCase()) {
+                case 'course': return 'fa-graduation-cap';
+                case 'book': return 'fa-book';
+                case 'platform': return 'fa-laptop-code';
+                case 'certification': return 'fa-certificate';
+                case 'software': return 'fa-code';
+                case 'exam': return 'fa-file-alt';
+                case 'journal': return 'fa-newspaper';
+                case 'standard': return 'fa-file-contract';
+                case 'community': return 'fa-users';
+                default: return 'fa-link';
+            }
+        }
+    </script>
+</body>
+</html>

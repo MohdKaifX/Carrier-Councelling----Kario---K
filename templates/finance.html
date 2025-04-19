@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance & Economics Careers | CareerHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --secondary: #2563eb;
+      --accent: #60a5fa;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --finance: #3b82f6;
+      --economics: #2563eb;
+      --investment: #60a5fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 8rem 6% 3rem;
+      background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
+                  url('/static/images/finance-banner.jpg') center/cover;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(to top, var(--dark), transparent);
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--finance), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    header p {
+      font-size: 1.3rem;
+      color: #e2e8f0;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+      font-style: italic;
+    }
+
+    .field-intro {
+      padding: 4rem 6%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .field-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--finance);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .field-intro h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--finance), transparent);
+    }
+
+    .field-intro h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin: 2.5rem 0 1.5rem;
+    }
+
+    .field-intro p {
+      margin-bottom: 1.5rem;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .highlight-box {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid var(--finance);
+      padding: 2rem;
+      margin: 3rem 0;
+      border-radius: 0 8px 8px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-box::before {
+      content: '“';
+      position: absolute;
+      top: -20px;
+      left: 10px;
+      font-size: 6rem;
+      color: rgba(59, 130, 246, 0.05);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .highlight-box p {
+      color: #e2e8f0;
+      font-size: 1.2rem;
+      position: relative;
+    }
+
+    ul.feature-list {
+      color: #94a3b8;
+      margin-left: 1.5rem;
+      margin-bottom: 2rem;
+      list-style-type: none;
+    }
+
+    ul.feature-list li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 2rem;
+      font-size: 1.1rem;
+    }
+
+    ul.feature-list li::before {
+      content: '💰';
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+    }
+
+    .career-cards-container {
+      padding: 3rem 6%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .career-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .career-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+      border-color: var(--finance);
+    }
+
+    .career-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+      filter: brightness(0.9);
+    }
+
+    .career-card:hover img {
+      transform: scale(1.05);
+      filter: brightness(1);
+    }
+
+    .card-content {
+      padding: 2rem;
+    }
+
+    .career-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .career-card p {
+      color: #94a3b8;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      min-height: 80px;
+      line-height: 1.7;
+    }
+
+    .career-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-pill {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--finance);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .learn-more {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      width: 100%;
+      padding: 1rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid var(--finance);
+      border-radius: 0.5rem;
+      color: var(--light);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      font-size: 1.1rem;
+    }
+
+    .learn-more:hover {
+      background: var(--finance);
+      color: var(--dark);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .faq-section {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4rem 6%;
+      margin: 4rem auto;
+      border-radius: 1rem;
+      max-width: 1000px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.1);
+    }
+
+    .faq-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      color: var(--finance);
+      position: relative;
+    }
+
+    .faq-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--finance), transparent);
+    }
+
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .faq {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.8rem;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .faq:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--finance);
+    }
+
+    .question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--light);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .answer {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      margin-top: 1.5rem;
+      display: none;
+      line-height: 1.8;
+    }
+
+    .faq.active .answer {
+      display: block;
+    }
+
+    .arrow {
+      transition: transform 0.4s ease;
+      color: var(--finance);
+    }
+
+    .faq.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 3rem;
+      background: linear-gradient(135deg, var(--finance), var(--economics));
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(15, 23, 42, 0.8);
+      margin-top: 4rem;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding-top: 6rem;
+      }
+      
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .career-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .field-intro, .faq-section {
+        padding: 3rem 5%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      header p {
+        font-size: 1.1rem;
+      }
+      
+      .field-intro, .career-cards-container, .faq-section {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+
+      .career-card {
+        margin-bottom: 1.5rem;
+      }
+
+      .career-card h3 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-chart-line"></i> Finance & Economics</h1>
+    <p>"Navigating markets and shaping economies through strategic financial expertise"</p>
+  </header>
+
+  <section class="field-intro">
+    <h2>About Financial Careers</h2>
+    <p>The finance and economics sector powers global markets, influences policy decisions, and helps individuals and organizations achieve their financial goals. From Wall Street to government agencies, financial professionals analyze data, manage risk, and create strategies that drive economic growth.</p>
+    
+    <div class="highlight-box">
+      <p><strong>Financial Impact:</strong> Whether optimizing corporate investments or helping families plan for retirement, financial careers combine analytical rigor with real-world impact. Professionals in this field navigate complex regulations, emerging technologies, and global market dynamics to create value and stability.</p>
+    </div>
+
+    <h3>Who Thrives in Financial Careers?</h3>
+    <p>This field is ideal for those who:</p>
+    <ul class="feature-list">
+      <li>Have strong analytical and quantitative skills</li>
+      <li>Enjoy solving complex problems with data-driven solutions</li>
+      <li>Are detail-oriented but can see the big picture</li>
+      <li>Thrive in fast-paced, dynamic environments</li>
+      <li>Can communicate complex financial concepts clearly</li>
+      <li>Are interested in how money moves through economies</li>
+    </ul>
+
+    <h3>Career Outlook</h3>
+    <p>The Bureau of Labor Statistics projects steady growth in financial fields:</p>
+    <ul class="feature-list">
+      <li><strong>Financial Analysts:</strong> +9% growth by 2030</li>
+      <li><strong>Personal Financial Advisors:</strong> +15% growth</li>
+      <li><strong>Economists:</strong> +13% growth</li>
+      <li><strong>FinTech Specialists:</strong> +20% growth</li>
+    </ul>
+    <p>Increasing complexity in financial markets and retirement planning is driving demand across all financial service sectors.</p>
+
+    <a href="/explore" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to All Fields
+    </a>
+  </section>
+
+  <section class="career-cards-container">
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/financial-analyst.jpg') }}" alt="Financial Analyst">
+      <div class="card-content">
+        <h3><i class="fas fa-chart-pie"></i> Financial Analyst</h3>
+        <p>Evaluate financial data to guide investment decisions and business strategies across industries.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$150k</span>
+          <span class="stat-pill"><i class="fas fa-building"></i> Corporate/Finance</span>
+          <span class="stat-pill"><i class="fas fa-graduation-cap"></i> CFA Valuable</span>
+        </div>
+        <a href="/finance-career?career=financial-analyst" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/economist.jpg') }}" alt="Economist">
+      <div class="card-content">
+        <h3><i class="fas fa-globe"></i> Economist</h3>
+        <p>Research economic trends, analyze data, and advise on policy and business decisions.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $70k-$180k</span>
+          <span class="stat-pill"><i class="fas fa-landmark"></i> Gov't/Academia</span>
+          <span class="stat-pill"><i class="fas fa-chart-line"></i> PhD Common</span>
+        </div>
+        <a href="/finance-career?career=economist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/accountant.jpg') }}" alt="Accountant">
+      <div class="card-content">
+        <h3><i class="fas fa-calculator"></i> Accountant</h3>
+        <p>Prepare financial statements, ensure compliance, and analyze financial operations.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $55k-$120k</span>
+          <span class="stat-pill"><i class="fas fa-file-invoice-dollar"></i> CPA Valuable</span>
+          <span class="stat-pill"><i class="fas fa-briefcase"></i> Diverse Industries</span>
+        </div>
+        <a href="/finance-career?career=accountant" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/auditor.jpg') }}" alt="Auditor">
+      <div class="card-content">
+        <h3><i class="fas fa-search-dollar"></i> Auditor</h3>
+        <p>Examine financial records to ensure accuracy and compliance with laws and regulations.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$130k</span>
+          <span class="stat-pill"><i class="fas fa-balance-scale"></i> Regulatory Focus</span>
+          <span class="stat-pill"><i class="fas fa-graduation-cap"></i> CIA Certification</span>
+        </div>
+        <a href="/finance-career?career=auditor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/investment-banker.jpg') }}" alt="Investment Banker">
+      <div class="card-content">
+        <h3><i class="fas fa-hand-holding-usd"></i> Investment Banker</h3>
+        <p>Help corporations raise capital through IPOs, mergers, and acquisitions.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $100k-$300k+</span>
+          <span class="stat-pill"><i class="fas fa-bullseye"></i> High Pressure</span>
+          <span class="stat-pill"><i class="fas fa-network-wired"></i> Deal Focused</span>
+        </div>
+        <a href="/finance-career?career=investment-banker" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/financial-planner.jpg') }}" alt="Financial Planner">
+      <div class="card-content">
+        <h3><i class="fas fa-piggy-bank"></i> Financial Planner</h3>
+        <p>Help individuals create comprehensive plans for wealth management and retirement.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $50k-$150k</span>
+          <span class="stat-pill"><i class="fas fa-user-tie"></i> Client Facing</span>
+          <span class="stat-pill"><i class="fas fa-chart-line"></i> +15% Growth</span>
+        </div>
+        <a href="/finance-career?career=financial-planner" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/actuary.jpg') }}" alt="Actuary">
+      <div class="card-content">
+        <h3><i class="fas fa-percentage"></i> Actuary</h3>
+        <p>Use mathematics and statistics to assess risk in insurance and financial sectors.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $80k-$200k+</span>
+          <span class="stat-pill"><i class="fas fa-shield-alt"></i> Risk Management</span>
+          <span class="stat-pill"><i class="fas fa-certificate"></i> Exam Series</span>
+        </div>
+        <a href="/finance-career?career=actuary" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/tax-advisor.jpg') }}" alt="Tax Advisor">
+      <div class="card-content">
+        <h3><i class="fas fa-receipt"></i> Tax Advisor</h3>
+        <p>Specialize in tax law to help clients minimize liabilities and ensure compliance.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$160k</span>
+          <span class="stat-pill"><i class="fas fa-gavel"></i> Regulatory Expertise</span>
+          <span class="stat-pill"><i class="fas fa-calendar-alt"></i> Seasonal Peaks</span>
+        </div>
+        <a href="/finance-career?career=tax-advisor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/portfolio-manager.jpg') }}" alt="Portfolio Manager">
+      <div class="card-content">
+        <h3><i class="fas fa-chart-bar"></i> Portfolio Manager</h3>
+        <p>Oversee investment portfolios and make strategic decisions for clients.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $90k-$250k+</span>
+          <span class="stat-pill"><i class="fas fa-chess"></i> Strategic Focus</span>
+          <span class="stat-pill"><i class="fas fa-certificate"></i> CFA Preferred</span>
+        </div>
+        <a href="/finance-career?career=portfolio-manager" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/risk-analyst.jpg') }}" alt="Risk Analyst">
+      <div class="card-content">
+        <h3><i class="fas fa-exclamation-triangle"></i> Risk Analyst</h3>
+        <p>Identify and evaluate financial risks to guide organizational decision-making.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $70k-$160k</span>
+          <span class="stat-pill"><i class="fas fa-shield-alt"></i> Mitigation Focus</span>
+          <span class="stat-pill"><i class="fas fa-database"></i> Data Intensive</span>
+        </div>
+        <a href="/finance-career?career=risk-analyst" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>Financial Career Insights</h2>
+    <div class="faq-container">
+      <div class="faq">
+        <div class="question">
+          <span>What certifications are valuable in finance careers?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Key certifications for financial professionals:</p>
+          <ul>
+            <li><strong>CFA (Chartered Financial Analyst):</strong> For investment analysis and portfolio management</li>
+            <li><strong>CPA (Certified Public Accountant):</strong> Essential for accounting and auditing</li>
+            <li><strong>CFP (Certified Financial Planner):</strong> For personal financial planning</li>
+            <li><strong>FRM (Financial Risk Manager):</strong> Specializing in risk assessment</li>
+            <li><strong>Series licenses:</strong> Required for selling securities (7, 63, etc.)</li>
+            <li><strong>CAIA (Chartered Alternative Investment Analyst):</strong> For alternative investments</li>
+          </ul>
+          <p>Certifications demonstrate expertise and can significantly boost earning potential.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>How is technology transforming finance careers?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Major technological impacts on finance:</p>
+          <ul>
+            <li><strong>FinTech:</strong> Digital banking, blockchain, and mobile payments</li>
+            <li><strong>AI and Machine Learning:</strong> Algorithmic trading and risk assessment</li>
+            <li><strong>Big Data Analytics:</strong> Enhanced market predictions and customer insights</li>
+            <li><strong>Automation:</strong> Streamlining routine accounting and reporting tasks</li>
+            <li><strong>Robo-Advisors:</strong> Automated investment platforms</li>
+          </ul>
+          <p>Successful professionals combine financial expertise with technical literacy.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>What are the career progression paths in finance?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Typical career trajectories include:</p>
+          <ul>
+            <li><strong>Corporate Finance:</strong> Analyst → Senior Analyst → Finance Manager → CFO</li>
+            <li><strong>Investment Banking:</strong> Analyst → Associate → VP → Managing Director</li>
+            <li><strong>Wealth Management:</strong> Junior Advisor → Senior Advisor → Practice Leader</li>
+            <li><strong>Accounting:</strong> Staff Accountant → Senior Accountant → Controller</li>
+            <li><strong>Alternative Paths:</strong> Entrepreneurship, consulting, or regulatory roles</li>
+          </ul>
+          <p>Early specialization often leads to faster advancement in chosen subfield.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>What skills are most valuable for finance professionals?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Essential skills for financial careers:</p>
+          <ul>
+            <li><strong>Technical:</strong> Financial modeling, data analysis, accounting principles</li>
+            <li><strong>Soft Skills:</strong> Communication, ethical judgment, client relations</li>
+            <li><strong>Technology:</strong> Excel mastery, financial software, programming basics</li>
+            <li><strong>Analytical:</strong> Critical thinking, problem-solving, attention to detail</li>
+            <li><strong>Business Acumen:</strong> Understanding of markets and economic principles</li>
+          </ul>
+          <p>The most successful professionals balance quantitative skills with emotional intelligence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Career Explorer. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Enhanced FAQ Toggle with Animation
+    document.querySelectorAll(".faq").forEach((faq) => {
+      const question = faq.querySelector(".question");
+      question.addEventListener("click", () => {
+        faq.classList.toggle("active");
+        
+        // Smooth height transition for answer
+        const answer = faq.querySelector(".answer");
+        if (faq.classList.contains("active")) {
+          answer.style.display = "block";
+          const height = answer.scrollHeight;
+          answer.style.height = "0";
+          setTimeout(() => {
+            answer.style.height = `${height}px`;
+            setTimeout(() => {
+              answer.style.height = "auto";
+            }, 300);
+          }, 10);
+        } else {
+          const height = answer.scrollHeight;
+          answer.style.height = `${height}px`;
+          setTimeout(() => {
+            answer.style.height = "0";
+            setTimeout(() => {
+              answer.style.display = "none";
+            }, 300);
+          }, 10);
+        }
+      });
+    });
+
+    // Scroll Animation with Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.classList.contains('career-card')) {
+            entry.target.style.transitionDelay = `${entries.indexOf(entry) * 0.1}s`;
+          }
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
+    });
+
+    document.querySelectorAll('.career-card, .field-intro > *, .faq')
+           .forEach(el => observer.observe(el));
+
+    // Card hover enhancement
+    document.querySelectorAll('.career-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.querySelector('img').style.transform = 'scale(1.05)';
+        card.style.boxShadow = '0 20px 40px rgba(59, 130, 246, 0.3)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.querySelector('img').style.transform = 'scale(1)';
+        card.style.boxShadow = '0 15px 30px rgba(59, 130, 246, 0.2)';
+      });
+    });
+  </script>
+</body>
+</html>

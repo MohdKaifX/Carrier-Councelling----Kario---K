@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+            --earth: #84cc16;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--success);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--success), var(--earth));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--success), var(--earth));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(132, 204, 22, 0.3);
+        }
+
+        .highlight-card h3 {
+            color: var(--success);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--success);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(132, 204, 22, 0.1);
+            color: var(--success);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(132, 204, 22, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(132, 204, 22, 0.3);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--success);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(132, 204, 22, 0.3);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--success);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/agriculture'">Back to Agriculture</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Agriculture Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+    </div>
+
+    <script>
+        // Agriculture Career Data
+        const careerData = {
+            "agronomist": {
+                title: "Agronomist",
+                image: "{{ url_for('static', filename='images/agronomist.jpg') }}",
+                description: "Agronomists are crop science experts who optimize agricultural production through research and application of soil science, plant genetics, and sustainable farming practices. They work to maximize crop yields while minimizing environmental impact.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-25+ LPA (Senior)",
+                education: "B.Sc in Agriculture (4 years) or M.Sc in Agronomy (2 years)",
+                growth: "9% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Soil Science",
+                    "Crop Nutrition",
+                    "Pest Management",
+                    "Precision Agriculture",
+                    "Data Analysis",
+                    "Research Methodology",
+                    "Sustainability Practices",
+                    "Communication"
+                ],
+                companies: "Syngenta, Bayer CropScience, ITC Agri Business, DuPont India, Government agricultural departments, research institutions",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Sc in Agriculture or related field (4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain practical experience through farm internships (6-12 months)"
+                    },
+                    {
+                        stage: "Field Agronomist",
+                        content: "Work directly with farmers to implement best practices (1-3 years)"
+                    },
+                    {
+                        stage: "Research Agronomist",
+                        content: "Conduct field trials and research projects (3-6 years)"
+                    },
+                    {
+                        stage: "Senior Agronomist",
+                        content: "Lead agricultural research programs or consultancy services (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Agronomy Fundamentals (Coursera)",
+                        link: "https://www.coursera.org/learn/agronomy"
+                    },
+                    {
+                        type: "Book",
+                        title: "Principles of Agronomy by Reddy & Reddy",
+                        link: "https://www.amazon.in/Principles-Agronomy-T-Yellamanda-Reddy/dp/8127243198"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Society of Agronomy",
+                        link: "https://www.isa-india.org/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Indian Journal of Agronomy",
+                        link: "https://www.isaindia.org/ijags.html"
+                    }
+                ],
+                outlook: "Agronomy careers are growing steadily with increasing focus on sustainable agriculture. Precision agriculture and climate-smart farming techniques are creating new opportunities."
+            },
+            "farm-manager": {
+                title: "Farm Manager",
+                image: "{{ url_for('static', filename='images/farm-manager.jpg') }}",
+                description: "Farm managers oversee daily agricultural operations including planting, irrigation, fertilization, harvesting, and livestock care. They make business decisions, manage workers, and ensure farm profitability while maintaining sustainable practices.",
+                salary: "₹3-6 LPA (Small Farms), ₹6-12 LPA (Mid-Sized), ₹12-20+ LPA (Large Commercial Farms)",
+                education: "B.Sc in Agriculture or Diploma in Farm Management + Practical Experience",
+                growth: "5% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-7 years, Senior: 8+ years",
+                skills: [
+                    "Crop/Livestock Knowledge",
+                    "Equipment Operation",
+                    "Financial Management",
+                    "Workforce Supervision",
+                    "Supply Chain Coordination",
+                    "Regulatory Compliance",
+                    "Problem Solving",
+                    "Technology Adoption"
+                ],
+                companies: "Large-scale farms, agribusinesses, cooperative societies, government farms, organic farming enterprises",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete agriculture diploma or degree (2-4 years)"
+                    },
+                    {
+                        stage: "Assistant Manager",
+                        content: "Learn operations under experienced manager (1-3 years)"
+                    },
+                    {
+                        stage: "Farm Manager",
+                        content: "Oversee complete farm operations (3-7 years)"
+                    },
+                    {
+                        stage: "Senior Manager",
+                        content: "Manage multiple farms or large commercial operations (5-10 years)"
+                    },
+                    {
+                        stage: "Agricultural Consultant",
+                        content: "Provide expertise to multiple farms (10+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Farm Business Management (edX)",
+                        link: "https://www.edx.org/course/farm-business-management"
+                    },
+                    {
+                        type: "Book",
+                        title: "Successful Farm Business Management by Kent Olson",
+                        link: "https://www.amazon.in/Successful-Farm-Business-Management-Production/dp/0133886847"
+                    },
+                    {
+                        type: "Government",
+                        title: "Agricultural Technology Management Agency (ATMA)",
+                        link: "https://www.agricoop.nic.in/atma-scheme"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Farm Management Software Solutions",
+                        link: "https://www.croplife.com/technology/farm-management-software/"
+                    }
+                ],
+                outlook: "Farm management opportunities remain stable with gradual modernization. Large commercial farms and organic operations show strongest growth potential."
+            },
+            "livestock-specialist": {
+                title: "Livestock Specialist",
+                image: "{{ url_for('static', filename='images/livestock-specialist.jpg') }}",
+                description: "Livestock specialists focus on animal health, nutrition, breeding, and production systems. They develop programs to improve animal welfare, productivity, and product quality while ensuring sustainable practices.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-25+ LPA (Senior)",
+                education: "B.V.Sc (Veterinary Science) or B.Sc in Animal Husbandry",
+                growth: "7% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Animal Nutrition",
+                    "Breeding Techniques",
+                    "Disease Prevention",
+                    "Herd Management",
+                    "Meat/Dairy Science",
+                    "Biosecurity",
+                    "Record Keeping",
+                    "Regulatory Knowledge"
+                ],
+                companies: "Amul, Mother Dairy, Venky's, Suguna Foods, Government veterinary departments, animal nutrition companies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.V.Sc or B.Sc in Animal Husbandry (4-5 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain hands-on experience in livestock operations (6-12 months)"
+                    },
+                    {
+                        stage: "Assistant Specialist",
+                        content: "Work under senior specialists (1-3 years)"
+                    },
+                    {
+                        stage: "Livestock Specialist",
+                        content: "Develop and implement animal health programs (3-6 years)"
+                    },
+                    {
+                        stage: "Senior Specialist",
+                        content: "Lead research or large-scale production systems (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Livestock Production Systems (Coursera)",
+                        link: "https://www.coursera.org/learn/livestock-production"
+                    },
+                    {
+                        type: "Book",
+                        title: "Animal Husbandry by G.C. Banerjee",
+                        link: "https://www.amazon.in/Animal-Husbandry-G-C-Banerjee/dp/9386237624"
+                    },
+                    {
+                        type: "Organization",
+                        title: "National Dairy Development Board",
+                        link: "https://www.nddb.coop/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Indian Journal of Animal Sciences",
+                        link: "https://epubs.icar.org.in/ijas/"
+                    }
+                ],
+                outlook: "Livestock specialists are in steady demand with India's growing dairy and meat industries. Focus on animal welfare and sustainable practices is increasing."
+            },
+            "soil-scientist": {
+                title: "Soil Scientist",
+                image: "{{ url_for('static', filename='images/soil-scientist.jpg') }}",
+                description: "Soil scientists study soil composition, structure, and fertility to recommend sustainable land use practices. They analyze soil samples, develop conservation plans, and research ways to improve soil health for agricultural productivity.",
+                salary: "₹5-9 LPA (Entry Level), ₹9-16 LPA (Mid Level), ₹16-25+ LPA (Senior)",
+                education: "B.Sc in Agriculture/Soil Science + M.Sc in Soil Science",
+                growth: "8% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Soil Analysis",
+                    "Laboratory Techniques",
+                    "GIS Applications",
+                    "Nutrient Management",
+                    "Research Design",
+                    "Data Interpretation",
+                    "Erosion Control",
+                    "Environmental Regulations"
+                ],
+                companies: "ICAR institutes, State agricultural universities, Fertilizer companies, Environmental consultancies, Government agriculture departments",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Sc in Agriculture/Environmental Science (4 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue M.Sc in Soil Science (2 years)"
+                    },
+                    {
+                        stage: "Research Assistant",
+                        content: "Work on soil research projects (1-2 years)"
+                    },
+                    {
+                        stage: "Soil Scientist",
+                        content: "Conduct independent research and analysis (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Scientist",
+                        content: "Lead soil research programs (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Soil Science Specialization (Coursera)",
+                        link: "https://www.coursera.org/learn/soil"
+                    },
+                    {
+                        type: "Book",
+                        title: "Fundamentals of Soil Science by D.K. Das",
+                        link: "https://www.amazon.in/Fundamentals-Soil-Science-D-K-Das/dp/8127243198"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Society of Soil Science",
+                        link: "https://www.isss-india.org/"
+                    },
+                    {
+                        type: "Government",
+                        title: "Soil Health Card Scheme",
+                        link: "https://soilhealth.dac.gov.in/"
+                    }
+                ],
+                outlook: "Soil science careers are growing with increased focus on sustainable land management. Precision agriculture and climate change adaptation are creating new opportunities."
+            },
+            "agricultural-engineer": {
+                title: "Agricultural Engineer",
+                image: "{{ url_for('static', filename='images/agricultural-engineer.jpg') }}",
+                description: "Agricultural engineers design and improve farming equipment, irrigation systems, storage facilities, and processing technologies. They combine engineering principles with agricultural knowledge to solve practical farming challenges.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-18 LPA (Mid Level), ₹18-30+ LPA (Senior)",
+                education: "B.Tech in Agricultural Engineering (4 years)",
+                growth: "6% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "CAD Design",
+                    "Equipment Mechanics",
+                    "Irrigation Systems",
+                    "Renewable Energy",
+                    "Project Management",
+                    "Precision Agriculture",
+                    "Structural Engineering",
+                    "Problem Solving"
+                ],
+                companies: "John Deere, Mahindra Agri Solutions, Jain Irrigation, Netafim, Government agricultural departments, research institutions",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Tech in Agricultural Engineering (4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain practical experience with agricultural machinery (6-12 months)"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Assist in design and implementation (1-3 years)"
+                    },
+                    {
+                        stage: "Project Engineer",
+                        content: "Lead specific engineering projects (3-6 years)"
+                    },
+                    {
+                        stage: "Senior Engineer",
+                        content: "Oversee multiple projects or research initiatives (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Agricultural Engineering (NPTEL)",
+                        link: "https://nptel.ac.in/courses/105/105/105105170/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Principles of Agricultural Engineering by Michael & Ojha",
+                        link: "https://www.amazon.in/Principles-Agricultural-Engineering-Michael-Ojha/dp/8127243198"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Society of Agricultural Engineers",
+                        link: "https://www.isae.in/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Agricultural Engineering Today",
+                        link: "https://www.isae.in/journal.php"
+                    }
+                ],
+                outlook: "Agricultural engineering is evolving with automation and smart farming technologies. Irrigation specialists and renewable energy experts are in particular demand."
+            },
+            "agricultural-scientist": {
+                title: "Agricultural Scientist",
+                image: "{{ url_for('static', filename='images/agricultural-scientist.jpg') }}",
+                description: "Agricultural scientists conduct research to improve crop yields, develop disease-resistant varieties, and create sustainable farming methods. They work in laboratories, greenhouses, and field settings to advance agricultural science.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-20 LPA (Mid Level), ₹20-35+ LPA (Senior)",
+                education: "M.Sc in Agriculture + Ph.D for research positions",
+                growth: "10% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Research Methodology",
+                    "Plant Genetics",
+                    "Data Analysis",
+                    "Scientific Writing",
+                    "Laboratory Techniques",
+                    "Field Trials",
+                    "Biotechnology",
+                    "Grant Writing"
+                ],
+                companies: "ICAR institutes, IARI, State agricultural universities, Biotech firms, Seed companies like Monsanto, Syngenta",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete M.Sc in relevant agricultural specialization (2 years after B.Sc)"
+                    },
+                    {
+                        stage: "Research Associate",
+                        content: "Assist in agricultural research projects (1-2 years)"
+                    },
+                    {
+                        stage: "Ph.D Studies",
+                        content: "Specialize in specific area of agricultural science (3-5 years)"
+                    },
+                    {
+                        stage: "Scientist",
+                        content: "Lead independent research (3-6 years post-Ph.D)"
+                    },
+                    {
+                        stage: "Senior Scientist",
+                        content: "Direct research programs and mentor junior scientists (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Agricultural Biotechnology (edX)",
+                        link: "https://www.edx.org/course/agricultural-biotechnology"
+                    },
+                    {
+                        type: "Book",
+                        title: "Principles of Plant Genetics and Breeding by George Acquaah",
+                        link: "https://www.amazon.in/Principles-Plant-Genetics-Breeding-Acquaah/dp/0470664754"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Council of Agricultural Research",
+                        link: "https://www.icar.org.in/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Indian Journal of Agricultural Sciences",
+                        link: "https://epubs.icar.org.in/ijagrisci/"
+                    }
+                ],
+                outlook: "Agricultural research is growing with emphasis on climate-resilient crops and sustainable intensification. Biotechnology and genomics are key growth areas."
+            },
+            "food-scientist": {
+                title: "Food Scientist",
+                image: "{{ url_for('static', filename='images/food-scientist.jpg') }}",
+                description: "Food scientists develop safe, nutritious, and appealing food products through research and testing. They study food composition, develop processing methods, and ensure quality standards from farm to table.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-18 LPA (Mid Level), ₹18-30+ LPA (Senior)",
+                education: "B.Tech/M.Sc in Food Technology or Food Science",
+                growth: "12% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Food Chemistry",
+                    "Quality Control",
+                    "Product Development",
+                    "Sensory Evaluation",
+                    "Food Safety Standards",
+                    "Processing Technology",
+                    "Nutritional Analysis",
+                    "Regulatory Compliance"
+                ],
+                companies: "Nestle, ITC Foods, Britannia, Amul, PepsiCo, Dabur, Government food research labs, FSSAI",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Tech/M.Sc in Food Technology/Science (4-5 years)"
+                    },
+                    {
+                        stage: "Quality Control",
+                        content: "Begin in food testing or quality assurance roles (1-2 years)"
+                    },
+                    {
+                        stage: "Product Development",
+                        content: "Work on creating new food products (2-4 years)"
+                    },
+                    {
+                        stage: "Food Scientist",
+                        content: "Lead research and development projects (4-6 years)"
+                    },
+                    {
+                        stage: "Senior Scientist",
+                        content: "Direct R&D programs or regulatory compliance (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Food Science and Nutrition (Coursera)",
+                        link: "https://www.coursera.org/learn/food-and-health"
+                    },
+                    {
+                        type: "Book",
+                        title: "Food Science by Potter & Hotchkiss",
+                        link: "https://www.amazon.in/Food-Science-Norman-N-Potter/dp/083421265X"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Association of Food Scientists & Technologists (India)",
+                        link: "https://www.afsti.org/"
+                    },
+                    {
+                        type: "Government",
+                        title: "Food Safety and Standards Authority of India",
+                        link: "https://fssai.gov.in/"
+                    }
+                ],
+                outlook: "Food science careers are growing with India's expanding processed food sector. Specialists in functional foods and food safety are in high demand."
+            },
+            "agricultural-economist": {
+                title: "Agricultural Economist",
+                image: "{{ url_for('static', filename='images/agricultural-economist.jpg') }}",
+                description: "Agricultural economists analyze market trends, policy impacts, and financial aspects of food systems. They conduct research on production costs, commodity prices, trade policies, and rural development to inform decision-making.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "B.Sc in Agriculture + M.Sc in Agricultural Economics",
+                growth: "8% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Economic Analysis",
+                    "Statistical Modeling",
+                    "Policy Evaluation",
+                    "Market Research",
+                    "Data Interpretation",
+                    "Report Writing",
+                    "Agricultural Systems",
+                    "Rural Development"
+                ],
+                companies: "NITI Aayog, World Bank, FAO, ICAR institutes, Agricultural universities, Commodity trading firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Sc in Agriculture + M.Sc in Agricultural Economics (6 years total)"
+                    },
+                    {
+                        stage: "Research Assistant",
+                        content: "Assist in economic research projects (1-2 years)"
+                    },
+                    {
+                        stage: "Economist",
+                        content: "Conduct independent analyses (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Economist",
+                        content: "Lead policy research or consultancy services (5-8 years)"
+                    },
+                    {
+                        stage: "Policy Advisor",
+                        content: "Influence agricultural policy decisions (8+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Agricultural Economics (edX)",
+                        link: "https://www.edx.org/course/agricultural-economics"
+                    },
+                    {
+                        type: "Book",
+                        title: "Agricultural Economics by Pindyck & Rubinfeld",
+                        link: "https://www.amazon.in/Agricultural-Economics-Pindyck-Rubinfeld-Economy/dp/9332555399"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Society of Agricultural Economics",
+                        link: "https://isaeindia.org/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Indian Journal of Agricultural Economics",
+                        link: "https://isaeindia.org/journal/"
+                    }
+                ],
+                outlook: "Agricultural economists are needed to analyze complex food systems and policy impacts. Climate change adaptation and agri-tech investments are key growth areas."
+            },
+            "horticulturist": {
+                title: "Horticulturist",
+                image: "{{ url_for('static', filename='images/horticulturist.jpg') }}",
+                description: "Horticulturists specialize in the cultivation of fruits, vegetables, flowers, and ornamental plants. They apply scientific knowledge to improve plant growth, yield, quality, and resistance to pests and diseases.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-25+ LPA (Senior)",
+                education: "B.Sc in Horticulture (4 years)",
+                growth: "10% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Plant Propagation",
+                    "Greenhouse Management",
+                    "Landscape Design",
+                    "Pest Control",
+                    "Plant Nutrition",
+                    "Post-Harvest Handling",
+                    "Nursery Operations",
+                    "Floriculture"
+                ],
+                companies: "Floriculture companies, Fruit export firms, Landscape design firms, Government horticulture departments, Botanical gardens",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Sc in Horticulture (4 years)"
+                    },
+                    {
+                        stage: "Assistant Horticulturist",
+                        content: "Gain practical experience in nurseries or farms (1-2 years)"
+                    },
+                    {
+                        stage: "Horticulturist",
+                        content: "Manage horticultural operations (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Horticulturist",
+                        content: "Specialize in areas like floriculture or pomology (5-8 years)"
+                    },
+                    {
+                        stage: "Consultant",
+                        content: "Provide expertise to multiple clients (8+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Horticulture Fundamentals (Coursera)",
+                        link: "https://www.coursera.org/learn/horticulture"
+                    },
+                    {
+                        type: "Book",
+                        title: "Introductory Horticulture by Reilly & Shry",
+                        link: "https://www.amazon.in/Introductory-Horticulture-H-Reilly/dp/1111312796"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Society for Horticultural Research",
+                        link: "https://www.ishr.org.in/"
+                    },
+                    {
+                        type: "Government",
+                        title: "National Horticulture Board",
+                        link: "https://nhb.gov.in/"
+                    }
+                ],
+                outlook: "Horticulture careers are growing with increasing demand for fruits, vegetables, and ornamental plants. Protected cultivation and organic horticulture are key trends."
+            },
+            "agricultural-inspector": {
+                title: "Agricultural Inspector",
+                image: "{{ url_for('static', filename='images/agri-inspector.jpg') }}",
+                description: "Agricultural inspectors ensure compliance with food safety regulations, quality standards, and agricultural laws. They inspect farms, processing facilities, and food products to protect public health and maintain industry standards.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-25+ LPA (Senior)",
+                education: "B.Sc in Agriculture/Food Science + Certification in Food Safety",
+                growth: "7% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Regulatory Knowledge",
+                    "Inspection Techniques",
+                    "Food Safety Standards",
+                    "Documentation",
+                    "Sampling Methods",
+                    "Quality Assessment",
+                    "Communication",
+                    "Attention to Detail"
+                ],
+                companies: "FSSAI, APEDA, State agriculture departments, Food processing companies, Export certification agencies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Sc in Agriculture/Food Science (4 years)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain food safety inspector certification (6-12 months)"
+                    },
+                    {
+                        stage: "Junior Inspector",
+                        content: "Assist senior inspectors (1-2 years)"
+                    },
+                    {
+                        stage: "Agricultural Inspector",
+                        content: "Conduct independent inspections (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Inspector",
+                        content: "Lead inspection teams or specialize (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Food Safety Officer Training",
+                        link: "https://www.fssai.gov.in/cms/food-safety-officer-training.php"
+                    },
+                    {
+                        type: "Book",
+                        title: "Food Safety and Standards Act",
+                        link: "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Food_Laws_English_18_10_2021.pdf"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Food Safety and Standards Authority of India",
+                        link: "https://www.fssai.gov.in/"
+                    },
+                    {
+                        type: "Government",
+                        title: "Agricultural and Processed Food Products Export Development Authority",
+                        link: "https://apeda.gov.in/"
+                    }
+                ],
+                outlook: "Agricultural inspection roles are growing with increasing food safety regulations. Export certification and organic standards verification are expanding areas."
+            },
+            "precision-agriculture-specialist": {
+                title: "Precision Agriculture Specialist",
+                image: "{{ url_for('static', filename='images/precision-agri-specialist.jpg') }}",
+                description: "Precision agriculture specialists implement technology-driven farming solutions using GPS, sensors, drones, and data analytics. They optimize inputs like water, fertilizer, and pesticides to increase efficiency and sustainability.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-22 LPA (Mid Level), ₹22-40+ LPA (Senior)",
+                education: "B.Tech in Agricultural Engineering or B.Sc in Agriculture with tech training",
+                growth: "15% (much faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "GIS Applications",
+                    "Drone Operation",
+                    "Sensor Technology",
+                    "Data Analytics",
+                    "Farm Management Software",
+                    "Variable Rate Technology",
+                    "IoT in Agriculture",
+                    "Technical Training"
+                ],
+                companies: "CropIn, Ninjacart, AgNext, John Deere, Mahindra Agri, Startups in agri-tech",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in agriculture or engineering (4 years)"
+                    },
+                    {
+                        stage: "Technology Training",
+                        content: "Specialize in precision agriculture tools (6-12 months)"
+                    },
+                    {
+                        stage: "Field Specialist",
+                        content: "Implement tech solutions on farms (1-3 years)"
+                    },
+                    {
+                        stage: "Precision Agriculture Specialist",
+                        content: "Design and manage precision systems (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Consultant",
+                        content: "Advise large farms and agribusinesses (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Precision Agriculture (Coursera)",
+                        link: "https://www.coursera.org/learn/precision-agriculture"
+                    },
+                    {
+                        type: "Book",
+                        title: "Precision Farming by K.R. Krishna",
+                        link: "https://www.amazon.in/Precision-Farming-Satellite-Farming-Site-specific/dp/0124208032"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Digital Agriculture Foundation",
+                        link: "https://digitalagriculturefoundation.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "AgriFarming Precision Agriculture Resources",
+                        link: "https://www.agrifarming.in/precision-farming"
+                    }
+                ],
+                outlook: "Precision agriculture is one of the fastest-growing areas in farming. Specialists with skills in AI, IoT, and data analytics are in high demand."
+            },
+            "agricultural-extension-officer": {
+                title: "Agricultural Extension Officer",
+                image: "{{ url_for('static', filename='images/extension-officer.jpg') }}",
+                description: "Agricultural extension officers bridge the gap between research and farmers by disseminating new technologies and best practices. They conduct training programs, demonstrations, and provide advisory services to farming communities.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-25+ LPA (Senior)",
+                education: "B.Sc in Agriculture + Extension Education training",
+                growth: "6% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Communication",
+                    "Training Delivery",
+                    "Community Engagement",
+                    "Technology Transfer",
+                    "Problem Solving",
+                    "Local Language Proficiency",
+                    "Demonstration Skills",
+                    "Report Writing"
+                ],
+                companies: "KVKs (Krishi Vigyan Kendras), State agriculture departments, NGOs, Farmer producer organizations",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete B.Sc in Agriculture (4 years)"
+                    },
+                    {
+                        stage: "Field Training",
+                        content: "Gain practical extension experience (1 year)"
+                    },
+                    {
+                        stage: "Extension Officer",
+                        content: "Work directly with farmer groups (2-4 years)"
+                    },
+                    {
+                        stage: "Senior Officer",
+                        content: "Lead extension programs (4-6 years)"
+                    },
+                    {
+                        stage: "Program Manager",
+                        content: "Design large-scale extension initiatives (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Agricultural Extension (NPTEL)",
+                        link: "https://nptel.ac.in/courses/105/105/105105170/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Agricultural Extension Worldwide by A.W. van den Ban",
+                        link: "https://www.amazon.in/Agricultural-Extension-Worldwide-A-van/dp/8120416439"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Krishi Vigyan Kendra Network",
+                        link: "https://kvk.icar.gov.in/"
+                    },
+                    {
+                        type: "Government",
+                        title: "Agricultural Technology Management Agency",
+                        link: "https://www.agricoop.nic.in/atma-scheme"
+                    }
+                ],
+                outlook: "Extension services remain crucial for technology adoption in Indian agriculture. Digital extension methods are creating new opportunities."
+            }
+        };
+
+        // Get career parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerId = urlParams.get('career');
+
+        // Set career data if valid ID provided
+        if (careerId && careerData[careerId]) {
+            const career = careerData[careerId];
+            
+            // Set basic info
+            document.getElementById('career-title').textContent = career.title;
+            document.getElementById('career-image').src = career.image;
+            document.getElementById('career-image').alt = career.title;
+            document.getElementById('career-description').textContent = career.description;
+            document.getElementById('career-salary').textContent = career.salary;
+            document.getElementById('career-education').textContent = career.education;
+            document.getElementById('career-growth').textContent = career.growth;
+            document.getElementById('career-experience').textContent = career.experience;
+            document.getElementById('career-companies').textContent = career.companies;
+            document.getElementById('job-outlook').innerHTML = `<h3><i class="fas fa-chart-line"></i> Outlook</h3><p>${career.outlook}</p>`;
+            
+            // Set skills
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Set career path
+            const careerPath = document.getElementById('career-path');
+            careerPath.innerHTML = '';
+            career.path.forEach(stage => {
+                const pathItem = document.createElement('div');
+                pathItem.className = 'path-item';
+                pathItem.innerHTML = `
+                    <div class="path-content">
+                        <h4>${stage.stage}</h4>
+                        <p>${stage.content}</p>
+                    </div>
+                `;
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Set resources
+            const resourcesContainer = document.getElementById('resources-container');
+            resourcesContainer.innerHTML = '';
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <h4><i class="fas fa-${resource.type.toLowerCase()}"></i> ${resource.type}: ${resource.title}</h4>
+                    <a href="${resource.link}" target="_blank">Learn More <i class="fas fa-external-link-alt"></i></a>
+                `;
+                resourcesContainer.appendChild(resourceCard);
+            });
+        } else {
+            // Redirect if invalid career ID
+            window.location.href = '/agriculture';
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.highlight-card, .path-item, .resource-card')
+               .forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

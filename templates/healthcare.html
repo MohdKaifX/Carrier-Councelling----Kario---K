@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #2563eb;
+            --accent: #60a5fa;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --medical: #3b82f6;
+            --clinical: #2563eb;
+            --wellness: #60a5fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/healthcare-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, var(--dark), transparent);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--medical), var(--wellness));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+            font-style: italic;
+        }
+
+        .field-intro {
+            padding: 4rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--medical);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .field-intro h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--medical), transparent);
+        }
+
+        .field-intro h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--wellness);
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--medical);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '“';
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 6rem;
+            color: rgba(59, 130, 246, 0.05);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .highlight-box p {
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 2rem;
+            list-style-type: none;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.1rem;
+        }
+
+        ul.feature-list li::before {
+            content: '🏥';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .career-cards-container {
+            padding: 3rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .career-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+            border-color: var(--medical);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+            filter: brightness(0.9);
+        }
+
+        .career-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(1);
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .career-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            min-height: 80px;
+            line-height: 1.7;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--medical);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--medical);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-size: 1.1rem;
+        }
+
+        .learn-more:hover {
+            background: var(--medical);
+            color: var(--dark);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4rem 6%;
+            margin: 4rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .faq-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--medical);
+            position: relative;
+        }
+
+        .faq-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--medical), transparent);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.8rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--medical);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .answer {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-top: 1.5rem;
+            display: none;
+            line-height: 1.8;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.4s ease;
+            color: var(--medical);
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 3rem;
+            background: linear-gradient(135deg, var(--medical), var(--clinical));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.8);
+            margin-top: 4rem;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+            }
+
+            .field-intro, .faq-section {
+                padding: 3rem 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+
+            .career-card {
+                margin-bottom: 1.5rem;
+            }
+
+            .career-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-heartbeat"></i> Healthcare Careers</h1>
+        <p>"Dedicated to healing, caring, and advancing medical science for healthier communities"</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About Healthcare Professions</h2>
+        <p>The healthcare sector encompasses diverse careers dedicated to patient care, medical research, and public health. From frontline clinicians to behind-the-scenes specialists, healthcare professionals work together to diagnose, treat, and prevent illness while improving quality of life across populations.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Healing Professions:</strong> Healthcare careers combine scientific knowledge with compassionate care. Whether in hospitals, clinics, research labs, or community settings, these professionals make life-changing differences through direct patient care, medical innovation, and health education.</p>
+        </div>
+
+        <h3>Who Thrives in Healthcare Careers?</h3>
+        <p>This field is ideal for individuals who:</p>
+        <ul class="feature-list">
+            <li>Are passionate about helping others and improving lives</li>
+            <li>Have strong scientific aptitude and problem-solving skills</li>
+            <li>Work well under pressure and in team environments</li>
+            <li>Are committed to lifelong learning and professional development</li>
+            <li>Possess empathy, patience, and strong communication skills</li>
+            <li>Want to be part of meaningful, purpose-driven work</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+        <p>The Bureau of Labor Statistics projects strong growth in healthcare:</p>
+        <ul class="feature-list">
+            <li><strong>Registered Nurses:</strong> +9% growth by 2030</li>
+            <li><strong>Physician Assistants:</strong> +31% growth</li>
+            <li><strong>Medical/Health Services Managers:</strong> +32% growth</li>
+            <li><strong>Healthcare Support Occupations:</strong> +16% growth</li>
+        </ul>
+        <p>Aging populations and expanded healthcare access continue to drive demand across all healthcare specialties.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Clinical Careers -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/doctor.jpg') }}" alt="Doctor">
+            <div class="card-content">
+                <h3><i class="fas fa-user-md"></i> Physician</h3>
+                <p>Diagnose and treat illnesses, injuries, and other health conditions across medical specialties.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $200k-$500k+</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> MD/DO Required</span>
+                    <span class="stat-pill"><i class="fas fa-clock"></i> 7+ Years Training</span>
+                </div>
+                <a href="/healthcare-career?career=doctor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/nurse.jpg') }}" alt="Nurse">
+            <div class="card-content">
+                <h3><i class="fas fa-user-nurse"></i> Registered Nurse</h3>
+                <p>Provide and coordinate patient care, educate patients, and support physicians.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $70k-$120k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> BSN/ADN</span>
+                    <span class="stat-pill"><i class="fas fa-chart-line"></i> +9% Growth</span>
+                </div>
+                <a href="/healthcare-career?career=nurse" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/pharmacist.jpg') }}" alt="Pharmacist">
+            <div class="card-content">
+                <h3><i class="fas fa-prescription-bottle-alt"></i> Pharmacist</h3>
+                <p>Dispense medications, advise on drug therapies, and monitor patient health.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $120k-$160k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> PharmD Required</span>
+                    <span class="stat-pill"><i class="fas fa-clinic-medical"></i> Retail/Hospital</span>
+                </div>
+                <a href="/healthcare-career?career=pharmacist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Allied Health -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/physio.jpg') }}" alt="Physiotherapist">
+            <div class="card-content">
+                <h3><i class="fas fa-spa"></i> Physical Therapist</h3>
+                <p>Help patients improve movement and manage pain through therapeutic exercises.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $85k-$120k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> DPT Degree</span>
+                    <span class="stat-pill"><i class="fas fa-chart-line"></i> +18% Growth</span>
+                </div>
+                <a href="/healthcare-career?career=physiotherapist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/radiologist.jpg') }}" alt="Radiologist">
+            <div class="card-content">
+                <h3><i class="fas fa-x-ray"></i> Radiologic Technologist</h3>
+                <p>Perform diagnostic imaging examinations like X-rays, CT scans, and MRIs.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$100k</span>
+                    <span class="stat-pill"><i class="fas fa-certificate"></i> Certification</span>
+                    <span class="stat-pill"><i class="fas fa-clinic-medical"></i> Hospital/Imaging</span>
+                </div>
+                <a href="/healthcare-career?career=radiologist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/lab.jpg') }}" alt="Medical Lab Technician">
+            <div class="card-content">
+                <h3><i class="fas fa-microscope"></i> Medical Lab Scientist</h3>
+                <p>Analyze body fluids and cells to help diagnose and treat diseases.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $55k-$90k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> BS Required</span>
+                    <span class="stat-pill"><i class="fas fa-flask"></i> Research Potential</span>
+                </div>
+                <a href="/healthcare-career?career=lab-technician" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Specialized Medicine -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/surgeon.jpg') }}" alt="Surgeon">
+            <div class="card-content">
+                <h3><i class="fas fa-syringe"></i> Surgeon</h3>
+                <p>Perform operations to treat diseases, injuries, and deformities.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $300k-$700k+</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> MD + Residency</span>
+                    <span class="stat-pill"><i class="fas fa-procedures"></i> Specialized Fields</span>
+                </div>
+                <a href="/healthcare-career?career=surgeon" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/dentist.jpg') }}" alt="Dentist">
+            <div class="card-content">
+                <h3><i class="fas fa-tooth"></i> Dentist</h3>
+                <p>Diagnose and treat problems with teeth, gums, and related oral structures.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $150k-$300k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> DDS/DMD</span>
+                    <span class="stat-pill"><i class="fas fa-smile"></i> Private Practice</span>
+                </div>
+                <a href="/healthcare-career?career=dentist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/psychologist.jpg') }}" alt="Psychologist">
+            <div class="card-content">
+                <h3><i class="fas fa-brain"></i> Clinical Psychologist</h3>
+                <p>Assess, diagnose, and treat mental, emotional, and behavioral disorders.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $80k-$150k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> PhD/PsyD</span>
+                    <span class="stat-pill"><i class="fas fa-chart-line"></i> +8% Growth</span>
+                </div>
+                <a href="/healthcare-career?career=psychologist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Public Health & Admin -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/public-health.jpg') }}" alt="Public Health Specialist">
+            <div class="card-content">
+                <h3><i class="fas fa-globe-americas"></i> Public Health Specialist</h3>
+                <p>Develop programs and policies to improve community health outcomes.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$120k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> MPH Common</span>
+                    <span class="stat-pill"><i class="fas fa-users"></i> Population Focus</span>
+                </div>
+                <a href="/healthcare-career?career=public-health" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="Healthcare Administrator">
+            <div class="card-content">
+                <h3><i class="fas fa-clipboard-list"></i> Healthcare Administrator</h3>
+                <p>Plan, direct, and coordinate medical services in hospitals and clinics.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $90k-$200k</span>
+                    <span class="stat-pill"><i class="fas fa-chart-line"></i> +32% Growth</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> MHA/MBA</span>
+                </div>
+                <a href="/healthcare-career?career=healthcare-admin" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/optometrist.jpg') }}" alt="Optometrist">
+            <div class="card-content">
+                <h3><i class="fas fa-glasses"></i> Optometrist</h3>
+                <p>Examine eyes for vision problems and prescribe corrective lenses.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $120k-$200k</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> OD Degree</span>
+                    <span class="stat-pill"><i class="fas fa-eye"></i> Private Practice</span>
+                </div>
+                <a href="/healthcare-career?career=optometrist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Healthcare Career Insights</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>What education is required for healthcare careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Educational requirements vary widely by profession:</p>
+                    <ul>
+                        <li><strong>Physicians:</strong> 4-year bachelor's + 4-year medical school + 3-7 year residency</li>
+                        <li><strong>Nurses:</strong> 2-year ADN or 4-year BSN degree (NP requires master's)</li>
+                        <li><strong>Allied Health:</strong> Certificates (1-2 years) to bachelor's degrees</li>
+                        <li><strong>Technologists:</strong> Associate's or bachelor's degrees with certifications</li>
+                        <li><strong>Public Health:</strong> Master's in Public Health (MPH) for advanced roles</li>
+                        <li><strong>Healthcare Admin:</strong> Master's in Health Administration (MHA) or MBA</li>
+                    </ul>
+                    <p>All clinical roles require licensure and continuing education.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="question">
+                    <span>What are emerging trends in healthcare careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Key trends transforming healthcare:</p>
+                    <ul>
+                        <li><strong>Telehealth:</strong> Remote patient care and digital health platforms</li>
+                        <li><strong>Specialization:</strong> Growing demand for niche medical expertise</li>
+                        <li><strong>Technology Integration:</strong> AI diagnostics, robotic surgery, EHR systems</li>
+                        <li><strong>Preventive Care:</strong> Focus on wellness and chronic disease management</li>
+                        <li><strong>Team-Based Care:</strong> Collaborative practice models with diverse providers</li>
+                        <li><strong>Global Health:</strong> Addressing pandemics and health disparities</li>
+                    </ul>
+                    <p>Healthcare professionals must adapt to technological and demographic changes.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="question">
+                    <span>What are the biggest challenges in healthcare careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Common challenges and how to address them:</p>
+                    <ul>
+                        <li><strong>Burnout:</strong> High stress demands strong self-care practices</li>
+                        <li><strong>Regulatory Changes:</strong> Staying current with healthcare laws and policies</li>
+                        <li><strong>Technological Advancements:</strong> Continuous learning to use new tools</li>
+                        <li><strong>Patient Diversity:</strong> Cultural competency training is essential</li>
+                        <li><strong>Work-Life Balance:</strong> Demanding schedules require careful management</li>
+                        <li><strong>Student Debt:</strong> Significant education costs for many clinical roles</li>
+                    </ul>
+                    <p>Professional organizations and mentorship can help navigate these challenges.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="question">
+                    <span>How can I gain healthcare experience before committing to education?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Valuable experience-building opportunities:</p>
+                    <ul>
+                        <li><strong>Volunteering:</strong> Hospitals, clinics, nursing homes</li>
+                        <li><strong>Shadowing:</strong> Following professionals in fields of interest</li>
+                        <li><strong>Entry-Level Jobs:</strong> Medical scribe, CNA, EMT, pharmacy tech</li>
+                        <li><strong>Research:</strong> Assisting with clinical or public health studies</li>
+                        <li><strong>Certifications:</strong> Basic life support (BLS), first aid, phlebotomy</li>
+                        <li><strong>Internships:</strong> Healthcare administration or public health programs</li>
+                    </ul>
+                    <p>Hands-on experience helps confirm career fit before educational investment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Career Explorer. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Enhanced FAQ Toggle with Animation
+        document.querySelectorAll(".faq").forEach((faq) => {
+            const question = faq.querySelector(".question");
+            question.addEventListener("click", () => {
+                faq.classList.toggle("active");
+                
+                // Smooth height transition for answer
+                const answer = faq.querySelector(".answer");
+                if (faq.classList.contains("active")) {
+                    answer.style.display = "block";
+                    const height = answer.scrollHeight;
+                    answer.style.height = "0";
+                    setTimeout(() => {
+                        answer.style.height = `${height}px`;
+                        setTimeout(() => {
+                            answer.style.height = "auto";
+                        }, 300);
+                    }, 10);
+                } else {
+                    const height = answer.scrollHeight;
+                    answer.style.height = `${height}px`;
+                    setTimeout(() => {
+                        answer.style.height = "0";
+                        setTimeout(() => {
+                            answer.style.display = "none";
+                        }, 300);
+                    }, 10);
+                }
+            });
+        });
+
+        // Scroll Animation with Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.classList.contains('career-card')) {
+                        entry.target.style.transitionDelay = `${entries.indexOf(entry) * 0.1}s`;
+                    }
+                }
+            });
+        }, { 
+            threshold: 0.1,
+            rootMargin: "0px 0px -100px 0px"
+        });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+                card.style.boxShadow = '0 20px 40px rgba(59, 130, 246, 0.3)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+                card.style.boxShadow = '0 15px 30px rgba(59, 130, 246, 0.2)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --tech-blue: #3b82f6;
+            --tech-purple: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--tech-blue), var(--tech-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--tech-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--tech-blue);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--tech-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--tech-blue);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--tech-blue);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+            border-color: var(--tech-blue);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--tech-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-tech {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--tech-blue);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-tech:hover {
+            color: var(--tech-purple);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/technology'">Back to Tech Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Technology Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/technology" class="back-to-tech">
+            <i class="fas fa-arrow-left"></i> Back to Technology Careers
+        </a>
+    </div>
+
+    <script>
+        // Technology Career Data (for all sub-cards in technology.html)
+        const techCareerData = {
+            "software-developer": {
+                title: "Software Developer",
+                image: "{{ url_for('static', filename='images/software-developer.jpg') }}",
+                description: "Software developers design, develop, test, and maintain software applications. They work across various industries to create programs that meet user needs, solve problems, and improve efficiency. Developers may specialize in front-end, back-end, full-stack, mobile, or game development.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "B.Tech in CS/IT (4 years), MCA (3 years), or Coding Bootcamps (3-6 months)",
+                growth: "25% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Programming Languages (Python, Java, JavaScript, C++)",
+                    "Data Structures & Algorithms",
+                    "Version Control (Git)",
+                    "Database Management",
+                    "Problem Solving",
+                    "Software Development Lifecycle",
+                    "Testing & Debugging",
+                    "Cloud Computing",
+                    "Agile Methodologies"
+                ],
+                companies: "Google, Microsoft, Amazon, Infosys, TCS, Wipro, HCL, Flipkart, Zomato, Swiggy, Paytm, startups",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete a bachelor's degree in computer science or related field, or attend a coding bootcamp"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain practical experience through internships (6 months to 1 year)"
+                    },
+                    {
+                        stage: "Junior Developer",
+                        content: "Entry-level position focusing on learning and contributing to projects (1-3 years)"
+                    },
+                    {
+                        stage: "Mid-Level Developer",
+                        content: "Take on more complex projects and potentially specialize (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Developer/Lead",
+                        content: "Lead projects, mentor juniors, and make architectural decisions (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "CS50: Introduction to Computer Science",
+                        link: "https://cs50.harvard.edu/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Clean Code by Robert C. Martin",
+                        link: "https://www.amazon.in/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882"
+                    },
+                    {
+                        type: "Platform",
+                        title: "LeetCode for Coding Practice",
+                        link: "https://leetcode.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "AWS Certified Developer",
+                        link: "https://aws.amazon.com/certification/certified-developer-associate/"
+                    }
+                ],
+                outlook: "The software development field is expected to grow 25% from 2022-2032, much faster than average. With digital transformation across industries, demand for skilled developers remains high. Specializations in AI, cloud computing, and cybersecurity are particularly valuable."
+            },
+            "web-developer": {
+                title: "Web Developer",
+                image: "{{ url_for('static', filename='images/web-developer.jpg') }}",
+                description: "Web developers build and maintain websites and web applications. They specialize in front-end (client-side), back-end (server-side), or full-stack development, creating responsive and interactive digital experiences for users across devices.",
+                salary: "₹4-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "B.Tech in CS/IT, Web Development Bootcamps (3-6 months), or Self-taught with portfolio",
+                growth: "23% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "HTML/CSS/JavaScript",
+                    "Frontend Frameworks (React, Angular, Vue)",
+                    "Backend Technologies (Node.js, Django, Ruby on Rails)",
+                    "Responsive Design",
+                    "RESTful APIs",
+                    "Version Control (Git)",
+                    "Web Performance Optimization",
+                    "Security Best Practices"
+                ],
+                companies: "Google, Facebook, Amazon, Flipkart, Swiggy, Zomato, startups, digital agencies",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Learn core web technologies (HTML, CSS, JavaScript)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Choose frontend, backend, or full-stack path"
+                    },
+                    {
+                        stage: "Junior Developer",
+                        content: "Work on specific components under supervision"
+                    },
+                    {
+                        stage: "Web Developer",
+                        content: "Build complete websites/applications independently"
+                    },
+                    {
+                        stage: "Senior Developer",
+                        content: "Lead projects and architect complex systems"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Platform",
+                        title: "MDN Web Docs",
+                        link: "https://developer.mozilla.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "The Odin Project (Full-stack)",
+                        link: "https://www.theodinproject.com/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Eloquent JavaScript",
+                        link: "https://eloquentjavascript.net/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Google Mobile Web Specialist",
+                        link: "https://developers.google.com/certification/mobile-web-specialist"
+                    }
+                ],
+                outlook: "Web development roles growing 23% annually with increasing digital presence needs. High demand for developers skilled in modern frameworks and progressive web apps."
+            },
+            "mobile-developer": {
+                title: "Mobile Developer",
+                image: "{{ url_for('static', filename='images/mobile-developer.jpg') }}",
+                description: "Mobile developers create applications for smartphones and tablets. They specialize in native platforms (iOS/Android) or cross-platform development, building apps that provide seamless user experiences on mobile devices.",
+                salary: "₹5-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "B.Tech in CS/IT, Mobile Development Bootcamps, or Self-taught with portfolio",
+                growth: "22% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Swift (iOS) or Kotlin (Android)",
+                    "Cross-platform Frameworks (Flutter, React Native)",
+                    "Mobile UI/UX Principles",
+                    "API Integration",
+                    "Performance Optimization",
+                    "Security Best Practices",
+                    "App Store Guidelines",
+                    "Testing & Debugging"
+                ],
+                companies: "Google, Apple, Facebook, Flipkart, Swiggy, Paytm, gaming companies, startups",
+                path: [
+                    {
+                        stage: "Platform Choice",
+                        content: "Select iOS, Android, or cross-platform focus"
+                    },
+                    {
+                        stage: "Core Skills",
+                        content: "Learn platform-specific languages and tools"
+                    },
+                    {
+                        stage: "Junior Developer",
+                        content: "Work on app components and features"
+                    },
+                    {
+                        stage: "Mobile Developer",
+                        content: "Build complete apps independently"
+                    },
+                    {
+                        stage: "Senior Developer",
+                        content: "Lead mobile teams and architecture"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Documentation",
+                        title: "Apple Developer Documentation",
+                        link: "https://developer.apple.com/documentation/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Android Developer Fundamentals",
+                        link: "https://developer.android.com/courses/fundamentals-training/toc-v2"
+                    },
+                    {
+                        type: "Book",
+                        title: "Flutter in Action",
+                        link: "https://www.manning.com/books/flutter-in-action"
+                    },
+                    {
+                        type: "Community",
+                        title: "React Native Community",
+                        link: "https://reactnative.dev/community"
+                    }
+                ],
+                outlook: "Mobile development growing 22% annually with increasing smartphone penetration. High demand for developers skilled in both native and cross-platform frameworks."
+            },
+            "data-scientist": {
+                title: "Data Scientist",
+                image: "{{ url_for('static', filename='images/data-scientist.jpg') }}",
+                description: "Data scientists analyze and interpret complex data to help organizations make data-driven decisions. They use statistical techniques, machine learning, and programming to extract insights from data, build predictive models, and solve business problems.",
+                salary: "₹8-18 LPA (Entry Level), ₹18-35 LPA (Mid Level), ₹35-70+ LPA (Senior)",
+                education: "B.Tech/M.Tech in CS/Data Science, MSc in Statistics/Mathematics, or Bootcamps",
+                growth: "35% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Python/R Programming",
+                    "Machine Learning Algorithms",
+                    "Statistical Analysis",
+                    "Data Visualization",
+                    "SQL/NoSQL Databases",
+                    "Big Data Technologies",
+                    "Data Wrangling",
+                    "Business Acumen"
+                ],
+                companies: "Google, Amazon, Microsoft, IBM, Flipkart, Paytm, healthcare, fintech companies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in quantitative field or data science"
+                    },
+                    {
+                        stage: "Analyst Role",
+                        content: "Start as data analyst to build foundational skills"
+                    },
+                    {
+                        stage: "Junior Data Scientist",
+                        content: "Focus on model building and analysis"
+                    },
+                    {
+                        stage: "Data Scientist",
+                        content: "Lead projects and develop complex models"
+                    },
+                    {
+                        stage: "Senior Data Scientist",
+                        content: "Drive data strategy and mentor teams"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Machine Learning by Andrew Ng",
+                        link: "https://www.coursera.org/learn/machine-learning"
+                    },
+                    {
+                        type: "Book",
+                        title: "Python for Data Analysis",
+                        link: "https://www.amazon.in/Python-Data-Analysis-Wrangling-IPython/dp/1491957662"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Kaggle for Competitions",
+                        link: "https://www.kaggle.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Google Data Analytics Certificate",
+                        link: "https://grow.google/certificates/data-analytics/"
+                    }
+                ],
+                outlook: "Data science roles growing 35% annually with increasing data generation. High demand for professionals skilled in machine learning and business analytics."
+            },
+            "ai-engineer": {
+                title: "AI Engineer",
+                image: "{{ url_for('static', filename='images/ai-engineer.jpg') }}",
+                description: "AI engineers develop and implement artificial intelligence models and systems. They work on machine learning, natural language processing, computer vision, and neural networks to create intelligent applications and solutions.",
+                salary: "₹10-20 LPA (Entry Level), ₹20-45 LPA (Mid Level), ₹45-90+ LPA (Senior)",
+                education: "B.Tech/M.Tech in CS with AI specialization, or Advanced Certifications",
+                growth: "40% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-5 years, Senior: 5+ years",
+                skills: [
+                    "Python & ML Libraries",
+                    "Neural Networks & Deep Learning",
+                    "Natural Language Processing",
+                    "Computer Vision",
+                    "TensorFlow/PyTorch",
+                    "Model Optimization",
+                    "Cloud AI Services",
+                    "Mathematics & Statistics"
+                ],
+                companies: "Google Brain, OpenAI, NVIDIA, Microsoft AI, IBM Watson, Indian AI startups",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Complete degree in CS with AI/ML focus"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Master ML frameworks and techniques"
+                    },
+                    {
+                        stage: "Junior AI Engineer",
+                        content: "Work on model development and training"
+                    },
+                    {
+                        stage: "AI Engineer",
+                        content: "Design end-to-end AI solutions"
+                    },
+                    {
+                        stage: "Senior AI Engineer",
+                        content: "Lead AI initiatives and research"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Deep Learning Specialization",
+                        link: "https://www.coursera.org/specializations/deep-learning"
+                    },
+                    {
+                        type: "Book",
+                        title: "Hands-On Machine Learning",
+                        link: "https://www.amazon.in/Hands-Machine-Learning-Scikit-Learn-TensorFlow/dp/1492032646"
+                    },
+                    {
+                        type: "Platform",
+                        title: "TensorFlow Documentation",
+                        link: "https://www.tensorflow.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Google Professional ML Engineer",
+                        link: "https://cloud.google.com/certification/machine-learning-engineer"
+                    }
+                ],
+                outlook: "AI engineering growing 40% annually with rapid adoption across industries. High demand for professionals skilled in neural networks and ethical AI implementation."
+            },
+            "data-engineer": {
+                title: "Data Engineer",
+                image: "{{ url_for('static', filename='images/data-engineer.jpg') }}",
+                description: "Data engineers design, build, and maintain data infrastructure and pipelines. They ensure data is properly collected, stored, processed, and made accessible for analysis and machine learning applications.",
+                salary: "₹7-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "B.Tech in CS/IT, or Data Engineering Certifications",
+                growth: "30% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-5 years, Senior: 5+ years",
+                skills: [
+                    "SQL & NoSQL Databases",
+                    "ETL Processes",
+                    "Big Data Technologies",
+                    "Data Warehousing",
+                    "Cloud Data Services",
+                    "Data Pipeline Design",
+                    "Distributed Systems",
+                    "Performance Optimization"
+                ],
+                companies: "Amazon, Google, Microsoft, Flipkart, Paytm, fintech, healthcare companies",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Develop strong database and programming skills"
+                    },
+                    {
+                        stage: "ETL Skills",
+                        content: "Master data extraction and transformation"
+                    },
+                    {
+                        stage: "Junior Data Engineer",
+                        content: "Build and maintain data pipelines"
+                    },
+                    {
+                        stage: "Data Engineer",
+                        content: "Design scalable data architectures"
+                    },
+                    {
+                        stage: "Senior Data Engineer",
+                        content: "Lead data infrastructure projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Data Engineering on Google Cloud",
+                        link: "https://www.coursera.org/professional-certificates/gcp-data-engineering"
+                    },
+                    {
+                        type: "Book",
+                        title: "Data Engineering Cookbook",
+                        link: "https://www.amazon.in/Data-Engineering-Cookbook-Processing-Analytics/dp/1838551306"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Apache Spark Documentation",
+                        link: "https://spark.apache.org/docs/latest/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "AWS Certified Data Analytics",
+                        link: "https://aws.amazon.com/certification/certified-data-analytics-specialty/"
+                    }
+                ],
+                outlook: "Data engineering growing 30% annually with increasing data volumes. High demand for professionals skilled in cloud data services and big data technologies."
+            },
+            "cybersecurity-analyst": {
+                title: "Cybersecurity Analyst",
+                image: "{{ url_for('static', filename='images/cybersecurity.jpg') }}",
+                description: "Cybersecurity analysts protect organizational systems and networks from digital threats. They monitor for security breaches, implement protective measures, conduct vulnerability assessments, and respond to incidents.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "B.Tech in CS/IT with security focus, or Cybersecurity Certifications",
+                growth: "31% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-5 years, Senior: 5+ years",
+                skills: [
+                    "Network Security",
+                    "Ethical Hacking",
+                    "SIEM Tools",
+                    "Incident Response",
+                    "Risk Assessment",
+                    "Cryptography",
+                    "Security Compliance",
+                    "Threat Intelligence"
+                ],
+                companies: "Palo Alto Networks, CrowdStrike, IBM Security, TCS, Wipro, banks, government",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Develop networking and security fundamentals"
+                    },
+                    {
+                        stage: "Certifications",
+                        content: "Obtain Security+, CEH, or similar credentials"
+                    },
+                    {
+                        stage: "SOC Analyst",
+                        content: "Monitor security alerts and incidents"
+                    },
+                    {
+                        stage: "Security Analyst",
+                        content: "Conduct vulnerability assessments"
+                    },
+                    {
+                        stage: "Senior Analyst",
+                        content: "Develop security strategies and policies"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Certified Ethical Hacker (CEH)",
+                        link: "https://www.eccouncil.org/certified-ethical-hacker/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Cybersecurity Fundamentals",
+                        link: "https://www.edx.org/professional-certificate/cybersecurity-fundamentals"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Hacker Playbook",
+                        link: "https://www.amazon.in/Hacker-Playbook-Practical-Penetration-Testing/dp/1494932636"
+                    },
+                    {
+                        type: "Platform",
+                        title: "TryHackMe Learning Paths",
+                        link: "https://tryhackme.com/"
+                    }
+                ],
+                outlook: "Cybersecurity roles growing 31% annually with increasing threats. High demand for cloud security experts and professionals with IoT security knowledge."
+            },
+            "cloud-architect": {
+                title: "Cloud Architect",
+                image: "{{ url_for('static', filename='images/cloud-architect.jpg') }}",
+                description: "Cloud architects design and implement cloud computing strategies for organizations. They evaluate cloud services, design cloud environments, and oversee migrations while ensuring security, scalability, and cost-efficiency.",
+                salary: "₹10-20 LPA (Entry Level), ₹20-40 LPA (Mid Level), ₹40-80+ LPA (Senior)",
+                education: "B.Tech in CS/IT + Cloud Certifications (AWS, Azure, GCP)",
+                growth: "30% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Cloud Platforms",
+                    "Infrastructure as Code",
+                    "Networking & Security",
+                    "Containerization",
+                    "Cost Optimization",
+                    "Disaster Recovery",
+                    "Multi-cloud Strategies",
+                    "DevOps Practices"
+                ],
+                companies: "Amazon Web Services, Microsoft Azure, Google Cloud, IBM Cloud, TCS, Infosys",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Gain experience as developer or sysadmin"
+                    },
+                    {
+                        stage: "Cloud Practitioner",
+                        content: "Obtain entry-level cloud certifications"
+                    },
+                    {
+                        stage: "Cloud Engineer",
+                        content: "Implement cloud solutions"
+                    },
+                    {
+                        stage: "Cloud Architect",
+                        content: "Design cloud environments"
+                    },
+                    {
+                        stage: "Senior Architect",
+                        content: "Lead enterprise cloud strategy"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "AWS Solutions Architect",
+                        link: "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Google Cloud Architecture",
+                        link: "https://www.coursera.org/professional-certificates/google-cloud-architecture"
+                    },
+                    {
+                        type: "Book",
+                        title: "Cloud Architecture Patterns",
+                        link: "https://www.amazon.in/Cloud-Architecture-Patterns-Using-Microsoft/dp/1449319777"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Linux Academy Cloud Labs",
+                        link: "https://linuxacademy.com/"
+                    }
+                ],
+                outlook: "Cloud computing roles growing 30% annually with enterprise adoption. High demand for multi-cloud expertise and security specializations."
+            },
+            "devops-engineer": {
+                title: "DevOps Engineer",
+                image: "{{ url_for('static', filename='images/devops.jpg') }}",
+                description: "DevOps engineers streamline software development and deployment through automation. They implement CI/CD pipelines, infrastructure as code, and monitoring systems to enable rapid, reliable software delivery.",
+                salary: "₹8-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "B.Tech in CS/IT + DevOps Certifications",
+                growth: "25% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-5 years, Senior: 5+ years",
+                skills: [
+                    "CI/CD Pipelines",
+                    "Infrastructure as Code",
+                    "Containerization",
+                    "Cloud Platforms",
+                    "Monitoring & Logging",
+                    "Scripting",
+                    "Configuration Management",
+                    "Site Reliability"
+                ],
+                companies: "Amazon, Microsoft, Google, IBM, Infosys, Wipro, tech startups",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Start as developer or system administrator"
+                    },
+                    {
+                        stage: "DevOps Training",
+                        content: "Learn automation tools and cloud platforms"
+                    },
+                    {
+                        stage: "Junior DevOps",
+                        content: "Implement CI/CD pipelines"
+                    },
+                    {
+                        stage: "DevOps Engineer",
+                        content: "Design deployment architectures"
+                    },
+                    {
+                        stage: "Senior DevOps",
+                        content: "Lead DevOps transformations"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "AWS Certified DevOps Engineer",
+                        link: "https://aws.amazon.com/certification/certified-devops-engineer-professional/"
+                    },
+                    {
+                        type: "Course",
+                        title: "DevOps Bootcamp",
+                        link: "https://www.udemy.com/course/the-complete-devops-bootcamp/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The DevOps Handbook",
+                        link: "https://www.amazon.in/DevOps-Handbook-World-Class-Reliability-Organizations/dp/1942788002"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Kubernetes Documentation",
+                        link: "https://kubernetes.io/docs/home/"
+                    }
+                ],
+                outlook: "DevOps roles growing 25% annually with digital transformation. High demand for Kubernetes expertise and multi-cloud deployment skills."
+            },
+            "blockchain-developer": {
+                title: "Blockchain Developer",
+                image: "{{ url_for('static', filename='images/blockchain.jpg') }}",
+                description: "Blockchain developers design and implement decentralized applications (DApps) and smart contracts. They work with distributed ledger technology to create secure, transparent systems for finance, supply chain, and other industries.",
+                salary: "₹8-18 LPA (Entry Level), ₹18-35 LPA (Mid Level), ₹35-70+ LPA (Senior)",
+                education: "B.Tech in CS/IT + Blockchain Certifications",
+                growth: "35% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Solidity/Go/Rust",
+                    "Smart Contracts",
+                    "Cryptography",
+                    "Distributed Systems",
+                    "Ethereum/Hyperledger",
+                    "Web3.js",
+                    "DeFi Principles",
+                    "NFT Development"
+                ],
+                companies: "Coinbase, Binance, ConsenSys, Polygon, WazirX, blockchain startups",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Learn programming and cryptography"
+                    },
+                    {
+                        stage: "Blockchain Basics",
+                        content: "Understand blockchain architecture"
+                    },
+                    {
+                        stage: "Smart Contracts",
+                        content: "Develop and audit contracts"
+                    },
+                    {
+                        stage: "DApp Development",
+                        content: "Build decentralized applications"
+                    },
+                    {
+                        stage: "Blockchain Architect",
+                        content: "Design enterprise solutions"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Blockchain Specialization",
+                        link: "https://www.coursera.org/specializations/blockchain"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Blockchain Developer",
+                        link: "https://blockchain-council.org/certifications/certified-blockchain-developer/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Mastering Blockchain",
+                        link: "https://www.amazon.in/Mastering-Blockchain-Imran-Bashir/dp/1787125440"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Ethereum Developer Docs",
+                        link: "https://ethereum.org/en/developers/docs/"
+                    }
+                ],
+                outlook: "Blockchain developer demand growing 35% annually with Web3 adoption. Strong opportunities in fintech, supply chain, and digital identity sectors."
+            },
+            "ar-vr-developer": {
+                title: "AR/VR Developer",
+                image: "{{ url_for('static', filename='images/ar-vr.jpg') }}",
+                description: "AR/VR developers create immersive augmented and virtual reality experiences. They work with 3D modeling, game engines, and spatial computing to build applications for gaming, education, training, and more.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "B.Tech in CS/Game Design, or Specialized Certifications",
+                growth: "28% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Unity/Unreal Engine",
+                    "3D Modeling",
+                    "Spatial Computing",
+                    "C#/C++ Programming",
+                    "User Interaction Design",
+                    "Performance Optimization",
+                    "Computer Vision",
+                    "Physics Simulation"
+                ],
+                companies: "Facebook (Meta), Google, Microsoft, gaming studios, edtech, healthcare tech",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Learn game engines and 3D development"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on AR or VR technologies"
+                    },
+                    {
+                        stage: "Junior Developer",
+                        content: "Work on AR/VR components"
+                    },
+                    {
+                        stage: "AR/VR Developer",
+                        content: "Build complete experiences"
+                    },
+                    {
+                        stage: "Senior Developer",
+                        content: "Lead immersive tech projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Platform",
+                        title: "Unity Learn",
+                        link: "https://learn.unity.com/"
+                    },
+                    {
+                        type: "Course",
+                        title: "VR Development with Oculus",
+                        link: "https://developer.oculus.com/learn/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Learning Virtual Reality",
+                        link: "https://www.amazon.in/Learning-Virtual-Reality-Development-Applications/dp/1492049830"
+                    },
+                    {
+                        type: "Community",
+                        title: "AR/VR Developer Groups",
+                        link: "https://www.meetup.com/topics/virtual-reality/"
+                    }
+                ],
+                outlook: "AR/VR development growing 28% annually with expanding use cases. High demand in gaming, education, and enterprise training sectors."
+            },
+            "iot-engineer": {
+                title: "IoT Engineer",
+                image: "{{ url_for('static', filename='images/iot-engineer.jpg') }}",
+                description: "IoT engineers develop interconnected smart devices and systems. They combine hardware and software skills to create solutions for home automation, industrial monitoring, smart cities, and wearable technology.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "B.Tech in CS/ECE/EEE with IoT focus, or Specialized Certifications",
+                growth: "26% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-5 years, Senior: 5+ years",
+                skills: [
+                    "Embedded Systems",
+                    "Sensor Networks",
+                    "Wireless Protocols",
+                    "Edge Computing",
+                    "Data Processing",
+                    "Hardware-Software Integration",
+                    "Security Protocols",
+                    "Cloud Connectivity"
+                ],
+                companies: "Bosch, Siemens, GE, Honeywell, Indian IoT startups, smart city projects",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Develop hardware and software skills"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on specific IoT domains"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Work on IoT components"
+                    },
+                    {
+                        stage: "IoT Engineer",
+                        content: "Develop complete solutions"
+                    },
+                    {
+                        stage: "Senior Engineer",
+                        content: "Lead IoT system architecture"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "IoT Specialization (Coursera)",
+                        link: "https://www.coursera.org/specializations/internet-of-things"
+                    },
+                    {
+                        type: "Book",
+                        title: "Building the Internet of Things",
+                        link: "https://www.amazon.in/Building-Internet-Things-Maciej-Kranz/dp/1119125645"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Arduino Documentation",
+                        link: "https://www.arduino.cc/en/Guide"
+                    },
+                    {
+                        type: "Certification",
+                        title: "AWS IoT Certification",
+                        link: "https://aws.amazon.com/certification/certified-iot-specialty/"
+                    }
+                ],
+                outlook: "IoT engineering growing 26% annually with smart device proliferation. Strong demand in industrial IoT and smart city implementations."
+            },
+            "qa-engineer": {
+                title: "QA Engineer",
+                image: "{{ url_for('static', filename='images/qa-engineer.jpg') }}",
+                description: "QA engineers ensure software quality through systematic testing. They design test cases, automate testing processes, identify bugs, and verify fixes to maintain high product standards before release.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-30+ LPA (Senior)",
+                education: "B.Tech in CS/IT, or Software Testing Certifications",
+                growth: "20% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Test Automation",
+                    "Testing Frameworks",
+                    "Bug Tracking",
+                    "Performance Testing",
+                    "Security Testing",
+                    "CI/CD Integration",
+                    "Manual Testing",
+                    "Quality Standards"
+                ],
+                companies: "All major tech companies, software product firms, outsourcing companies",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Learn software testing fundamentals"
+                    },
+                    {
+                        stage: "Automation",
+                        content: "Master test automation tools"
+                    },
+                    {
+                        stage: "Junior QA",
+                        content: "Execute test cases and report bugs"
+                    },
+                    {
+                        stage: "QA Engineer",
+                        content: "Design test strategies"
+                    },
+                    {
+                        stage: "Senior QA",
+                        content: "Lead quality assurance programs"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "ISTQB Certification",
+                        link: "https://www.istqb.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Selenium WebDriver with Python",
+                        link: "https://www.udemy.com/course/selenium-webdriver-with-python/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Agile Testing",
+                        link: "https://www.amazon.in/Agile-Testing-Practical-Guide-Testers/dp/0321534468"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Test Automation University",
+                        link: "https://testautomationu.applitools.com/"
+                    }
+                ],
+                outlook: "QA engineering growing 20% annually with increasing software complexity. High demand for automation skills and performance testing expertise."
+            },
+            "ux-designer": {
+                title: "UX Designer",
+                image: "{{ url_for('static', filename='images/ux-designer.jpg') }}",
+                description: "UX designers create meaningful digital experiences by focusing on user needs. They conduct research, design wireframes, prototype interactions, and test usability to optimize product experiences.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-20 LPA (Mid Level), ₹20-40+ LPA (Senior)",
+                education: "Bachelor's in Design/HCI, UX Certifications, or Bootcamps",
+                growth: "22% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "User Research",
+                    "Wireframing & Prototyping",
+                    "Usability Testing",
+                    "Information Architecture",
+                    "Interaction Design",
+                    "Design Thinking",
+                    "Accessibility",
+                    "Collaboration"
+                ],
+                companies: "Google, IBM, Amazon, Flipkart, Swiggy, fintech, edtech companies",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Learn UX principles and tools"
+                    },
+                    {
+                        stage: "Portfolio",
+                        content: "Build case studies with projects"
+                    },
+                    {
+                        stage: "Junior Designer",
+                        content: "Work on design components"
+                    },
+                    {
+                        stage: "UX Designer",
+                        content: "Own end-to-end design process"
+                    },
+                    {
+                        stage: "Lead Designer",
+                        content: "Manage design teams and strategy"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Don't Make Me Think",
+                        link: "https://www.amazon.in/Dont-Make-Think-Revisited-Usability/dp/0321965515"
+                    },
+                    {
+                        type: "Course",
+                        title: "Google UX Design Certificate",
+                        link: "https://www.coursera.org/professional-certificates/google-ux-design"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Figma Design Community",
+                        link: "https://www.figma.com/community"
+                    },
+                    {
+                        type: "Blog",
+                        title: "Nielsen Norman Group",
+                        link: "https://www.nngroup.com/articles/"
+                    }
+                ],
+                outlook: "UX design roles growing 22% as companies prioritize digital experiences. Emerging opportunities in AR/VR interfaces and voice user interfaces."
+            }
+        };
+
+        // Load career data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerKey = urlParams.get('career');
+
+        if (careerKey && techCareerData[careerKey]) {
+            const career = techCareerData[careerKey];
+            
+            // Set basic information
+            document.title = `${career.title} | CareerHub`;
+            document.getElementById("career-title").textContent = career.title;
+            document.getElementById("career-image").src = career.image;
+            document.getElementById("career-image").alt = career.title;
+            document.getElementById("career-description").textContent = career.description;
+            document.getElementById("career-salary").textContent = career.salary;
+            document.getElementById("career-education").textContent = career.education;
+            document.getElementById("career-growth").textContent = career.growth;
+            document.getElementById("career-experience").textContent = career.experience;
+            document.getElementById("career-companies").textContent = career.companies;
+            
+            // Populate skills
+            const skillsContainer = document.getElementById("skills-container");
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement("div");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Populate career path
+            const careerPath = document.getElementById("career-path");
+            career.path.forEach((stage, index) => {
+                const pathItem = document.createElement("div");
+                pathItem.className = "path-item";
+                
+                const pathContent = document.createElement("div");
+                pathContent.className = "path-content";
+                
+                const stageTitle = document.createElement("h4");
+                stageTitle.textContent = `${index + 1}. ${stage.stage}`;
+                
+                const stageDesc = document.createElement("p");
+                stageDesc.textContent = stage.content;
+                
+                pathContent.appendChild(stageTitle);
+                pathContent.appendChild(stageDesc);
+                pathItem.appendChild(pathContent);
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Populate resources
+            const resourcesContainer = document.getElementById("resources-container");
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement("div");
+                resourceCard.className = "resource-card";
+                
+                const resourceTitle = document.createElement("h4");
+                resourceTitle.innerHTML = `<i class="fas ${getResourceIcon(resource.type)}"></i> ${resource.type}: ${resource.title}`;
+                
+                const resourceLink = document.createElement("a");
+                resourceLink.href = resource.link;
+                resourceLink.target = "_blank";
+                resourceLink.textContent = "Explore Resource →";
+                
+                resourceCard.appendChild(resourceTitle);
+                resourceCard.appendChild(resourceLink);
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            const jobOutlook = document.getElementById("job-outlook");
+            jobOutlook.innerHTML = `<h3><i class="fas fa-chart-line"></i> Market Outlook</h3><p>${career.outlook}</p>`;
+            
+        } else {
+            document.querySelector(".career-container").innerHTML = `
+                <div style="text-align: center; padding: 5rem 0;">
+                    <h2 style="color: var(--tech-blue); margin-bottom: 1rem;">Technology Career Not Found</h2>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">The requested technology career path could not be found.</p>
+                    <button class="cta-btn" onclick="window.location.href='/technology'">Browse Tech Careers</button>
+                </div>
+            `;
+        }
+
+        function getResourceIcon(type) {
+            switch(type.toLowerCase()) {
+                case 'course': return 'fa-graduation-cap';
+                case 'book': return 'fa-book';
+                case 'platform': return 'fa-laptop-code';
+                case 'certification': return 'fa-certificate';
+                case 'documentation': return 'fa-file-alt';
+                case 'community': return 'fa-users';
+                case 'tool': return 'fa-tools';
+                case 'blog': return 'fa-blog';
+                default: return 'fa-link';
+            }
+        }
+    </script>
+</body>
+</html>

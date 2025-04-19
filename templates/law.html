@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --law: #8b5cf6;
+            --justice: #6366f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/law-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.2));
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--law), var(--justice));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .field-intro {
+            padding: 3rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-size: 2rem;
+            color: var(--law);
+            margin-bottom: 1.5rem;
+        }
+
+        .field-intro h3 {
+            font-size: 1.5rem;
+            color: var(--justice);
+            margin: 2rem 0 1rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid var(--law);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul.feature-list li::before {
+            content: '⚖️';
+            position: absolute;
+            left: 0;
+        }
+
+        .career-cards-container {
+            padding: 2rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);
+            border-color: var(--law);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .career-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .career-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--justice);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--law);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .learn-more:hover {
+            background: var(--law);
+            color: var(--light);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 6%;
+            margin: 3rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--law);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--law);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-balance-scale"></i> Law Careers</h1>
+        <p>Championing justice, interpreting the law, and protecting rights in society</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About the Legal Field</h2>
+        <p>The legal profession encompasses diverse careers dedicated to interpreting, applying, and upholding laws that govern society. From courtroom advocacy to corporate compliance, legal professionals play vital roles in maintaining justice, resolving disputes, and shaping policy at all levels of society.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Legal Spectrum:</strong> Litigation, corporate law, public interest, criminal justice, and regulatory compliance. Careers range from traditional courtroom roles to emerging specialties in technology law and international arbitration, with opportunities in private practice, government, and non-profit sectors.</p>
+        </div>
+
+        <h3>Who Should Pursue Law?</h3>
+        <p>This field is ideal for individuals who:</p>
+        <ul class="feature-list">
+            <li>Have strong analytical and critical thinking skills</li>
+            <li>Enjoy research, writing, and complex problem-solving</li>
+            <li>Are passionate about justice and social issues</li>
+            <li>Thrive in structured, detail-oriented environments</li>
+            <li>Possess excellent communication and advocacy skills</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+        <p>The Bureau of Labor Statistics projects steady growth across legal careers:</p>
+        <ul class="feature-list">
+            <li><strong>Lawyers:</strong> +10% growth by 2030</li>
+            <li><strong>Paralegals:</strong> +12% growth</li>
+            <li><strong>Judges:</strong> +3% growth</li>
+            <li><strong>Legal consultants:</strong> +15% growth</li>
+        </ul>
+        <p>Emerging areas like technology law, environmental law, and international arbitration are experiencing particularly strong demand as legal systems adapt to global changes.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Litigation -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/lawyer.jpg') }}" alt="Lawyer">
+            <div class="card-content">
+                <h3><i class="fas fa-gavel"></i> Lawyer</h3>
+                <p>Represent clients in legal matters, provide counsel, and advocate in court proceedings.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$80k-$200k+</span>
+                    <span class="stat-pill">JD required</span>
+                    <span class="stat-pill">Bar exam</span>
+                </div>
+                <a href="/law-career?career=lawyer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/judge.jpg') }}" alt="Judge">
+            <div class="card-content">
+                <h3><i class="fas fa-scale-balanced"></i> Judge</h3>
+                <p>Preside over legal proceedings, interpret laws, and deliver judgments in court.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$120k-$250k+</span>
+                    <span class="stat-pill">Appointed/elected</span>
+                    <span class="stat-pill">Experience</span>
+                </div>
+                <a href="/law-career?career=judge" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Legal Support -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/legal-advisor.jpg') }}" alt="Legal Advisor">
+            <div class="card-content">
+                <h3><i class="fas fa-briefcase"></i> Legal Advisor</h3>
+                <p>Provide specialized legal guidance to organizations or government agencies.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$90k-$180k</span>
+                    <span class="stat-pill">Specialized</span>
+                    <span class="stat-pill">JD required</span>
+                </div>
+                <a href="/law-career?career=legal-advisor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/paralegal.jpg') }}" alt="Paralegal">
+            <div class="card-content">
+                <h3><i class="fas fa-file-contract"></i> Paralegal</h3>
+                <p>Support lawyers with research, documentation, and case preparation.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$80k</span>
+                    <span class="stat-pill">Certificate/degree</span>
+                    <span class="stat-pill">High demand</span>
+                </div>
+                <a href="/law-career?career=paralegal" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Criminal Law -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/public-prosecutor.jpg') }}" alt="Public Prosecutor">
+            <div class="card-content">
+                <h3><i class="fas fa-landmark"></i> Public Prosecutor</h3>
+                <p>Represent the government in criminal cases and uphold justice.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$70k-$150k</span>
+                    <span class="stat-pill">Government</span>
+                    <span class="stat-pill">Trial experience</span>
+                </div>
+                <a href="/law-career?career=public-prosecutor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/criminal-lawyer.jpg') }}" alt="Criminal Lawyer">
+            <div class="card-content">
+                <h3><i class="fas fa-handcuffs"></i> Criminal Lawyer</h3>
+                <p>Defend or prosecute individuals accused of criminal offenses.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$75k-$200k+</span>
+                    <span class="stat-pill">Courtroom focus</span>
+                    <span class="stat-pill">High-pressure</span>
+                </div>
+                <a href="/law-career?career=criminal-lawyer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Specialized Law -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/corporate-lawyer.jpg') }}" alt="Corporate Lawyer">
+            <div class="card-content">
+                <h3><i class="fas fa-building"></i> Corporate Lawyer</h3>
+                <p>Handle legal matters for businesses including contracts and compliance.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$120k-$300k+</span>
+                    <span class="stat-pill">High earning</span>
+                    <span class="stat-pill">Long hours</span>
+                </div>
+                <a href="/law-career?career=corporate-lawyer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/family-lawyer.jpg') }}" alt="Family Lawyer">
+            <div class="card-content">
+                <h3><i class="fas fa-heart"></i> Family Lawyer</h3>
+                <p>Handle divorce, custody, adoption, and other family-related legal matters.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$70k-$150k</span>
+                    <span class="stat-pill">Emotionally complex</span>
+                    <span class="stat-pill">Client-focused</span>
+                </div>
+                <a href="/law-career?career=family-lawyer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Public Interest -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/civil-rights-lawyer.jpg') }}" alt="Civil Rights Lawyer">
+            <div class="card-content">
+                <h3><i class="fas fa-scale-balanced"></i> Civil Rights Lawyer</h3>
+                <p>Advocate for equal rights and challenge discrimination through the legal system.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$60k-$130k</span>
+                    <span class="stat-pill">Public interest</span>
+                    <span class="stat-pill">Policy impact</span>
+                </div>
+                <a href="/law-career?career=civil-rights-lawyer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/environmental-lawyer.jpg') }}" alt="Environmental Lawyer">
+            <div class="card-content">
+                <h3><i class="fas fa-leaf"></i> Environmental Lawyer</h3>
+                <p>Work on legal issues related to environmental protection and regulations.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$80k-$180k</span>
+                    <span class="stat-pill">Growing field</span>
+                    <span class="stat-pill">Policy focus</span>
+                </div>
+                <a href="/law-career?career=environmental-lawyer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Law Career FAQs</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>What education is required for legal careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Educational paths vary by position:</p>
+                    <ul>
+                        <li><strong>Lawyers:</strong> Bachelor's degree + Juris Doctor (JD) + bar exam</li>
+                        <li><strong>Paralegals:</strong> Associate's degree or certificate program</li>
+                        <li><strong>Judges:</strong> Typically require JD + extensive legal experience</li>
+                        <li><strong>Legal consultants:</strong> Often require JD + specialized expertise</li>
+                    </ul>
+                    <p>Many law schools prefer applicants with diverse undergraduate backgrounds.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What are the biggest challenges in legal careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Common challenges include:</p>
+                    <ul>
+                        <li><strong>Long hours:</strong> Especially in corporate law and litigation</li>
+                        <li><strong>High stress:</strong> Dealing with high-stakes cases and client expectations</li>
+                        <li><strong>Student debt:</strong> Law school can be expensive</li>
+                        <li><strong>Competition:</strong> Particularly for prestigious positions</li>
+                        <li><strong>Emotional toll:</strong> Especially in criminal and family law</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What's the career progression like in law?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Typical career paths include:</p>
+                    <ul>
+                        <li><strong>Law firm:</strong> Associate → Senior Associate → Partner</li>
+                        <li><strong>Corporate:</strong> Staff attorney → General counsel</li>
+                        <li><strong>Public sector:</strong> Prosecutor → Judge</li>
+                        <li><strong>Public interest:</strong> Staff attorney → Director</li>
+                    </ul>
+                    <p>Many lawyers change sectors during their careers for diverse experience.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What skills are most valuable in legal careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Key skills for success:</p>
+                    <ul>
+                        <li><strong>Analytical thinking:</strong> Interpreting complex information</li>
+                        <li><strong>Research/writing:</strong> Crafting persuasive arguments</li>
+                        <li><strong>Oral advocacy:</strong> Presenting cases effectively</li>
+                        <li><strong>Attention to detail:</strong> Spotting critical legal nuances</li>
+                        <li><strong>Ethical judgment:</strong> Maintaining professional standards</li>
+                        <li><strong>Client management:</strong> Building trust and understanding needs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq").forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sports Careers | CareerHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #7c3aed;
+      --accent: #00d4ff;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --sports: #ef4444;
+      --fitness: #f59e0b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 8rem 6% 3rem;
+      background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                  url('/static/images/sports-banner.jpg') center/cover;
+      text-align: center;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(239, 68, 68, 0.2), rgba(245, 158, 11, 0.2));
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--sports), var(--fitness));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #e2e8f0;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+
+    .field-intro {
+      padding: 3rem 6%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .field-intro h2 {
+      font-size: 2rem;
+      color: var(--sports);
+      margin-bottom: 1.5rem;
+    }
+
+    .field-intro h3 {
+      font-size: 1.5rem;
+      color: var(--fitness);
+      margin: 2rem 0 1rem;
+    }
+
+    .field-intro p {
+      margin-bottom: 1.5rem;
+      color: #94a3b8;
+    }
+
+    .highlight-box {
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 4px solid var(--sports);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    ul.feature-list {
+      color: #94a3b8;
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    ul.feature-list li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    ul.feature-list li::before {
+      content: '🏆';
+      position: absolute;
+      left: 0;
+    }
+
+    .career-cards-container {
+      padding: 2rem 6%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .career-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .career-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(239, 68, 68, 0.2);
+      border-color: var(--sports);
+    }
+
+    .career-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .career-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .career-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .career-card p {
+      color: #94a3b8;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      min-height: 60px;
+    }
+
+    .career-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.2rem 0;
+    }
+
+    .stat-pill {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--fitness);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .learn-more {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--sports);
+      border-radius: 0.5rem;
+      color: var(--light);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .learn-more:hover {
+      background: var(--sports);
+      color: var(--light);
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+
+    .faq-section {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3rem 6%;
+      margin: 3rem auto;
+      border-radius: 1rem;
+      max-width: 1000px;
+      backdrop-filter: blur(10px);
+    }
+
+    .faq-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--sports);
+    }
+
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .faq:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--sports);
+    }
+
+    .question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--light);
+    }
+
+    .answer {
+      font-size: 1rem;
+      color: #94a3b8;
+      margin-top: 1rem;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .faq.active .answer {
+      display: block;
+    }
+
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .faq.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding-top: 6rem;
+      }
+      
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .career-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .field-intro, .career-cards-container, .faq-section {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-running"></i> Sports Careers</h1>
+    <p>Explore exciting careers in athletic performance, sports management, and fitness industries.</p>
+  </header>
+
+  <section class="field-intro">
+    <h2>About Sports Careers</h2>
+    <p>The sports industry offers diverse career opportunities beyond just being an athlete. From coaching and sports medicine to management and media, these careers combine passion for sports with professional skills. The sector includes professional sports, fitness industry, sports technology, and recreational management.</p>
+    
+    <div class="highlight-box">
+      <p><strong>Career Spectrum:</strong> Professional athletics, coaching, sports medicine, management, media, and technology. Careers range from on-field performance to behind-the-scenes roles that keep the sports world running.</p>
+    </div>
+
+    <h3>Who Should Pursue Sports Careers?</h3>
+    <p>This field is ideal for individuals who:</p>
+    <ul class="feature-list">
+      <li>Are passionate about sports and physical activity</li>
+      <li>Enjoy working in dynamic, high-energy environments</li>
+      <li>Have strong communication and leadership skills</li>
+      <li>Are team players with competitive spirit</li>
+      <li>Want to help others achieve physical goals</li>
+    </ul>
+
+    <h3>Career Outlook</h3>
+    <p>The sports industry offers:</p>
+    <ul class="feature-list">
+      <li><strong>Growing industry:</strong> Global sports market valued at $500+ billion</li>
+      <li><strong>Diverse opportunities:</strong> 100+ different career paths in sports</li>
+      <li><strong>Health focus:</strong> Increased demand for fitness professionals</li>
+      <li><strong>Technology:</strong> Emerging fields like sports analytics and esports</li>
+    </ul>
+    <p>With growing health awareness and sports popularity, career opportunities continue to expand.</p>
+
+    <a href="/explore" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to All Fields
+    </a>
+  </section>
+
+  <section class="career-cards-container">
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/professional-athlete.jpg') }}" alt="Professional Athlete">
+      <div class="card-content">
+        <h3><i class="fas fa-trophy"></i> Professional Athlete</h3>
+        <p>Compete at highest levels in sports like cricket, football, tennis, or athletics.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹5L-₹50Cr+</span>
+          <span class="stat-pill">Elite skill</span>
+          <span class="stat-pill">Performance</span>
+        </div>
+        <a href="/sports-career?career=professional-athlete" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-coach.jpg') }}" alt="Sports Coach">
+      <div class="card-content">
+        <h3><i class="fas fa-whistle"></i> Sports Coach</h3>
+        <p>Train athletes to improve performance, technique, and strategy.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3-25 LPA</span>
+          <span class="stat-pill">Certification</span>
+          <span class="stat-pill">Team leadership</span>
+        </div>
+        <a href="/sports-career?career=sports-coach" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/fitness-trainer.jpg') }}" alt="Fitness Trainer">
+      <div class="card-content">
+        <h3><i class="fas fa-dumbbell"></i> Fitness Trainer</h3>
+        <p>Design exercise programs and guide clients to achieve fitness goals.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹2-15 LPA</span>
+          <span class="stat-pill">Certification</span>
+          <span class="stat-pill">Client focus</span>
+        </div>
+        <a href="/sports-career?career=fitness-trainer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-analyst.jpg') }}" alt="Sports Analyst">
+      <div class="card-content">
+        <h3><i class="fas fa-chart-bar"></i> Sports Analyst</h3>
+        <p>Use data to evaluate performance, strategy, and player statistics.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹4-20 LPA</span>
+          <span class="stat-pill">Data skills</span>
+          <span class="stat-pill">Sports knowledge</span>
+        </div>
+        <a href="/sports-career?career=sports-analyst" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/physical-therapist.jpg') }}" alt="Sports Physiotherapist">
+      <div class="card-content">
+        <h3><i class="fas fa-bone"></i> Sports Physiotherapist</h3>
+        <p>Help athletes prevent and recover from injuries through therapy.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3-18 LPA</span>
+          <span class="stat-pill">Medical degree</span>
+          <span class="stat-pill">Rehabilitation</span>
+        </div>
+        <a href="/sports-career?career=sports-physiotherapist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-journalist.jpg') }}" alt="Sports Journalist">
+      <div class="card-content">
+        <h3><i class="fas fa-newspaper"></i> Sports Journalist</h3>
+        <p>Cover sports news, conduct interviews, and write articles.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3-15 LPA</span>
+          <span class="stat-pill">Writing skills</span>
+          <span class="stat-pill">Media outlets</span>
+        </div>
+        <a href="/sports-career?career=sports-journalist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-psychologist.jpg') }}" alt="Sports Psychologist">
+      <div class="card-content">
+        <h3><i class="fas fa-brain"></i> Sports Psychologist</h3>
+        <p>Help athletes with mental conditioning, focus, and performance anxiety.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹4-20 LPA</span>
+          <span class="stat-pill">Psychology degree</span>
+          <span class="stat-pill">Mental training</span>
+        </div>
+        <a href="/sports-career?career=sports-psychologist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-agent.jpg') }}" alt="Sports Agent">
+      <div class="card-content">
+        <h3><i class="fas fa-handshake"></i> Sports Agent</h3>
+        <p>Negotiate contracts and manage business affairs for athletes.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹5-50 LPA+</span>
+          <span class="stat-pill">Networking</span>
+          <span class="stat-pill">Legal knowledge</span>
+        </div>
+        <a href="/sports-career?career=sports-agent" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-commentator.jpg') }}" alt="Sports Commentator">
+      <div class="card-content">
+        <h3><i class="fas fa-microphone"></i> Sports Commentator</h3>
+        <p>Provide live commentary and analysis during sports broadcasts.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3-25 LPA</span>
+          <span class="stat-pill">Voice skills</span>
+          <span class="stat-pill">Game knowledge</span>
+        </div>
+        <a href="/sports-career?career=sports-commentator" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-official.jpg') }}" alt="Sports Official">
+      <div class="card-content">
+        <h3><i class="fas fa-flag"></i> Sports Official</h3>
+        <p>Enforce rules and ensure fair play as referee, umpire or judge.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹2-12 LPA</span>
+          <span class="stat-pill">Certification</span>
+          <span class="stat-pill">Rule mastery</span>
+        </div>
+        <a href="/sports-career?career=sports-official" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sports-nutritionist.jpg') }}" alt="Sports Nutritionist">
+      <div class="card-content">
+        <h3><i class="fas fa-apple-alt"></i> Sports Nutritionist</h3>
+        <p>Design diet plans to optimize athlete performance and recovery.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹3-18 LPA</span>
+          <span class="stat-pill">Dietetics degree</span>
+          <span class="stat-pill">Performance focus</span>
+        </div>
+        <a href="/sports-career?career=sports-nutritionist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/esports-player.jpg') }}" alt="Esports Player">
+      <div class="card-content">
+        <h3><i class="fas fa-gamepad"></i> Esports Player</h3>
+        <p>Compete professionally in video game tournaments and leagues.</p>
+        <div class="career-stats">
+          <span class="stat-pill">₹5-2Cr+</span>
+          <span class="stat-pill">Gaming skills</span>
+          <span class="stat-pill">Team play</span>
+        </div>
+        <a href="/sports-career?career=esports-player" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>Sports Career FAQs</h2>
+    <div class="faq-container">
+      <div class="faq">
+        <div class="question">
+          <span>What education is needed for sports careers?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Educational requirements vary widely:</p>
+          <ul>
+            <li><strong>Athletes:</strong> Training more important than formal education</li>
+            <li><strong>Coaches/Trainers:</strong> Certification programs often required</li>
+            <li><strong>Sports Medicine:</strong> Medical or physiotherapy degrees</li>
+            <li><strong>Management:</strong> Business or sports management degrees</li>
+            <li><strong>Media:</strong> Journalism or communications degrees helpful</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>How do I start a career as a professional athlete?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Path to professional sports typically involves:</p>
+          <ul>
+            <li><strong>Early specialization:</strong> Start training young in chosen sport</li>
+            <li><strong>Competition:</strong> Participate in local and national tournaments</li>
+            <li><strong>Coaching:</strong> Work with qualified coaches to develop skills</li>
+            <li><strong>Exposure:</strong> Get noticed through competitions and scouts</li>
+            <li><strong>Academies:</strong> Join sports academies or training centers</li>
+            <li><strong>Representation:</strong> Consider getting a sports agent</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>What are the highest paying sports careers?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Top earning potential in sports:</p>
+          <ul>
+            <li><strong>Professional Athletes:</strong> Especially in cricket, football, tennis</li>
+            <li><strong>Sports Agents:</strong> Percentage of athlete contracts</li>
+            <li><strong>Team Managers:</strong> In professional leagues</li>
+            <li><strong>Sports Doctors:</strong> Specialized physicians</li>
+            <li><strong>Broadcasters:</strong> High-profile commentators</li>
+            <li><strong>Esports Players:</strong> In growing gaming industry</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>Are there sports careers that don't require being an athlete?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Many non-athlete roles in sports:</p>
+          <ul>
+            <li><strong>Coaching/Training:</strong> Developing athlete skills</li>
+            <li><strong>Sports Medicine:</strong> Physios, nutritionists, psychologists</li>
+            <li><strong>Management:</strong> Team operations, facilities, events</li>
+            <li><strong>Media:</strong> Journalism, broadcasting, production</li>
+            <li><strong>Technology:</strong> Analytics, equipment development</li>
+            <li><strong>Administration:</strong> League officials, regulators</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // FAQ Toggle Functionality
+    document.querySelectorAll(".faq").forEach((faq) => {
+      faq.addEventListener("click", () => {
+        faq.classList.toggle("active");
+      });
+    });
+
+    // Scroll Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.career-card, .field-intro > *, .faq')
+           .forEach(el => observer.observe(el));
+
+    // Card hover enhancement
+    document.querySelectorAll('.career-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.querySelector('img').style.transform = 'scale(1.05)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.querySelector('img').style.transform = 'scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>

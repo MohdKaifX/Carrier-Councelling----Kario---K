@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --education: #0ea5e9;
+            --teaching: #38bdf8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/education-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(14, 165, 233, 0.2), rgba(56, 189, 248, 0.2));
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--education), var(--teaching));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .field-intro {
+            padding: 3rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-size: 2rem;
+            color: var(--education);
+            margin-bottom: 1.5rem;
+        }
+
+        .field-intro h3 {
+            font-size: 1.5rem;
+            color: var(--teaching);
+            margin: 2rem 0 1rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid var(--education);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul.feature-list li::before {
+            content: '📚';
+            position: absolute;
+            left: 0;
+        }
+
+        .career-cards-container {
+            padding: 2rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .career-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.2);
+            border-color: var(--education);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .career-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .career-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(14, 165, 233, 0.15);
+            color: var(--teaching);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--education);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .learn-more:hover {
+            background: var(--education);
+            color: var(--light);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 6%;
+            margin: 3rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--education);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--education);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-graduation-cap"></i> Education Careers</h1>
+        <p>Shape minds and transform lives through teaching, administration, and educational innovation</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About the Education Field</h2>
+        <p>Education is the foundation of societal progress, encompassing diverse roles that facilitate learning, skill development, and personal growth. From early childhood to higher education and corporate training, this field offers opportunities to make lasting impacts on individuals and communities.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Key Aspects:</strong> Curriculum development, instructional design, student assessment, educational technology, and institutional leadership. Careers range from classroom teaching to policy-making and educational research.</p>
+        </div>
+
+        <h3>Who Should Pursue Education?</h3>
+        <p>This field is ideal for individuals who:</p>
+        <ul class="feature-list">
+            <li>Are passionate about learning and knowledge sharing</li>
+            <li>Enjoy working with people of all ages and backgrounds</li>
+            <li>Have patience, creativity, and strong communication skills</li>
+            <li>Want to make a difference in society</li>
+            <li>Are adaptable to changing educational technologies and methods</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+        <p>The Bureau of Labor Statistics projects steady growth in education careers:</p>
+        <ul class="feature-list">
+            <li><strong>Special education teachers:</strong> +8% growth by 2030</li>
+            <li><strong>Postsecondary teachers:</strong> +12% growth</li>
+            <li><strong>Instructional coordinators:</strong> +10% growth</li>
+            <li><strong>Career counselors:</strong> +11% growth</li>
+        </ul>
+        <p>Emerging areas like online education, STEM instruction, and adult education are creating new opportunities for educators.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Classroom Teaching -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/teacher.jpg') }}" alt="School Teacher">
+            <div class="card-content">
+                <h3><i class="fas fa-chalkboard-teacher"></i> School Teacher</h3>
+                <p>Educate students in K-12 schools, specializing in specific subjects or grade levels.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$100k</span>
+                    <span class="stat-pill">State certified</span>
+                    <span class="stat-pill">+5% Growth</span>
+                </div>
+                <a href="/education-career?career=school-teacher" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/professor.jpg') }}" alt="College Professor">
+            <div class="card-content">
+                <h3><i class="fas fa-user-graduate"></i> College Professor</h3>
+                <p>Teach specialized subjects at colleges and universities while conducting research.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$60k-$150k+</span>
+                    <span class="stat-pill">PhD required</span>
+                    <span class="stat-pill">Tenure track</span>
+                </div>
+                <a href="/education-career?career=college-professor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Specialized Education -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/special-educator.jpg') }}" alt="Special Educator">
+            <div class="card-content">
+                <h3><i class="fas fa-heart"></i> Special Educator</h3>
+                <p>Support students with diverse learning needs through individualized instruction.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$85k</span>
+                    <span class="stat-pill">+8% Growth</span>
+                    <span class="stat-pill">Special certs</span>
+                </div>
+                <a href="/education-career?career=special-educator" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/esl-teacher.jpg') }}" alt="ESL Teacher">
+            <div class="card-content">
+                <h3><i class="fas fa-language"></i> ESL Teacher</h3>
+                <p>Teach English to non-native speakers in schools or language institutes.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$35k-$70k</span>
+                    <span class="stat-pill">Global demand</span>
+                    <span class="stat-pill">TESOL cert</span>
+                </div>
+                <a href="/education-career?career=esl-teacher" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Counseling & Support -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/education-counselor.jpg') }}" alt="Education Counselor">
+            <div class="card-content">
+                <h3><i class="fas fa-hands-helping"></i> Education Counselor</h3>
+                <p>Guide students in academic planning, career choices, and personal development.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$90k</span>
+                    <span class="stat-pill">Master's preferred</span>
+                    <span class="stat-pill">+11% Growth</span>
+                </div>
+                <a href="/education-career?career=education-counselor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Administration -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/principal.jpg') }}" alt="Principal">
+            <div class="card-content">
+                <h3><i class="fas fa-user-tie"></i> Principal</h3>
+                <p>Lead schools by managing staff, curriculum, and overall educational quality.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$80k-$130k</span>
+                    <span class="stat-pill">Admin license</span>
+                    <span class="stat-pill">Leadership</span>
+                </div>
+                <a href="/education-career?career=principal" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Corporate & Alternative Education -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/corporate-trainer.jpg') }}" alt="Corporate Trainer">
+            <div class="card-content">
+                <h3><i class="fas fa-briefcase"></i> Corporate Trainer</h3>
+                <p>Develop and deliver professional development programs for organizations.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$55k-$110k</span>
+                    <span class="stat-pill">Industry exp</span>
+                    <span class="stat-pill">L&D focus</span>
+                </div>
+                <a href="/education-career?career=corporate-trainer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/online-instructor.jpg') }}" alt="Online Instructor">
+            <div class="card-content">
+                <h3><i class="fas fa-laptop"></i> Online Instructor</h3>
+                <p>Teach courses through digital platforms and virtual learning environments.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$100k</span>
+                    <span class="stat-pill">Tech savvy</span>
+                    <span class="stat-pill">Flexible</span>
+                </div>
+                <a href="/education-career?career=online-instructor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Educational Support -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/curriculum-developer.jpg') }}" alt="Curriculum Developer">
+            <div class="card-content">
+                <h3><i class="fas fa-book-open"></i> Curriculum Developer</h3>
+                <p>Design educational programs, learning materials, and assessment tools.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$60k-$110k</span>
+                    <span class="stat-pill">EdTech growth</span>
+                    <span class="stat-pill">Master's+</span>
+                </div>
+                <a href="education-career?career=curriculum-developer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/librarian.jpg') }}" alt="Librarian">
+            <div class="card-content">
+                <h3><i class="fas fa-book"></i> Librarian</h3>
+                <p>Manage information resources and support research in educational settings.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$90k</span>
+                    <span class="stat-pill">MLIS degree</span>
+                    <span class="stat-pill">Digital shift</span>
+                </div>
+                <a href="/education-career?career=librarian" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Education Career FAQs</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>What qualifications are needed for education careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Requirements vary by role and level:</p>
+                    <ul>
+                        <li><strong>K-12 teachers:</strong> Bachelor's degree + state certification</li>
+                        <li><strong>College professors:</strong> Typically PhD (Master's for community colleges)</li>
+                        <li><strong>Counselors:</strong> Master's in counseling or related field</li>
+                        <li><strong>Administrators:</strong> Master's in education administration + license</li>
+                        <li><strong>Corporate trainers:</strong> Industry experience + training certifications</li>
+                    </ul>
+                    <p>Continuing education is often required to maintain certifications.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How is technology changing education careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Key technological impacts on education:</p>
+                    <ul>
+                        <li><strong>Online learning:</strong> Growth of virtual classrooms and MOOCs</li>
+                        <li><strong>EdTech tools:</strong> LMS platforms, adaptive learning software</li>
+                        <li><strong>Digital literacy:</strong> Essential skill for all educators</li>
+                        <li><strong>Hybrid models:</strong> Blending in-person and online instruction</li>
+                        <li><strong>Data analytics:</strong> Tracking student progress and outcomes</li>
+                    </ul>
+                    <p>Educators must continuously adapt to new technologies.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What are the career advancement opportunities in education?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Typical career progression paths:</p>
+                    <ul>
+                        <li><strong>Classroom teachers:</strong> Department head → Assistant principal → Principal</li>
+                        <li><strong>Professors:</strong> Assistant → Associate → Full professor → Department chair</li>
+                        <li><strong>Counselors:</strong> Lead counselor → Director of counseling</li>
+                        <li><strong>Alternative paths:</strong> Curriculum specialist → Educational consultant → Policy work</li>
+                        <li><strong>Corporate path:</strong> Trainer → L&D manager → Chief Learning Officer</li>
+                    </ul>
+                    <p>Advanced degrees often required for administrative roles.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What are the most rewarding aspects of education careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Educators commonly report these satisfactions:</p>
+                    <ul>
+                        <li><strong>Student impact:</strong> Seeing learners grow and succeed</li>
+                        <li><strong>Intellectual stimulation:</strong> Continuous learning environment</li>
+                        <li><strong>Community building:</strong> Creating supportive learning environments</li>
+                        <li><strong>Schedule benefits:</strong> Summers and holidays off (for many)</li>
+                        <li><strong>Purpose:</strong> Contributing to society's future</li>
+                        <li><strong>Variety:</strong> No two days are exactly alike</li>
+                    </ul>
+                    <p>While challenging, education offers unique personal rewards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq").forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.03)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

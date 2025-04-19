@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+            --gray: #94a3b8;
+            --darker: #020617;
+            --card-bg: rgba(255, 255, 255, 0.07);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: url('../static/images/pattern-dark.svg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Header Styles - Consistent with quiz.html */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.02);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content a {
+            color: var(--light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+        }
+
+        .dropdown-content a i {
+            margin-right: 8px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .user-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 8rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Stats Container - Modern Card Design */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.75rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(37, 99, 235, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card h3 {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Quiz History - Modern Accordion */
+        .quiz-history h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent);
+        }
+
+        #quiz-history-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-header {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .quiz-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .quiz-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+        }
+
+        .quiz-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-card.active .quiz-content {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 1000px;
+        }
+
+        .prompt-section, .response-section {
+            margin-top: 1.5rem;
+        }
+
+        .prompt-section h4, .response-section h4 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .prompt-text, .response-text {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            line-height: 1.7;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight {
+            background-color: rgba(0, 212, 255, 0.2);
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.25rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            margin: 1rem 0;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-size: 1.5rem;
+        }
+
+        .empty-state p {
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 7rem 1.5rem 2rem;
+            }
+
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .quiz-date {
+                align-self: flex-start;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="window.location.href='/'">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="explore">Explore</a></li>
+                <li><a href="/">Career Hub</a></li>
+                <li><a href="quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div id="authButtons"></div>
+    </header>
+
+    <div class="container">
+        <div class="profile-header">
+            <div>
+                <h1>Your Profile</h1>
+                <p>View your quiz history and career insights</p>
+            </div>
+            <button class="cta-btn" onclick="window.location.href='quiz'">
+                <i class="fas fa-plus"></i> Take New Quiz
+            </button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3><i class="fas fa-clipboard-list"></i> Quizzes Taken</h3>
+                <p id="quiz-count">0</p>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fas fa-star"></i> Most Recommended</h3>
+                <p id="top-career">-</p>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fas fa-calendar-alt"></i> First Quiz</h3>
+                <p id="first-quiz">-</p>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fas fa-clock"></i> Last Quiz</h3>
+                <p id="last-quiz">-</p>
+            </div>
+        </div>
+
+        <div class="quiz-history">
+            <h2><i class="fas fa-history"></i> Quiz History</h2>
+            <div id="quiz-history-container">
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <h3>Loading your quiz history...</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <noscript>
+        <div class="empty-state">
+            <i class="fas fa-lock"></i>
+            <h3>Please enable JavaScript to view your profile</h3>
+            <p>CareerHub requires JavaScript to fetch and display your quiz history and profile information.</p>
+        </div>
+    </noscript>
+
+    <script>
+        // ===== GLOBAL VARIABLES =====
+        let currentUser = null;
+        const authButtonsContainer = document.getElementById('authButtons');
+        const quizHistoryContainer = document.getElementById('quiz-history-container');
+
+        // ===== AUTH FUNCTIONS =====
+        async function verifyToken(token) {
+            try {
+                const response = await fetch('/api/auth/dashboard', {
+                    method: 'GET',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    return { valid: true, user: data.user };
+                }
+                return { valid: false };
+            } catch (error) {
+                console.error('Token verification error:', error);
+                return { valid: false };
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        }
+
+        function createUserDropdown(user) {
+            const userInitial = user.email ? user.email.charAt(0).toUpperCase() : 'U';
+            
+            const dropdownHTML = `
+                <div class="user-dropdown">
+                    <div class="user-btn">
+                        <div class="user-avatar">${userInitial}</div>
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="profile"><i class="fas fa-user"></i> Profile</a>
+                        <a href="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            `;
+            
+            authButtonsContainer.innerHTML = dropdownHTML;
+        }
+
+        // ===== UI UTILITIES =====
+        function highlightKeywords(text) {
+            const careerKeywords = [
+                'software engineer', 'data scientist', 'product manager', 
+                'ux designer', 'devops engineer', 'machine learning engineer',
+                'frontend developer', 'backend developer', 'full stack developer',
+                'data analyst', 'business analyst', 'project manager',
+                'digital marketer', 'content strategist', 'cybersecurity specialist'
+            ];
+            
+            const skillKeywords = [
+                'python', 'javascript', 'java', 'c++', 'react', 'angular',
+                'node.js', 'sql', 'nosql', 'aws', 'azure', 'docker',
+                'kubernetes', 'agile', 'scrum', 'leadership', 'communication'
+            ];
+            
+            let highlightedText = text;
+            // Utility: Escape RegExp special characters (e.g., C++, C#, Java?)
+            function escapeRegExp(string) {
+                 return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+            // Highlight career keywords with accent color
+            careerKeywords.forEach(keyword => {
+                const safeKeyword = escapeRegExp(keyword);
+                const regex = new RegExp(`\\b${safeKeyword}\\b`, 'gi');
+                highlightedText = highlightedText.replace(regex, 
+                    `<span class="highlight" style="color: var(--accent);">${keyword}</span>`);
+            });
+
+            // Highlight skill keywords with primary color
+            skillKeywords.forEach(keyword => {
+            const safeKeyword = escapeRegExp(keyword);
+            const regex = new RegExp(`\\b${safeKeyword}\\b`, 'gi');
+            highlightedText = highlightedText.replace(regex, 
+        `       <span class="highlight" style="color: var(--primary);">${keyword}</span>`);
+            });
+
+            return highlightedText;
+        }
+
+
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function showEmptyState() {
+            quizHistoryContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>No quizzes taken yet</h3>
+                    <p>Start by taking your first quiz to explore career suggestions.</p>
+                    <button class="cta-btn" onclick="window.location.href='quiz'" style="margin-top: 1.5rem;">
+                        <i class="fas fa-plus"></i> Take First Quiz
+                    </button>
+                </div>`;
+        }
+
+        function showErrorState(message) {
+            quizHistoryContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error loading quiz history</h3>
+                    <p>${message || 'Please try again later.'}</p>
+                    <button class="cta-btn" onclick="loadQuizHistory()" style="margin-top: 1.5rem;">
+                        <i class="fas fa-sync-alt"></i> Retry
+                    </button>
+                </div>`;
+        }
+
+        // ===== QUIZ HISTORY FUNCTIONS =====
+        async function loadQuizHistory() {
+            const token = localStorage.getItem('token');
+
+            // Check if user is authenticated
+            if (!token) {
+                window.location.href = '/';
+                return;
+            }
+
+            // Show loading state
+            quizHistoryContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <h3>Loading your quiz history...</h3>
+                </div>`;
+
+            try {
+                // Verify token and get user data
+                const verification = await verifyToken(token);
+
+                if (!verification.valid) {
+                    localStorage.removeItem('token');
+                    window.location.href = '/';
+                    return;
+                }
+
+                currentUser = verification.user;
+                createUserDropdown(currentUser);
+
+                const response = await fetch('/api/quiz/results', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                const quizResults = data.results;
+
+                if (!quizResults || quizResults.length === 0) {
+                    showEmptyState();
+                    return;
+                }
+
+                // Update stats
+                document.getElementById('quiz-count').textContent = quizResults.length;
+                document.getElementById('first-quiz').textContent = formatDate(quizResults[quizResults.length - 1].timestamp);
+                document.getElementById('last-quiz').textContent = formatDate(quizResults[0].timestamp);
+
+                // Analyze top career from responses
+                const allResponses = quizResults.map(q => q.response).join(' ').toLowerCase();
+                const careerKeywords = [
+                    'software engineer', 'data scientist', 'product manager', 
+                    'ux designer', 'devops engineer', 'machine learning',
+                    'frontend', 'backend', 'full stack', 'data analyst',
+                    'business analyst', 'project manager', 'digital marketing',
+                    'content', 'cybersecurity'
+                ];
+                function escapeRegExp(string) {
+                    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                }
+
+                const careerCounts = {};
+                careerKeywords.forEach(keyword => {
+                    const safeKeyword = escapeRegExp(keyword); // Escape special characters
+                    const regex = new RegExp(safeKeyword, 'gi');
+                    const matches = allResponses.match(regex);
+                    careerCounts[keyword] = matches ? matches.length : 0;
+                });
+
+
+                const sortedCareers = Object.entries(careerCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .filter(([_, count]) => count > 0);
+
+                if (sortedCareers.length > 0) {
+                    const [topCareer] = sortedCareers[0];
+                    document.getElementById('top-career').textContent = topCareer
+                        .split(' ')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ');
+                }
+
+                // Render quiz history cards
+                quizHistoryContainer.innerHTML = '';
+                quizResults.forEach((quiz, index) => {
+                    const quizCard = document.createElement('div');
+                    quizCard.className = 'quiz-card';
+                    quizCard.innerHTML = `
+                        <div class="quiz-header" onclick="this.parentElement.classList.toggle('active')">
+                            <h3><i class="fas fa-file-alt"></i> Quiz #${quizResults.length - index}</h3>
+                            <span class="quiz-date">${formatDate(quiz.timestamp)}</span>
+                        </div>
+                        <div class="quiz-content">
+                            <div class="prompt-section">
+                                <h4><i class="fas fa-question-circle"></i> Your Questions</h4>
+                                <div class="prompt-text">${quiz.prompt}</div>
+                            </div>
+                            <div class="response-section">
+                                <h4><i class="fas fa-lightbulb"></i> Career Recommendations</h4>
+                                <div class="response-text">${highlightKeywords(quiz.response)}</div>
+                            </div>
+                        </div>
+                    `;
+                    quizHistoryContainer.appendChild(quizCard);
+                });
+
+            } catch (error) {
+                console.error('Error loading quiz history:', error);
+                showErrorState("Something went wrong. Please try again.");
+            }
+        }
+
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', loadQuizHistory);
+    </script>
+</body>
+</html>

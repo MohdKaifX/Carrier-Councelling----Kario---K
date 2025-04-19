@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --engineering: #60a5fa;
+            --mechanical: #f59e0b;
+            --civil: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--engineering), var(--accent));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--engineering), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--engineering);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--engineering);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(96, 165, 250, 0.1);
+            color: var(--engineering);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--engineering);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--engineering);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(96, 165, 250, 0.2);
+            border-color: var(--engineering);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--engineering);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-engineering {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--engineering);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-engineering:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore.">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/engineering'">Back to Engineering</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Engineering Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/engineering" class="back-to-engineering">
+            <i class="fas fa-arrow-left"></i> Back to Engineering Careers
+        </a>
+    </div>
+
+    <script>
+        // Engineering Career Data (for all sub-cards in engineering.html)
+        const engineeringCareerData = {
+            "software-engineer": {
+                title: "Software Engineer",
+                image: "{{ url_for('static', filename='images/software-engineer.jpg') }}",
+                description: "Software engineers design, develop, test, and maintain software applications and systems across various platforms and industries. They apply engineering principles to software development to create efficient and reliable solutions.",
+                salary: "$80k-$200k+ (varies by specialization and location)",
+                education: "Bachelor's in Computer Science/Software Engineering (4 years), Master's optional",
+                growth: "22% (Much faster than average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Programming Languages (Java, Python, C++)",
+                    "Data Structures & Algorithms",
+                    "Software Development Lifecycle",
+                    "Database Management",
+                    "Cloud Computing",
+                    "DevOps Practices",
+                    "Agile Methodologies",
+                    "System Design"
+                ],
+                companies: "Google, Microsoft, Amazon, Apple, Facebook, IBM, Oracle, Intel, Adobe, Cisco, startups",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's degree in computer science or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain practical experience through internships (1-2 summers)"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Entry-level position focusing on learning and contributing to projects"
+                    },
+                    {
+                        stage: "Software Engineer",
+                        content: "Take ownership of features and components"
+                    },
+                    {
+                        stage: "Senior Engineer",
+                        content: "Lead projects and mentor junior engineers"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "CS50: Introduction to Computer Science",
+                        link: "https://cs50.harvard.edu/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Clean Code by Robert C. Martin",
+                        link: "https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882"
+                    },
+                    {
+                        type: "Platform",
+                        title: "LeetCode for Coding Practice",
+                        link: "https://leetcode.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "AWS Certified Developer",
+                        link: "https://aws.amazon.com/certification/certified-developer-associate/"
+                    }
+                ],
+                outlook: "Software engineering roles are projected to grow 22% from 2022-2032, much faster than average. Demand remains strong across industries with particular growth in cloud computing, AI, and cybersecurity specializations."
+            },
+            "civil-engineer": {
+                title: "Civil Engineer",
+                image: "{{ url_for('static', filename='images/civil-engineer.jpg') }}",
+                description: "Civil engineers design, construct, and maintain infrastructure projects including buildings, roads, bridges, dams, and water supply systems. They ensure structural integrity, safety, and compliance with regulations while considering environmental impact.",
+                salary: "$70k-$150k (varies by specialization and project size)",
+                education: "Bachelor's in Civil Engineering (4 years), PE license required for certain roles",
+                growth: "8% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Structural Analysis",
+                    "CAD Software (AutoCAD, Revit)",
+                    "Project Management",
+                    "Construction Methods",
+                    "Geotechnical Engineering",
+                    "Surveying",
+                    "Building Codes",
+                    "Sustainability Practices"
+                ],
+                companies: "AECOM, Jacobs, Bechtel, Fluor, Kiewit, HDR, WSP, government agencies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete ABET-accredited bachelor's in civil engineering"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain field experience through summer internships"
+                    },
+                    {
+                        stage: "EIT Position",
+                        content: "Work as Engineer-in-Training under PE supervision"
+                    },
+                    {
+                        stage: "PE License",
+                        content: "Pass Fundamentals and Principles of Engineering exams"
+                    },
+                    {
+                        stage: "Project Engineer",
+                        content: "Lead engineering projects and teams"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "PE Civil Exam Prep",
+                        link: "https://www.ncees.org/engineering/pe/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Structural Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/civil-and-environmental-engineering/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Civil Engineering Reference Manual",
+                        link: "https://www.amazon.com/Civil-Engineering-Reference-Manual-Michael/dp/1591265106"
+                    },
+                    {
+                        type: "Software",
+                        title: "AutoCAD Civil 3D Training",
+                        link: "https://www.autodesk.com/certification/learn"
+                    }
+                ],
+                outlook: "Civil engineering jobs expected to grow 8% with infrastructure renewal needs. Specializations in transportation, water resources, and sustainable design show particular promise. Government projects and private development continue to drive demand."
+            },
+            "mechanical-engineer": {
+                title: "Mechanical Engineer",
+                image: "{{ url_for('static', filename='images/mechanical-engineer.jpg') }}",
+                description: "Mechanical engineers design, analyze, and manufacture mechanical systems and thermal devices. They work on everything from small components to large machinery across industries like automotive, aerospace, energy, and manufacturing.",
+                salary: "$75k-$160k (varies by industry and specialization)",
+                education: "Bachelor's in Mechanical Engineering (4 years), PE optional",
+                growth: "10% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "CAD/CAM Software",
+                    "Finite Element Analysis",
+                    "Thermodynamics",
+                    "Materials Science",
+                    "Manufacturing Processes",
+                    "Product Development",
+                    "Robotics",
+                    "HVAC Systems"
+                ],
+                companies: "Boeing, Lockheed Martin, Tesla, Ford, GE, Siemens, Honeywell, NASA, SpaceX",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete ABET-accredited bachelor's in mechanical engineering"
+                    },
+                    {
+                        stage: "Co-op/Internship",
+                        content: "Gain practical experience through co-op programs"
+                    },
+                    {
+                        stage: "Design Engineer",
+                        content: "Entry-level position focusing on component design"
+                    },
+                    {
+                        stage: "Project Engineer",
+                        content: "Lead mechanical system development"
+                    },
+                    {
+                        stage: "Senior Engineer",
+                        content: "Oversee complex engineering projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Software",
+                        title: "SolidWorks Certification",
+                        link: "https://www.solidworks.com/certifications"
+                    },
+                    {
+                        type: "Course",
+                        title: "Mechanical Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/mechanical-engineering/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Mechanical Engineering Design by Shigley",
+                        link: "https://www.amazon.com/Shigleys-Mechanical-Engineering-Design-McGraw-Hill/dp/0073398209"
+                    },
+                    {
+                        type: "Organization",
+                        title: "ASME Resources",
+                        link: "https://www.asme.org/"
+                    }
+                ],
+                outlook: "Mechanical engineering roles expected to grow 10% with demand in automotive, aerospace, and energy sectors. Emerging areas like robotics, additive manufacturing, and renewable energy systems offer new opportunities."
+            },
+            "electrical-engineer": {
+                title: "Electrical Engineer",
+                image: "{{ url_for('static', filename='images/electrical-engineer.jpg') }}",
+                description: "Electrical engineers design, develop, and test electrical equipment and systems. They work with power generation and distribution, electronics, communications systems, and electrical machinery across various industries.",
+                salary: "$80k-$170k (varies by specialization and industry)",
+                education: "Bachelor's in Electrical Engineering (4 years), PE optional",
+                growth: "7% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Circuit Design",
+                    "Power Systems",
+                    "Control Systems",
+                    "Microelectronics",
+                    "Signal Processing",
+                    "Embedded Systems",
+                    "Renewable Energy",
+                    "Test Equipment"
+                ],
+                companies: "General Electric, Siemens, Texas Instruments, Intel, IBM, Lockheed Martin, utilities",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete ABET-accredited bachelor's in electrical engineering"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain hands-on experience through internships"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Entry-level position in chosen specialization"
+                    },
+                    {
+                        stage: "Design Engineer",
+                        content: "Take ownership of electrical system designs"
+                    },
+                    {
+                        stage: "Project Lead",
+                        content: "Manage electrical engineering projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "PE Electrical Exam Prep",
+                        link: "https://www.ncees.org/engineering/pe/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Circuits and Electronics (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Art of Electronics",
+                        link: "https://www.amazon.com/Art-Electronics-Paul-Horowitz/dp/0521809266"
+                    },
+                    {
+                        type: "Organization",
+                        title: "IEEE Resources",
+                        link: "https://www.ieee.org/"
+                    }
+                ],
+                outlook: "Electrical engineering jobs expected to grow 7% with increasing demand in power systems, renewable energy, and electronics. Specializations in embedded systems and IoT devices show strong growth potential."
+            },
+            "environmental-engineer": {
+                title: "Environmental Engineer",
+                image: "{{ url_for('static', filename='images/environmental-engineer.jpg') }}",
+                description: "Environmental engineers develop solutions to environmental problems. They work on water and air pollution control, recycling, waste disposal, and public health issues, applying engineering principles to protect the environment.",
+                salary: "$70k-$140k (varies by sector and location)",
+                education: "Bachelor's in Environmental Engineering (4 years), PE optional",
+                growth: "6% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Water Treatment",
+                    "Air Quality Management",
+                    "Waste Management",
+                    "Environmental Regulations",
+                    "GIS Applications",
+                    "Sustainability Practices",
+                    "Remediation Technologies",
+                    "Environmental Impact Assessment"
+                ],
+                companies: "AECOM, CH2M, Jacobs, Tetra Tech, government agencies, environmental consultancies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in environmental engineering or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain field experience through environmental projects"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Entry-level position in consulting or government"
+                    },
+                    {
+                        stage: "Project Engineer",
+                        content: "Lead environmental assessment and remediation projects"
+                    },
+                    {
+                        stage: "Senior Engineer",
+                        content: "Develop environmental strategies and policies"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "PE Environmental Exam",
+                        link: "https://www.ncees.org/engineering/pe/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Environmental Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/civil-and-environmental-engineering/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Introduction to Environmental Engineering",
+                        link: "https://www.amazon.com/Introduction-Environmental-Engineering-Davis-Cornwell/dp/0073401145"
+                    },
+                    {
+                        type: "Organization",
+                        title: "ASCE Environmental Resources",
+                        link: "https://www.asce.org/"
+                    }
+                ],
+                outlook: "Environmental engineering jobs expected to grow 6% with increasing focus on sustainability and climate change mitigation. Water resource management and renewable energy projects driving much of the demand."
+            },
+            "chemical-engineer": {
+                title: "Chemical Engineer",
+                image: "{{ url_for('static', filename='images/chemical-engineer.jpg') }}",
+                description: "Chemical engineers apply chemistry, physics, and engineering principles to design and operate industrial processes. They work in pharmaceuticals, energy, materials, food processing, and other industries that involve chemical transformations.",
+                salary: "$85k-$180k (varies by industry and specialization)",
+                education: "Bachelor's in Chemical Engineering (4 years), PE optional",
+                growth: "9% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Process Design",
+                    "Process Simulation",
+                    "Chemical Reactions",
+                    "Thermodynamics",
+                    "Plant Operations",
+                    "Safety Procedures",
+                    "Materials Science",
+                    "Quality Control"
+                ],
+                companies: "Dow, DuPont, BASF, ExxonMobil, Shell, Pfizer, Merck, Procter & Gamble",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete ABET-accredited bachelor's in chemical engineering"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain plant or lab experience through internships"
+                    },
+                    {
+                        stage: "Process Engineer",
+                        content: "Entry-level position focusing on process optimization"
+                    },
+                    {
+                        stage: "Project Engineer",
+                        content: "Lead chemical process design and implementation"
+                    },
+                    {
+                        stage: "Plant Manager",
+                        content: "Oversee chemical manufacturing operations"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Software",
+                        title: "Aspen Plus Training",
+                        link: "https://www.aspentech.com/en/training"
+                    },
+                    {
+                        type: "Course",
+                        title: "Chemical Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/chemical-engineering/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Elementary Principles of Chemical Processes",
+                        link: "https://www.amazon.com/Elementary-Principles-Chemical-Processes-3rd/dp/047168757X"
+                    },
+                    {
+                        type: "Organization",
+                        title: "AIChE Resources",
+                        link: "https://www.aiche.org/"
+                    }
+                ],
+                outlook: "Chemical engineering jobs expected to grow 9% with demand in pharmaceuticals, alternative energy, and specialty chemicals. Emerging areas include nanotechnology and biotechnology applications."
+            },
+            "aerospace-engineer": {
+                title: "Aerospace Engineer",
+                image: "{{ url_for('static', filename='images/aerospace-engineer.jpg') }}",
+                description: "Aerospace engineers design aircraft, spacecraft, satellites, and missiles. They develop technologies for aviation and space exploration, working on aerodynamics, propulsion systems, materials, and structural design.",
+                salary: "$90k-$190k (varies by sector and security clearance)",
+                education: "Bachelor's in Aerospace Engineering (4 years), advanced degrees common",
+                growth: "8% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Aerodynamics",
+                    "Flight Mechanics",
+                    "Propulsion Systems",
+                    "Structural Analysis",
+                    "Avionics",
+                    "Systems Engineering",
+                    "Computational Fluid Dynamics",
+                    "Spacecraft Design"
+                ],
+                companies: "Boeing, Lockheed Martin, Northrop Grumman, SpaceX, NASA, Blue Origin, Raytheon",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in aerospace engineering or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience through aerospace industry internships"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Entry-level position in aeronautics or astronautics"
+                    },
+                    {
+                        stage: "Systems Engineer",
+                        content: "Work on complex aerospace systems integration"
+                    },
+                    {
+                        stage: "Lead Engineer",
+                        content: "Oversee major aerospace projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Software",
+                        title: "ANSYS CFD Training",
+                        link: "https://www.ansys.com/training-center"
+                    },
+                    {
+                        type: "Course",
+                        title: "Aerospace Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/aeronautics-and-astronautics/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Introduction to Flight by Anderson",
+                        link: "https://www.amazon.com/Introduction-Flight-John-Anderson/dp/0073529397"
+                    },
+                    {
+                        type: "Organization",
+                        title: "AIAA Resources",
+                        link: "https://www.aiaa.org/"
+                    }
+                ],
+                outlook: "Aerospace engineering jobs expected to grow 8% with continued demand in defense and space exploration. Commercial spaceflight and unmanned aerial systems are growth areas."
+            },
+            "biomedical-engineer": {
+                title: "Biomedical Engineer",
+                image: "{{ url_for('static', filename='images/biomedical-engineer.jpg') }}",
+                description: "Biomedical engineers combine engineering principles with medical sciences to design and create equipment, devices, computer systems, and software used in healthcare. They work on medical imaging, prosthetics, implants, and other healthcare technologies.",
+                salary: "$75k-$160k (varies by specialization and industry)",
+                education: "Bachelor's in Biomedical Engineering (4 years), advanced degrees common",
+                growth: "10% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Medical Device Design",
+                    "Biomechanics",
+                    "Biomaterials",
+                    "Medical Imaging",
+                    "Physiological Systems",
+                    "Regulatory Standards",
+                    "Tissue Engineering",
+                    "Rehabilitation Engineering"
+                ],
+                companies: "Medtronic, Johnson & Johnson, GE Healthcare, Siemens Healthineers, Stryker, Boston Scientific",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in biomedical engineering or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience in medical device companies or hospitals"
+                    },
+                    {
+                        stage: "R&D Engineer",
+                        content: "Entry-level position in medical technology development"
+                    },
+                    {
+                        stage: "Product Engineer",
+                        content: "Lead medical device design and testing"
+                    },
+                    {
+                        stage: "Regulatory Specialist",
+                        content: "Ensure compliance with medical device regulations"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Clinical Engineer Certification",
+                        link: "https://www.aami.org/certification"
+                    },
+                    {
+                        type: "Course",
+                        title: "Biomedical Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/biological-engineering/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Biomedical Engineering Design",
+                        link: "https://www.amazon.com/Biomedical-Engineering-Design-Joseph-Bronzino/dp/0123749796"
+                    },
+                    {
+                        type: "Organization",
+                        title: "BMES Resources",
+                        link: "https://www.bmes.org/"
+                    }
+                ],
+                outlook: "Biomedical engineering jobs expected to grow 10% with aging population and increasing healthcare technology needs. Specializations in medical imaging, prosthetics, and wearable devices show strong potential."
+            },
+            "industrial-engineer": {
+                title: "Industrial Engineer",
+                image: "{{ url_for('static', filename='images/industrial-engineer.jpg') }}",
+                description: "Industrial engineers optimize complex systems, processes, and organizations. They work to eliminate waste of time, money, materials, and energy across manufacturing, logistics, healthcare, and service industries.",
+                salary: "$75k-$150k (varies by industry and specialization)",
+                education: "Bachelor's in Industrial Engineering (4 years), advanced degrees optional",
+                growth: "12% (Faster than average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Process Optimization",
+                    "Supply Chain Management",
+                    "Quality Control",
+                    "Operations Research",
+                    "Human Factors",
+                    "Lean Manufacturing",
+                    "Six Sigma",
+                    "Data Analysis"
+                ],
+                companies: "Amazon, Boeing, Toyota, FedEx, UPS, hospitals, consulting firms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in industrial engineering or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience in manufacturing or logistics"
+                    },
+                    {
+                        stage: "Process Engineer",
+                        content: "Entry-level position focusing on process improvement"
+                    },
+                    {
+                        stage: "Operations Manager",
+                        content: "Lead efficiency initiatives across departments"
+                    },
+                    {
+                        stage: "Plant Manager",
+                        content: "Oversee entire manufacturing or distribution operations"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Six Sigma Certification",
+                        link: "https://www.asq.org/cert/six-sigma"
+                    },
+                    {
+                        type: "Course",
+                        title: "Industrial Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/engineering-systems-division/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Introduction to Industrial Engineering",
+                        link: "https://www.amazon.com/Introduction-Industrial-Engineering-Avraham-Shtub/dp/1466560405"
+                    },
+                    {
+                        type: "Organization",
+                        title: "IISE Resources",
+                        link: "https://www.iise.org/"
+                    }
+                ],
+                outlook: "Industrial engineering jobs expected to grow 12% as companies seek to improve efficiency and reduce costs. Strong demand in e-commerce logistics and healthcare systems optimization."
+            },
+            "nuclear-engineer": {
+                title: "Nuclear Engineer",
+                image: "{{ url_for('static', filename='images/nuclear-engineer.jpg') }}",
+                description: "Nuclear engineers research and develop processes, instruments, and systems to harness nuclear energy and radiation. They work in power generation, medical applications, and national security, focusing on safety and efficiency.",
+                salary: "$90k-$180k (varies by sector and security clearance)",
+                education: "Bachelor's in Nuclear Engineering (4 years), advanced degrees common",
+                growth: "4% (Slower than average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Nuclear Physics",
+                    "Radiation Protection",
+                    "Reactor Design",
+                    "Thermal Hydraulics",
+                    "Nuclear Safety",
+                    "Waste Management",
+                    "Nuclear Safety",
+                    "Waste Management",
+                    "Regulatory Compliance",
+                    "Radiation Shielding",
+                    "Materials Science"
+                ],
+                companies: "Nuclear Regulatory Commission, energy companies, national labs, medical facilities, defense contractors",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in nuclear engineering or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience at nuclear facility or research lab"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Work under supervision on nuclear systems"
+                    },
+                    {
+                        stage: "Licensed Engineer",
+                        content: "Obtain necessary certifications and clearances"
+                    },
+                    {
+                        stage: "Senior Engineer",
+                        content: "Lead nuclear projects and safety initiatives"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "PE Nuclear Exam",
+                        link: "https://www.ncees.org/engineering/pe/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Nuclear Engineering (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/nuclear-engineering/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Introduction to Nuclear Engineering",
+                        link: "https://www.amazon.com/Introduction-Nuclear-Engineering-John-Lamarsh/dp/0201824981"
+                    },
+                    {
+                        type: "Organization",
+                        title: "ANS Resources",
+                        link: "https://www.ans.org/"
+                    }
+                ],
+                outlook: "Nuclear engineering jobs expected to grow 4% with focus on maintaining existing plants and developing next-generation reactors. Strong demand in medical applications and national security sectors."
+            },
+            "petroleum-engineer": {
+                title: "Petroleum Engineer",
+                image: "{{ url_for('static', filename='images/petroleum-engineer.jpg') }}",
+                description: "Petroleum engineers design methods for extracting oil and gas from underground deposits. They develop drilling plans, evaluate production methods, and implement technologies to maximize recovery while minimizing environmental impact.",
+                salary: "$100k-$200k+ (varies by location and oil prices)",
+                education: "Bachelor's in Petroleum Engineering (4 years), PE optional",
+                growth: "3% (Slower than average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Reservoir Engineering",
+                    "Drilling Technology",
+                    "Production Optimization",
+                    "Geological Analysis",
+                    "Fluid Mechanics",
+                    "Well Completion",
+                    "Environmental Regulations",
+                    "Economic Evaluation"
+                ],
+                companies: "ExxonMobil, Chevron, Shell, BP, Halliburton, Schlumberger, Baker Hughes",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in petroleum engineering"
+                    },
+                    {
+                        stage: "Field Internship",
+                        content: "Gain hands-on experience at drilling sites"
+                    },
+                    {
+                        stage: "Field Engineer",
+                        content: "Work on drilling and production operations"
+                    },
+                    {
+                        stage: "Reservoir Engineer",
+                        content: "Analyze and optimize oil/gas recovery"
+                    },
+                    {
+                        stage: "Senior Engineer",
+                        content: "Manage major extraction projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Software",
+                        title: "Petroleum Engineering Software Training",
+                        link: "https://www.slb.com/services/training"
+                    },
+                    {
+                        type: "Course",
+                        title: "Petroleum Engineering (Stanford Online)",
+                        link: "https://online.stanford.edu/courses/soeees-yge300-petroleum-engineering"
+                    },
+                    {
+                        type: "Book",
+                        title: "Petroleum Production Engineering",
+                        link: "https://www.amazon.com/Petroleum-Production-Engineering-Computer-Assisted/dp/0750682701"
+                    },
+                    {
+                        type: "Organization",
+                        title: "SPE Resources",
+                        link: "https://www.spe.org/"
+                    }
+                ],
+                outlook: "Petroleum engineering jobs expected to grow 3% with volatility due to energy transition. Opportunities exist in conventional extraction and emerging carbon capture technologies."
+            },
+            "marine-engineer": {
+                title: "Marine Engineer",
+                image: "{{ url_for('static', filename='images/marine-engineer.jpg') }}",
+                description: "Marine engineers design, build, and maintain ships, submarines, and offshore structures. They work on propulsion systems, hull design, and onboard systems for commercial, military, and research vessels.",
+                salary: "$80k-$170k (varies by sector and project type)",
+                education: "Bachelor's in Marine Engineering (4 years), license required for certain roles",
+                growth: "9% (As fast as average 2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Naval Architecture",
+                    "Propulsion Systems",
+                    "Marine Materials",
+                    "Hydrodynamics",
+                    "Offshore Structures",
+                    "Ship Design",
+                    "Marine Safety",
+                    "Environmental Compliance"
+                ],
+                companies: "Shipbuilders, naval yards, cruise lines, offshore oil companies, government agencies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in marine engineering or naval architecture"
+                    },
+                    {
+                        stage: "Sea Time",
+                        content: "Gain practical experience aboard ships"
+                    },
+                    {
+                        stage: "Junior Engineer",
+                        content: "Work on marine systems design"
+                    },
+                    {
+                        stage: "Licensed Engineer",
+                        content: "Obtain necessary maritime certifications"
+                    },
+                    {
+                        stage: "Chief Engineer",
+                        content: "Oversee all engineering operations"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Marine Engineering License",
+                        link: "https://www.dco.uscg.mil/nmc/engineering/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Naval Architecture (MIT OpenCourseWare)",
+                        link: "https://ocw.mit.edu/courses/mechanical-engineering/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Introduction to Naval Architecture",
+                        link: "https://www.amazon.com/Introduction-Naval-Architecture-Eric-Tupper/dp/0080982377"
+                    },
+                    {
+                        type: "Organization",
+                        title: "SNAME Resources",
+                        link: "https://www.sname.org/"
+                    }
+                ],
+                outlook: "Marine engineering jobs expected to grow 9% with demand in commercial shipping, offshore wind, and naval defense. Specializations in green shipping technologies show strong potential."
+            }
+        };
+
+        // Load career data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerKey = urlParams.get('career');
+
+        if (careerKey && engineeringCareerData[careerKey]) {
+            const career = engineeringCareerData[careerKey];
+            
+            // Set basic information
+            document.title = `${career.title} | CareerHub`;
+            document.getElementById("career-title").textContent = career.title;
+            document.getElementById("career-image").src = career.image;
+            document.getElementById("career-image").alt = career.title;
+            document.getElementById("career-description").textContent = career.description;
+            document.getElementById("career-salary").textContent = career.salary;
+            document.getElementById("career-education").textContent = career.education;
+            document.getElementById("career-growth").textContent = career.growth;
+            document.getElementById("career-experience").textContent = career.experience;
+            document.getElementById("career-companies").textContent = career.companies;
+            
+            // Populate skills
+            const skillsContainer = document.getElementById("skills-container");
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement("div");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Populate career path
+            const careerPath = document.getElementById("career-path");
+            career.path.forEach((stage, index) => {
+                const pathItem = document.createElement("div");
+                pathItem.className = "path-item";
+                
+                const pathContent = document.createElement("div");
+                pathContent.className = "path-content";
+                
+                const stageTitle = document.createElement("h4");
+                stageTitle.textContent = `${index + 1}. ${stage.stage}`;
+                
+                const stageDesc = document.createElement("p");
+                stageDesc.textContent = stage.content;
+                
+                pathContent.appendChild(stageTitle);
+                pathContent.appendChild(stageDesc);
+                pathItem.appendChild(pathContent);
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Populate resources
+            const resourcesContainer = document.getElementById("resources-container");
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement("div");
+                resourceCard.className = "resource-card";
+                
+                const resourceTitle = document.createElement("h4");
+                resourceTitle.innerHTML = `<i class="fas ${getResourceIcon(resource.type)}"></i> ${resource.type}: ${resource.title}`;
+                
+                const resourceLink = document.createElement("a");
+                resourceLink.href = resource.link;
+                resourceLink.target = "_blank";
+                resourceLink.textContent = "Explore Resource →";
+                
+                resourceCard.appendChild(resourceTitle);
+                resourceCard.appendChild(resourceLink);
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            const jobOutlook = document.getElementById("job-outlook");
+            jobOutlook.innerHTML = `<h3><i class="fas fa-chart-line"></i> Market Outlook</h3><p>${career.outlook}</p>`;
+            
+        } else {
+            document.querySelector(".career-container").innerHTML = `
+                <div style="text-align: center; padding: 5rem 0;">
+                    <h2 style="color: var(--engineering); margin-bottom: 1rem;">Engineering Career Not Found</h2>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">The requested engineering career path could not be found.</p>
+                    <button class="cta-btn" onclick="window.location.href='/engineering'">Browse Engineering Careers</button>
+                </div>
+            `;
+        }
+
+        function getResourceIcon(type) {
+            switch(type.toLowerCase()) {
+                case 'course': return 'fa-graduation-cap';
+                case 'book': return 'fa-book';
+                case 'platform': return 'fa-laptop-code';
+                case 'certification': return 'fa-certificate';
+                case 'software': return 'fa-code';
+                case 'organization': return 'fa-users';
+                default: return 'fa-link';
+            }
+        }
+    </script>
+</body>
+</html>

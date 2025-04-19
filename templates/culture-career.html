@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --cultural: #a78bfa;
+            --performance: #f472b6;
+            --creative: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--cultural);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--cultural), var(--performance));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--cultural), var(--performance));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .highlight-card h3 {
+            color: var(--cultural);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--cultural);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cultural), transparent);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(167, 139, 250, 0.1);
+            color: var(--cultural);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--cultural);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--cultural);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(167, 139, 250, 0.2);
+            border-color: var(--cultural);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--cultural);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-culture {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--cultural);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-culture:hover {
+            color: var(--performance);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/culture'">Back to Culture Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Cultural Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies/Organizations Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/culture" class="back-to-culture">
+            <i class="fas fa-arrow-left"></i> Back to Entertainment & Culture Careers
+        </a>
+    </div>
+
+    <script>
+        // Cultural Career Data (for all sub-cards in culture.html)
+        const cultureCareerData = {
+            "musician": {
+                title: "Musician",
+                image: "{{ url_for('static', filename='images/musician.jpg') }}",
+                description: "Musicians compose, perform, and record music across various genres and settings. They may work as solo artists, band members, session musicians, or composers for film/TV. Careers range from live performances to studio recording and music education.",
+                salary: "₹30k-₹200k+ (Highly variable based on gigs, royalties, and teaching)",
+                education: "Conservatory training (3-4 years), Music degrees (BMus), or self-taught with portfolio",
+                growth: "5% (average growth, but digital platforms creating new opportunities)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Established: 5+ years",
+                skills: [
+                    "Instrument Proficiency",
+                    "Music Theory & Composition",
+                    "Ear Training",
+                    "Performance Skills",
+                    "Recording Techniques",
+                    "Improvisation",
+                    "Collaboration",
+                    "Music Production",
+                    "Digital Distribution"
+                ],
+                companies: "Recording studios, Symphony orchestras, Music schools, Film/TV production, Independent labels, Digital platforms (Spotify, YouTube)",
+                path: [
+                    {
+                        stage: "Training",
+                        content: "Develop musical skills through lessons, practice, and education"
+                    },
+                    {
+                        stage: "Local Performances",
+                        content: "Start with small gigs and local performances"
+                    },
+                    {
+                        stage: "Professional Gigs",
+                        content: "Get paid performances and session work"
+                    },
+                    {
+                        stage: "Recording Artist",
+                        content: "Release original music or join established acts"
+                    },
+                    {
+                        stage: "Established Career",
+                        content: "Tour, teach, or compose professionally"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Platform",
+                        title: "Berklee Online Music Courses",
+                        link: "https://online.berklee.edu/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Musician's Way by Gerald Klickstein",
+                        link: "https://www.amazon.in/Musicians-Way-Guide-Practice-Performance/dp/0195343131"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Ableton Live for Music Production",
+                        link: "https://www.ableton.com/"
+                    },
+                    {
+                        type: "Community",
+                        title: "SoundBetter for Musician Networking",
+                        link: "https://www.soundbetter.com/"
+                    }
+                ],
+                outlook: "Traditional music careers growing at average rate, but digital platforms enabling new revenue streams through streaming, sync licensing, and direct fan engagement. Niche genres and multimedia skills increasing opportunities."
+            },
+            "actor": {
+                title: "Actor",
+                image: "{{ url_for('static', filename='images/actor.jpg') }}",
+                description: "Actors portray characters in theater, film, television, and digital media. They interpret scripts, collaborate with directors, and bring stories to life through performance. Careers range from stage to screen, including voice acting and motion capture.",
+                salary: "₹40k-₹5M+ (Extremely variable based on projects and fame)",
+                education: "Drama school (3 years), Theater degrees, or practical experience",
+                growth: "5% (highly competitive with most growth in digital content)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Established: 5+ years",
+                skills: [
+                    "Character Interpretation",
+                    "Voice Projection",
+                    "Movement & Physicality",
+                    "Emotional Range",
+                    "Improvisation",
+                    "Script Analysis",
+                    "Collaboration",
+                    "Audition Techniques",
+                    "Camera Awareness"
+                ],
+                companies: "Film/TV production companies, Theater companies, Streaming platforms, Advertising agencies, Voiceover studios",
+                path: [
+                    {
+                        stage: "Training",
+                        content: "Study acting through classes or formal education"
+                    },
+                    {
+                        stage: "Local Theater",
+                        content: "Start with community or small theater productions"
+                    },
+                    {
+                        stage: "Professional Roles",
+                        content: "Land paid roles in theater, film, or commercials"
+                    },
+                    {
+                        stage: "Union Membership",
+                        content: "Join actors' unions (Equity, SAG-AFTRA equivalents)"
+                    },
+                    {
+                        stage: "Established Career",
+                        content: "Secure recurring roles or build reputation in niche"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "An Actor Prepares by Constantin Stanislavski",
+                        link: "https://www.amazon.in/Actor-Prepares-Constantin-Stanislavski/dp/1780938439"
+                    },
+                    {
+                        type: "Course",
+                        title: "MasterClass: Acting Classes by Famous Actors",
+                        link: "https://www.masterclass.com/classes"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Backstage Casting Calls",
+                        link: "https://www.backstage.com/"
+                    },
+                    {
+                        type: "Community",
+                        title: "Actor's Equity Association",
+                        link: "https://www.actorsequity.org/"
+                    }
+                ],
+                outlook: "Traditional acting roles growing slowly, but explosion in streaming content creating new opportunities. Voice acting and motion capture for games/VR experiencing above-average growth."
+            },
+            "dancer": {
+                title: "Dancer",
+                image: "{{ url_for('static', filename='images/dancer.jpg') }}",
+                description: "Dancers express stories and emotions through movement. They perform in various settings including theater, film, music videos, and live events. Specializations include ballet, contemporary, hip-hop, cultural dance forms, and choreography.",
+                salary: "₹25k-₹150k (Varies by company and performance type)",
+                education: "Dance conservatory (3-4 years), University programs, or intensive training",
+                growth: "5% (digital content and commercial work growing fastest)",
+                experience: "Apprentice: 0-2 years, Company member: 3-5 years, Principal: 5+ years",
+                skills: [
+                    "Technical Proficiency",
+                    "Physical Conditioning",
+                    "Artistic Expression",
+                    "Musicality",
+                    "Choreographic Memory",
+                    "Collaboration",
+                    "Improvisation",
+                    "Teaching Ability",
+                    "Cross-disciplinary Skills"
+                ],
+                companies: "Dance companies, Theater productions, Film/TV, Music tours, Cultural organizations, Cruise ships, Theme parks",
+                path: [
+                    {
+                        stage: "Training",
+                        content: "Begin intensive training in chosen dance form(s)"
+                    },
+                    {
+                        stage: "Apprenticeship",
+                        content: "Join company as trainee or apprentice"
+                    },
+                    {
+                        stage: "Company Dancer",
+                        content: "Become full company member with regular roles"
+                    },
+                    {
+                        stage: "Soloist",
+                        content: "Take on featured and solo performances"
+                    },
+                    {
+                        stage: "Principal/Choreographer",
+                        content: "Lead roles or transition to choreography"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "School",
+                        title: "The Julliard School Dance Division",
+                        link: "https://www.juilliard.edu/music/dance"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Creative Habit by Twyla Tharp",
+                        link: "https://www.amazon.in/Creative-Habit-Learn-Life-Twyla/dp/0743235274"
+                    },
+                    {
+                        type: "Platform",
+                        title: "DancePlug Online Classes",
+                        link: "https://www.danceplug.com/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "International Dance Council",
+                        link: "https://www.cid-world.org/"
+                    }
+                ],
+                outlook: "Traditional dance company positions limited but growing opportunities in commercial dance, digital content creation, and interdisciplinary performance. Cultural dance preservation gaining recognition and funding."
+            },
+            "director": {
+                title: "Film/Theater Director",
+                image: "{{ url_for('static', filename='images/director.jpg') }}",
+                description: "Directors oversee the creative vision of productions from concept to final performance. They guide actors, collaborate with designers, and make artistic decisions that shape the audience's experience in film, television, or theater.",
+                salary: "₹50k-₹10M+ (Extremely variable based on project scale)",
+                education: "Film/theater school (3-4 years), Practical experience, or related degrees",
+                growth: "10% (faster in digital content and streaming platforms)",
+                experience: "Assistant: 0-3 years, Junior Director: 3-5 years, Established: 5+ years",
+                skills: [
+                    "Creative Vision",
+                    "Storytelling",
+                    "Leadership",
+                    "Collaboration",
+                    "Script Analysis",
+                    "Technical Knowledge",
+                    "Budget Management",
+                    "Casting",
+                    "Artistic Decision-making"
+                ],
+                companies: "Film/TV studios, Theater companies, Streaming platforms, Production houses, Advertising agencies",
+                path: [
+                    {
+                        stage: "Education/Apprenticeship",
+                        content: "Learn craft through school or assistant roles"
+                    },
+                    {
+                        stage: "Short Films/Small Productions",
+                        content: "Direct smaller projects to build portfolio"
+                    },
+                    {
+                        stage: "Professional Debut",
+                        content: "Land first professional directing opportunity"
+                    },
+                    {
+                        stage: "Feature Work",
+                        content: "Direct full-length films or major productions"
+                    },
+                    {
+                        stage: "Established Director",
+                        content: "Develop personal style and industry reputation"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "On Directing Film by David Mamet",
+                        link: "https://www.amazon.in/Directing-Film-David-Mamet/dp/0140127224"
+                    },
+                    {
+                        type: "Course",
+                        title: "AFI Conservatory Directing Workshop",
+                        link: "https://www.afi.com/conservatory/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "MasterClass: Directing Classes",
+                        link: "https://www.masterclass.com/classes"
+                    },
+                    {
+                        type: "Festival",
+                        title: "Sundance Institute Director's Lab",
+                        link: "https://www.sundance.org/programs"
+                    }
+                ],
+                outlook: "Directing opportunities expanding with growth of streaming content and international co-productions. Digital platforms enabling more diverse voices to enter the field."
+            },
+            "cultural-manager": {
+                title: "Cultural Manager",
+                image: "{{ url_for('static', filename='images/cultural-manager.jpg') }}",
+                description: "Cultural managers develop programs that preserve heritage and engage diverse audiences. They work in museums, cultural centers, festivals, and arts organizations to bridge artistic vision with community needs and financial sustainability.",
+                salary: "₹45k-₹120k (Varies by organization size and funding)",
+                education: "Arts administration (2-3 years), Museum studies, or related fields",
+                growth: "10% (increasing focus on cultural preservation and accessibility)",
+                experience: "Assistant: 0-2 years, Coordinator: 2-4 years, Manager: 5+ years",
+                skills: [
+                    "Cultural Knowledge",
+                    "Program Development",
+                    "Community Engagement",
+                    "Grant Writing",
+                    "Budget Management",
+                    "Partnership Building",
+                    "Event Planning",
+                    "Audience Development",
+                    "Digital Outreach"
+                ],
+                companies: "Museums, Cultural centers, Heritage sites, Arts councils, Nonprofit organizations, Government cultural departments",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in arts administration or related field"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain experience in cultural organization"
+                    },
+                    {
+                        stage: "Assistant Role",
+                        content: "Work in supporting position at cultural institution"
+                    },
+                    {
+                        stage: "Program Coordinator",
+                        content: "Manage specific programs or exhibitions"
+                    },
+                    {
+                        stage: "Cultural Manager",
+                        content: "Oversee multiple programs or entire institution"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Arts Management Certification",
+                        link: "https://www.artsmanagement.net/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Art of the Turnaround by Michael Kaiser",
+                        link: "https://www.amazon.in/Art-Turnaround-Creating-Maintaining-Organizations/dp/158465709X"
+                    },
+                    {
+                        type: "Organization",
+                        title: "International Council of Museums",
+                        link: "https://icom.museum/en/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "The Journal of Arts Management",
+                        link: "https://www.tandfonline.com/toc/vjam20/current"
+                    }
+                ],
+                outlook: "Cultural management growing as heritage preservation gains importance. Digital engagement and hybrid programming creating new opportunities post-pandemic."
+            },
+            "playwright": {
+                title: "Playwright",
+                image: "{{ url_for('static', filename='images/playwright.jpg') }}",
+                description: "Playwrights craft compelling narratives for stage productions. They create original works or adapt existing stories, developing dialogue, structure, and themes that resonate with audiences and performers. Many combine writing with teaching or other arts roles.",
+                salary: "₹35k-₹300k (Highly variable with project royalties and grants)",
+                education: "Creative writing programs (2-3 years), Theater studies, or self-taught",
+                growth: "3% (steady with new digital platforms emerging)",
+                experience: "Emerging: 0-3 years, Mid-career: 4-7 years, Established: 8+ years",
+                skills: [
+                    "Storytelling",
+                    "Dialogue Writing",
+                    "Dramatic Structure",
+                    "Character Development",
+                    "Research",
+                    "Collaboration",
+                    "Editing",
+                    "Industry Knowledge",
+                    "Self-Promotion"
+                ],
+                companies: "Theater companies, Production houses, Universities, Streaming platforms (for audio drama), Cultural organizations",
+                path: [
+                    {
+                        stage: "Writing Practice",
+                        content: "Develop craft through writing and reading plays"
+                    },
+                    {
+                        stage: "Workshops/Readings",
+                        content: "Participate in development opportunities"
+                    },
+                    {
+                        stage: "First Production",
+                        content: "Have work produced by small company"
+                    },
+                    {
+                        stage: "Professional Recognition",
+                        content: "Receive commissions or larger productions"
+                    },
+                    {
+                        stage: "Established Playwright",
+                        content: "Build body of work and industry reputation"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Playwright's Guidebook by Stuart Spencer",
+                        link: "https://www.amazon.in/Playwrights-Guidebook-Stuart-Spencer/dp/0571199914"
+                    },
+                    {
+                        type: "Program",
+                        title: "The Playwrights' Center Fellowships",
+                        link: "https://pwcenter.org/"
+                    },
+                    {
+                        type: "Competition",
+                        title: "The Bruntwood Prize for Playwriting",
+                        link: "https://writer.bruntwoodprize.com/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "New Play Exchange",
+                        link: "https://newplayexchange.org/"
+                    }
+                ],
+                outlook: "Traditional theater writing remains competitive, but audio drama and digital performance formats creating new avenues. Cross-cultural collaborations increasing opportunities."
+            },
+            "media-presenter": {
+                title: "Media Presenter",
+                image: "{{ url_for('static', filename='images/media-presenter.jpg') }}",
+                description: "Media presenters host and produce engaging content across television, radio, podcasts, and digital platforms. They research topics, conduct interviews, and deliver information in compelling ways tailored to their audience and medium.",
+                salary: "₹40k-₹5M+ (Highly variable based on platform and fame)",
+                education: "Media/communications degrees (3-4 years), Journalism training, or experience",
+                growth: "10% (digital media growing much faster than traditional)",
+                experience: "Intern: 0-1 year, Junior Presenter: 1-3 years, Established: 4+ years",
+                skills: [
+                    "On-Camera Presence",
+                    "Interviewing",
+                    "Research",
+                    "Script Writing",
+                    "Improvisation",
+                    "Technical Awareness",
+                    "Social Media Savvy",
+                    "Audience Engagement",
+                    "Content Development"
+                ],
+                companies: "TV/radio stations, Streaming platforms, Podcast networks, Production companies, Digital media startups",
+                path: [
+                    {
+                        stage: "Education/Training",
+                        content: "Learn media skills through school or internships"
+                    },
+                    {
+                        stage: "Small Market/Platform",
+                        content: "Start with local or niche audience"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Develop expertise in specific content area"
+                    },
+                    {
+                        stage: "Major Platform",
+                        content: "Move to larger audience or network"
+                    },
+                    {
+                        stage: "Brand Building",
+                        content: "Develop personal brand and following"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "BBC Academy Presenting Masterclass",
+                        link: "https://www.bbc.co.uk/academy"
+                    },
+                    {
+                        type: "Book",
+                        title: "Broadcast Journalism by Andrew Boyd",
+                        link: "https://www.amazon.in/Broadcast-Journalism-Techniques-Radio-Television/dp/0240516369"
+                    },
+                    {
+                        type: "Platform",
+                        title: "LinkedIn Learning Presenting Courses",
+                        link: "https://www.linkedin.com/learning/"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Anchor for Podcast Creation",
+                        link: "https://anchor.fm/"
+                    }
+                ],
+                outlook: "Traditional broadcasting roles declining but digital content creation exploding. Niche audiences and independent creators finding success through direct-to-consumer platforms."
+            },
+            "costume-designer": {
+                title: "Costume Designer",
+                image: "{{ url_for('static', filename='images/costume-designer.jpg') }}",
+                description: "Costume designers create visual storytelling through wardrobe. They research historical periods, conceptualize designs, and oversee fabrication for theater, film, television, and live performances. Their work supports character development and production aesthetics.",
+                salary: "₹50k-₹150k (Varies by project budget and experience)",
+                education: "Fashion/theater design programs (3-4 years), Apprenticeships, or experience",
+                growth: "7% (streaming content increasing opportunities)",
+                experience: "Assistant: 0-2 years, Associate: 2-4 years, Lead Designer: 5+ years",
+                skills: [
+                    "Design Skills",
+                    "Historical Research",
+                    "Fabric Knowledge",
+                    "Pattern Making",
+                    "Collaboration",
+                    "Budget Management",
+                    "Color Theory",
+                    "Character Analysis",
+                    "Technical Drawing"
+                ],
+                companies: "Film/TV productions, Theater companies, Opera/ballet companies, Theme parks, Historical reenactments",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Study fashion, theater, or costume design"
+                    },
+                    {
+                        stage: "Assistant Roles",
+                        content: "Work under established designers"
+                    },
+                    {
+                        stage: "Small Productions",
+                        content: "Design for independent or local projects"
+                    },
+                    {
+                        stage: "Professional Designer",
+                        content: "Lead design for mid-sized productions"
+                    },
+                    {
+                        stage: "Head Designer",
+                        content: "Oversee major productions or build reputation"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Costume Designer's Handbook by Rosemary Ingham",
+                        link: "https://www.amazon.in/Costume-Designers-Handbook-Professional-Practical/dp/0325001134"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Costume Designers Guild",
+                        link: "https://costumedesignersguild.com/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Central Saint Martins Costume Design",
+                        link: "https://www.arts.ac.uk/colleges/central-saint-martins"
+                    },
+                    {
+                        type: "Software",
+                        title: "CLO 3D for Digital Costume Design",
+                        link: "https://www.clo3d.com/"
+                    }
+                ],
+                outlook: "Costume design opportunities growing with expansion of streaming content and international productions. Digital design tools and sustainable practices becoming increasingly important."
+            },
+            "digital-artist": {
+                title: "Digital Artist",
+                image: "{{ url_for('static', filename='images/digital-artist.jpg') }}",
+                description: "Digital artists create visual content using technology. They work in games, animation, VR/AR, advertising, and fine art, combining traditional artistic skills with software expertise. Specializations include concept art, matte painting, and interactive media.",
+                salary: "₹60k-₹150k (Varies by industry and specialization)",
+                education: "Digital arts programs (3-4 years), Self-taught with strong portfolio",
+                growth: "15% (especially strong in games and interactive media)",
+                experience: "Junior Artist: 0-2 years, Mid-level: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Digital Painting",
+                    "3D Modeling",
+                    "Animation Principles",
+                    "Software Proficiency",
+                    "Concept Development",
+                    "Collaboration",
+                    "Art Direction",
+                    "Technical Problem-solving",
+                    "Adaptability"
+                ],
+                companies: "Game studios, Animation houses, VFX companies, Advertising agencies, Tech companies (UI/UX), Freelance marketplaces",
+                path: [
+                    {
+                        stage: "Skill Development",
+                        content: "Master digital tools and artistic fundamentals"
+                    },
+                    {
+                        stage: "Portfolio Building",
+                        content: "Create personal projects and small commissions"
+                    },
+                    {
+                        stage: "Entry-level Position",
+                        content: "Join studio as junior artist or intern"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on specific area (characters, environments, etc.)"
+                    },
+                    {
+                        stage: "Lead Roles",
+                        content: "Become art director or senior artist"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Platform",
+                        title: "ArtStation for Portfolio and Learning",
+                        link: "https://www.artstation.com/"
+                    },
+                    {
+                        type: "Course",
+                        title: "CGMA Digital Art Courses",
+                        link: "https://www.cgmasteracademy.com/"
+                    },
+                    {
+                        type: "Software",
+                        title: "Adobe Creative Suite for Artists",
+                        link: "https://www.adobe.com/creativecloud.html"
+                    },
+                    {
+                        type: "Community",
+                        title: "Concept Art Association",
+                        link: "https://www.conceptartassociation.com/"
+                    }
+                ],
+                outlook: "Digital art careers growing rapidly with expansion of game industry, streaming content, and immersive technologies. Remote work opportunities increasing globally."
+            },
+            "cultural-analyst": {
+                title: "Cultural Analyst",
+                image: "{{ url_for('static', filename='images/cultural-analyst.jpg') }}",
+                description: "Cultural analysts study societal trends to advise content creators and institutions. They examine how cultural products reflect and shape values, using qualitative and quantitative methods to provide insights for media, marketing, and policy.",
+                salary: "₹65k-₹130k (Varies by organization and experience)",
+                education: "Master's in Cultural Studies, Anthropology, or related field",
+                growth: "12% (faster than average with data-driven cultural insights)",
+                experience: "Junior Analyst: 0-3 years, Analyst: 3-6 years, Senior: 7+ years",
+                skills: [
+                    "Cultural Research",
+                    "Data Analysis",
+                    "Trend Forecasting",
+                    "Qualitative Methods",
+                    "Market Research",
+                    "Cross-cultural Communication",
+                    "Report Writing",
+                    "Statistical Software",
+                    "Presentation Skills"
+                ],
+                companies: "Media companies, Marketing firms, Cultural institutions, Government agencies, Think tanks, Streaming platforms",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete degree in cultural studies or related field"
+                    },
+                    {
+                        stage: "Research Experience",
+                        content: "Gain experience through internships or assistantships"
+                    },
+                    {
+                        stage: "Junior Analyst",
+                        content: "Conduct research and assist with reports (0-3 years)"
+                    },
+                    {
+                        stage: "Cultural Analyst",
+                        content: "Lead research projects and present findings (3-6 years)"
+                    },
+                    {
+                        stage: "Senior Analyst",
+                        content: "Develop research methodologies and lead teams (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Cultural Analytics Specialization",
+                        link: "https://www.coursera.org/specializations/cultural-analytics"
+                    },
+                    {
+                        type: "Book",
+                        title: "Watching the English by Kate Fox",
+                        link: "https://www.amazon.in/Watching-English-Hidden-Rules-Behaviour/dp/0340818867"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of Cultural Analytics",
+                        link: "https://culturalanalytics.org/"
+                    },
+                    {
+                        type: "Tool",
+                        title: "NVivo for Qualitative Research",
+                        link: "https://www.qsrinternational.com/nvivo-qualitative-data-analysis-software/home"
+                    }
+                ],
+                outlook: "Cultural analysis growing as organizations seek data-driven insights into audience behavior and societal trends. Increasing demand in streaming platforms and global marketing."
+            },
+            "art-curator": {
+                title: "Art Curator",
+                image: "{{ url_for('static', filename='images/art-curator.jpg') }}",
+                description: "Art curators design exhibitions that contextualize artworks for public engagement. They research collections, develop themes, write catalog essays, and oversee the presentation of artworks in museums, galleries, and alternative spaces.",
+                salary: "₹45k-₹120k (Varies by institution size and location)",
+                education: "Master's in Art History, Curatorial Studies, or related field",
+                growth: "9% (steady with digital curation expanding opportunities)",
+                experience: "Assistant Curator: 0-3 years, Associate: 3-6 years, Curator: 7+ years",
+                skills: [
+                    "Art Historical Knowledge",
+                    "Exhibition Design",
+                    "Collection Management",
+                    "Research Skills",
+                    "Grant Writing",
+                    "Public Speaking",
+                    "Digital Curation",
+                    "Art Handling",
+                    "Collaboration"
+                ],
+                companies: "Museums, Art galleries, Auction houses, Universities, Corporate collections, Artist estates",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete art history or curatorial studies degree"
+                    },
+                    {
+                        stage: "Internships",
+                        content: "Gain museum/gallery experience (1-2 years)"
+                    },
+                    {
+                        stage: "Assistant Curator",
+                        content: "Support exhibition development (0-3 years)"
+                    },
+                    {
+                        stage: "Associate Curator",
+                        content: "Co-curate exhibitions (3-6 years)"
+                    },
+                    {
+                        stage: "Curator",
+                        content: "Lead major exhibitions and acquisitions (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Curating Contemporary Art",
+                        link: "https://www.coursera.org/learn/curating"
+                    },
+                    {
+                        type: "Book",
+                        title: "Ways of Curating by Hans Ulrich Obrist",
+                        link: "https://www.amazon.in/Ways-Curating-Hans-Ulrich-Obrist/dp/014312639X"
+                    },
+                    {
+                        type: "Organization",
+                        title: "International Council of Museums",
+                        link: "https://icom.museum/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Google Arts & Culture",
+                        link: "https://artsandculture.google.com/"
+                    }
+                ],
+                outlook: "Traditional curator roles stable while digital curation and online exhibitions creating new opportunities. Increasing focus on diverse voices and decolonizing collections."
+            },
+            "festival-producer": {
+                title: "Festival Producer",
+                image: "{{ url_for('static', filename='images/festival-producer.jpg') }}",
+                description: "Festival producers coordinate large-scale cultural events from concept to execution. They oversee programming, logistics, budgeting, and team management for arts festivals, film festivals, and cultural celebrations.",
+                salary: "₹50k-₹150k (Varies by festival size and funding)",
+                education: "Event management, Arts administration, or related field",
+                growth: "10% (community-focused festivals growing fastest)",
+                experience: "Assistant: 0-2 years, Coordinator: 2-4 years, Producer: 5+ years",
+                skills: [
+                    "Event Planning",
+                    "Budget Management",
+                    "Sponsorship Acquisition",
+                    "Team Leadership",
+                    "Risk Assessment",
+                    "Marketing",
+                    "Contract Negotiation",
+                    "Community Engagement",
+                    "Crisis Management"
+                ],
+                companies: "Film festivals, Music festivals, Cultural organizations, Municipal arts programs, Corporate sponsors",
+                path: [
+                    {
+                        stage: "Volunteer Experience",
+                        content: "Start with festival volunteering"
+                    },
+                    {
+                        stage: "Assistant Roles",
+                        content: "Work in festival operations (0-2 years)"
+                    },
+                    {
+                        stage: "Department Coordinator",
+                        content: "Manage specific festival areas (2-4 years)"
+                    },
+                    {
+                        stage: "Associate Producer",
+                        content: "Assist with overall festival production (3-5 years)"
+                    },
+                    {
+                        stage: "Festival Producer",
+                        content: "Lead entire festival planning (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Event Management Certification",
+                        link: "https://www.eventmanagerblog.com/event-management-certification"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Art of the Festival by Gary Topp",
+                        link: "https://www.amazon.in/Art-Festival-Gary-Topp/dp/1907359268"
+                    },
+                    {
+                        type: "Organization",
+                        title: "International Festivals Association",
+                        link: "https://www.festivalassociation.org/"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Eventbrite for Festival Ticketing",
+                        link: "https://www.eventbrite.com/"
+                    }
+                ],
+                outlook: "Festival production growing with increasing demand for live cultural experiences post-pandemic. Hybrid (in-person + digital) festivals becoming standard."
+            }
+        };
+
+        // Load career data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerKey = urlParams.get('career');
+
+        if (careerKey && cultureCareerData[careerKey]) {
+            const career = cultureCareerData[careerKey];
+            
+            // Set basic information
+            document.title = `${career.title} | CareerHub`;
+            document.getElementById("career-title").textContent = career.title;
+            document.getElementById("career-image").src = career.image;
+            document.getElementById("career-image").alt = career.title;
+            document.getElementById("career-description").textContent = career.description;
+            document.getElementById("career-salary").textContent = career.salary;
+            document.getElementById("career-education").textContent = career.education;
+            document.getElementById("career-growth").textContent = career.growth;
+            document.getElementById("career-experience").textContent = career.experience;
+            document.getElementById("career-companies").textContent = career.companies;
+            
+            // Populate skills
+            const skillsContainer = document.getElementById("skills-container");
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement("div");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Populate career path
+            const careerPath = document.getElementById("career-path");
+            career.path.forEach((stage, index) => {
+                const pathItem = document.createElement("div");
+                pathItem.className = "path-item";
+                
+                const pathContent = document.createElement("div");
+                pathContent.className = "path-content";
+                
+                const stageTitle = document.createElement("h4");
+                stageTitle.textContent = `${index + 1}. ${stage.stage}`;
+                
+                const stageDesc = document.createElement("p");
+                stageDesc.textContent = stage.content;
+                
+                pathContent.appendChild(stageTitle);
+                pathContent.appendChild(stageDesc);
+                pathItem.appendChild(pathContent);
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Populate resources
+            const resourcesContainer = document.getElementById("resources-container");
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement("div");
+                resourceCard.className = "resource-card";
+                
+                const resourceTitle = document.createElement("h4");
+                resourceTitle.innerHTML = `<i class="fas ${getResourceIcon(resource.type)}"></i> ${resource.type}: ${resource.title}`;
+                
+                const resourceLink = document.createElement("a");
+                resourceLink.href = resource.link;
+                resourceLink.target = "_blank";
+                resourceLink.textContent = "Explore Resource →";
+                
+                resourceCard.appendChild(resourceTitle);
+                resourceCard.appendChild(resourceLink);
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            const jobOutlook = document.getElementById("job-outlook");
+            jobOutlook.innerHTML = `<h3><i class="fas fa-chart-line"></i> Market Outlook</h3><p>${career.outlook}</p>`;
+            
+        } else {
+            document.querySelector(".career-container").innerHTML = `
+                <div style="text-align: center; padding: 5rem 0;">
+                    <h2 style="color: var(--cultural); margin-bottom: 1rem;">Cultural Career Not Found</h2>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">The requested cultural career path could not be found.</p>
+                    <button class="cta-btn" onclick="window.location.href='/culture'">Browse Cultural Careers</button>
+                </div>
+            `;
+        }
+
+        function getResourceIcon(type) {
+            switch(type.toLowerCase()) {
+                case 'course': return 'fa-graduation-cap';
+                case 'book': return 'fa-book';
+                case 'platform': return 'fa-laptop-code';
+                case 'certification': return 'fa-certificate';
+                case 'documentation': return 'fa-file-alt';
+                case 'community': return 'fa-users';
+                case 'tool': return 'fa-tools';
+                case 'blog': return 'fa-blog';
+                case 'exam': return 'fa-file-signature';
+                case 'organization': return 'fa-university';
+                case 'school': return 'fa-school';
+                case 'software': return 'fa-code';
+                case 'journal': return 'fa-newspaper';
+                case 'festival': return 'fa-calendar-star';
+                default: return 'fa-link';
+            }
+        }
+    </script>
+</body>
+</html>

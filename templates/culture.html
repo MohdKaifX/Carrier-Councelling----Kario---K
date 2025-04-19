@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entertainment & Culture Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --cultural: #a78bfa;
+            --performance: #f472b6;
+            --creative: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/culture-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, var(--dark), transparent);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--cultural), var(--performance));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+            font-style: italic;
+        }
+
+        .field-intro {
+            padding: 4rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--cultural);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .field-intro h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cultural), transparent);
+        }
+
+        .field-intro h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--performance);
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: rgba(167, 139, 250, 0.1);
+            border-left: 4px solid var(--cultural);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '“';
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 6rem;
+            color: rgba(167, 139, 250, 0.05);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .highlight-box p {
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 2rem;
+            list-style-type: none;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.1rem;
+        }
+
+        ul.feature-list li::before {
+            content: '🎭';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .career-cards-container {
+            padding: 3rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .career-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(167, 139, 250, 0.2);
+            border-color: var(--cultural);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+            filter: brightness(0.9);
+        }
+
+        .career-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(1);
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .career-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            min-height: 80px;
+            line-height: 1.7;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--cultural);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(167, 139, 250, 0.1);
+            border: 1px solid var(--cultural);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-size: 1.1rem;
+        }
+
+        .learn-more:hover {
+            background: var(--cultural);
+            color: var(--dark);
+            box-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4rem 6%;
+            margin: 4rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.1);
+        }
+
+        .faq-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--cultural);
+            position: relative;
+        }
+
+        .faq-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cultural), transparent);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.8rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--cultural);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .answer {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-top: 1.5rem;
+            display: none;
+            line-height: 1.8;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.4s ease;
+            color: var(--cultural);
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 3rem;
+            background: linear-gradient(135deg, var(--cultural), var(--performance));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(167, 139, 250, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+            }
+
+            .field-intro, .faq-section {
+                padding: 3rem 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+
+            .career-card {
+                margin-bottom: 1.5rem;
+            }
+
+            .career-card h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-masks-theater"></i> Entertainment & Culture</h1>
+        <p>"Where creativity meets tradition to shape society's soul"</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About the Cultural Arts</h2>
+        <p>The entertainment and culture sector is the vibrant heartbeat of human expression, encompassing the performing arts, media, heritage preservation, and creative innovation. This dynamic field bridges tradition and modernity, offering careers that celebrate diversity, storytelling, and artistic excellence across global communities.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Creative Pulse:</strong> From Broadway stages to digital streaming platforms, cultural careers combine artistic vision with technical mastery. Whether preserving ancient traditions or pioneering new art forms, professionals in this field shape how societies see themselves and connect with one another.</p>
+        </div>
+
+        <h3>Who Thrives in Cultural Careers?</h3>
+        <p>This field calls to those who:</p>
+        <ul class="feature-list">
+            <li>Possess boundless creativity and artistic sensitivity</li>
+            <li>Excel at storytelling and emotional communication</li>
+            <li>Thrive in collaborative, dynamic environments</li>
+            <li>Are passionate about cultural preservation and innovation</li>
+            <li>Combine technical skills with artistic vision</li>
+            <li>Understand the business behind the arts</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+               <p>The Bureau of Labor Statistics projects varied growth across cultural sectors:</p>
+        <ul class="feature-list">
+            <li><strong>Digital media:</strong> +12% growth by 2030</li>
+            <li><strong>Museum curation:</strong> +9% growth</li>
+            <li><strong>Performing arts:</strong> +5% growth</li>
+            <li><strong>Cultural event management:</strong> +10% growth</li>
+        </ul>
+        <p>Streaming platforms and digital content creation are driving new opportunities, while traditional institutions continue adapting to technological changes.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Performing Arts -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/musician.jpg') }}" alt="Musician">
+            <div class="card-content">
+                <h3><i class="fas fa-music"></i> Musician</h3>
+                <p>Create and perform music across genres, from classical orchestras to digital production studios.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $30k-$200k+</span>
+                    <span class="stat-pill"><i class="fas fa-microphone"></i> Live/Studio</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> Conservatory</span>
+                </div>
+                <a href="/culture-career?career=musician" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/actor.jpg') }}" alt="Actor">
+            <div class="card-content">
+                <h3><i class="fas fa-theater-masks"></i> Actor</h3>
+                <p>Bring characters to life on stage, film, and television through performance artistry.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $40k-$5M+</span>
+                    <span class="stat-pill"><i class="fas fa-star"></i> Unionized</span>
+                    <span class="stat-pill"><i class="fas fa-users"></i> Highly Competitive</span>
+                </div>
+                <a href="/culture-career?career=actor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/dancer.jpg') }}" alt="Dancer">
+            <div class="card-content">
+                <h3><i class="fas fa-shoe-prints"></i> Dancer</h3>
+                <p>Express stories and emotions through movement in performances worldwide.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $25k-$150k</span>
+                    <span class="stat-pill"><i class="fas fa-clock"></i> Intensive Training</span>
+                    <span class="stat-pill"><i class="fas fa-heart"></i> Physical Demands</span>
+                </div>
+                <a href="/culture-career?career=dancer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Creative Direction -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/director.jpg') }}" alt="Director">
+            <div class="card-content">
+                <h3><i class="fas fa-film"></i> Film/Theater Director</h3>
+                <p>Lead creative vision for productions from concept to final performance.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $50k-$10M+</span>
+                    <span class="stat-pill"><i class="fas fa-trophy"></i> Festival Circuit</span>
+                    <span class="stat-pill"><i class="fas fa-network-wired"></i> Collaborative</span>
+                </div>
+                <a href="/culture-career?career=director" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/cultural-manager.jpg') }}" alt="Cultural Manager">
+            <div class="card-content">
+                <h3><i class="fas fa-landmark"></i> Cultural Manager</h3>
+                <p>Develop programs that preserve heritage and engage diverse audiences.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $45k-$120k</span>
+                    <span class="stat-pill"><i class="fas fa-globe"></i> Community Focus</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> Arts Admin</span>
+                </div>
+                <a href="/culture-career?career=cultural-manager" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Creative Writing -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/playwright.jpg') }}" alt="Playwright">
+            <div class="card-content">
+                <h3><i class="fas fa-pen-fancy"></i> Playwright</h3>
+                <p>Craft compelling narratives for stage productions and performance art.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $35k-$300k</span>
+                    <span class="stat-pill"><i class="fas fa-book-open"></i> Residencies</span>
+                    <span class="stat-pill"><i class="fas fa-award"></i> Grants Available</span>
+                </div>
+                <a href="/culture-career?career=playwright" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Media & Presentation -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/media-presenter.jpg') }}" alt="Media Presenter">
+            <div class="card-content">
+                <h3><i class="fas fa-broadcast-tower"></i> Media Presenter</h3>
+                <p>Host and produce engaging content across television, radio, and digital platforms.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $40k-$5M+</span>
+                    <span class="stat-pill"><i class="fas fa-wifi"></i> Digital Growth</span>
+                    <span class="stat-pill"><i class="fas fa-user-tie"></i> Personal Brand</span>
+                </div>
+                <a href="/culture-career?career=media-presenter" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Design & Production -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/costume-designer.jpg') }}" alt="Costume Designer">
+            <div class="card-content">
+                <h3><i class="fas fa-tshirt"></i> Costume Designer</h3>
+                <p>Create visual storytelling through period-accurate or fantastical wardrobe design.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $50k-$150k</span>
+                    <span class="stat-pill"><i class="fas fa-history"></i> Research Intensive</span>
+                    <span class="stat-pill"><i class="fas fa-theater-masks"></i> Theater/Film</span>
+                </div>
+                <a href="/culture-career?career=costume-designer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Emerging Fields -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/digital-artist.jpg') }}" alt="Digital Artist">
+            <div class="card-content">
+                <h3><i class="fas fa-tablet-alt"></i> Digital Artist</h3>
+                <p>Merge traditional artistry with technology for games, VR, and interactive media.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$150k</span>
+                    <span class="stat-pill"><i class="fas fa-chart-line"></i> +15% Growth</span>
+                    <span class="stat-pill"><i class="fas fa-tools"></i> Software Skills</span>
+                </div>
+                <a href="/culture-career?career=digital-artist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/cultural-analyst.jpg') }}" alt="Cultural Analyst">
+            <div class="card-content">
+                <h3><i class="fas fa-chart-pie"></i> Cultural Analyst</h3>
+                <p>Study societal trends to advise content creators and cultural institutions.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $65k-$130k</span>
+                    <span class="stat-pill"><i class="fas fa-globe"></i> Global Perspective</span>
+                    <span class="stat-pill"><i class="fas fa-database"></i> Research Focus</span>
+                </div>
+                <a href="/culture-career?career=cultural-analyst" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/art-curator.jpg') }}" alt="Art Curator">
+            <div class="card-content">
+                <h3><i class="fas fa-paint-brush"></i> Art Curator</h3>
+                <p>Design exhibitions that contextualize artworks for public engagement.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $45k-$120k</span>
+                    <span class="stat-pill"><i class="fas fa-university"></i> Museum/Gallery</span>
+                    <span class="stat-pill"><i class="fas fa-graduation-cap"></i> Art History</span>
+                </div>
+                <a href="/culture-career?career=art-curator" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/festival-producer.jpg') }}" alt="Festival Producer">
+            <div class="card-content">
+                <h3><i class="fas fa-calendar-star"></i> Festival Producer</h3>
+                <p>Coordinate large-scale cultural events from concept to execution.</p>
+                <div class="career-stats">
+                    <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $50k-$150k</span>
+                    <span class="stat-pill"><i class="fas fa-tasks"></i> Project Management</span>
+                    <span class="stat-pill"><i class="fas fa-handshake"></i> Sponsorships</span>
+                </div>
+                <a href="/culture-career?career=festival-producer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Cultural Career Insights</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>How do I build a sustainable career in the arts?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Thriving in cultural careers requires strategic approaches:</p>
+                    <ul>
+                        <li><strong>Diversify income streams:</strong> Combine performance with teaching, commissions, and grants</li>
+                        <li><strong>Develop business skills:</strong> Marketing, networking, and financial management are essential</li>
+                        <li><strong>Embrace digital platforms:</strong> Build audiences through social media and content creation</li>
+                        <li><strong>Seek residencies/fellowships:</strong> Many institutions support emerging artists</li>
+                        <li><strong>Join professional unions:</strong> SAG-AFTRA, Actors' Equity, etc. provide resources</li>
+                    </ul>
+                    <p>Persistence and adaptability are key in this competitive field.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What's the role of education in cultural careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Educational paths vary by discipline:</p>
+                    <ul>
+                        <li><strong>Performing arts:</strong> Conservatory training vs. university programs</li>
+                        <li><strong>Visual arts:</strong> MFA programs vs. independent study</li>
+                        <li><strong>Arts administration:</strong> Specialized master's degrees gaining importance</li>
+                        <li><strong>Digital media:</strong> Often self-taught with portfolio focus</li>
+                        <li><strong>Cultural studies:</strong> Anthropology/art history backgrounds valuable</li>
+                    </ul>
+                    <p>Many successful artists blend formal training with mentorship and real-world experience.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How is technology transforming cultural careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Digital innovation creates new opportunities:</p>
+                    <ul>
+                        <li><strong>Virtual performances:</strong> Expanded global audiences through streaming</li>
+                        <li><strong>NFT art market:</strong> New revenue models for digital creators</li>
+                        <li><strong>AR/VR experiences:</strong> Immersive storytelling formats</li>
+                        <li><strong>AI tools:</strong> Assisting with composition, design, and production</li>
+                        <li><strong>Digital archives:</strong> Preserving cultural heritage in new ways</li>
+                    </ul>
+                    <p>Successful professionals adapt while maintaining artistic integrity.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What are the challenges in cultural careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Common challenges and solutions:</p>
+                    <ul>
+                        <li><strong>Income instability:</strong> Diversify with teaching, grants, and commercial work</li>
+                        <li><strong>High competition:</strong> Develop unique niche and strong personal brand</li>
+                        <li><strong>Burnout:</strong> Balance creative passion with self-care routines</li>
+                        <li><strong>Funding cuts:</strong> Cultivate individual donors and corporate sponsors</li>
+                        <li><strong>Technological disruption:</strong> Continuously update digital skills</li>
+                    </ul>
+                    <p>Building a supportive community helps navigate these challenges.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Enhanced FAQ Toggle with Animation
+        document.querySelectorAll(".faq").forEach((faq) => {
+            const question = faq.querySelector(".question");
+            question.addEventListener("click", () => {
+                faq.classList.toggle("active");
+                
+                // Smooth height transition for answer
+                const answer = faq.querySelector(".answer");
+                if (faq.classList.contains("active")) {
+                    answer.style.display = "block";
+                    const height = answer.scrollHeight;
+                    answer.style.height = "0";
+                    setTimeout(() => {
+                        answer.style.height = `${height}px`;
+                        setTimeout(() => {
+                            answer.style.height = "auto";
+                        }, 300);
+                    }, 10);
+                } else {
+                    const height = answer.scrollHeight;
+                    answer.style.height = `${height}px`;
+                    setTimeout(() => {
+                        answer.style.height = "0";
+                        setTimeout(() => {
+                            answer.style.display = "none";
+                        }, 300);
+                    }, 10);
+                }
+            });
+        });
+
+        // Scroll Animation with Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.classList.contains('career-card')) {
+                        entry.target.style.transitionDelay = `${entries.indexOf(entry) * 0.1}s`;
+                    }
+                }
+            });
+        }, { 
+            threshold: 0.1,
+            rootMargin: "0px 0px -100px 0px"
+        });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement with GSAP-like animation
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+                card.style.boxShadow = '0 20px 40px rgba(167, 139, 250, 0.3)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+                card.style.boxShadow = '0 15px 30px rgba(167, 139, 250, 0.2)';
+            });
+        });
+    </script>
+</body>
+</html>

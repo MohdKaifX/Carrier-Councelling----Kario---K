@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --law: #8b5cf6;
+            --justice: #6366f1;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--law), var(--justice));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--law);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--law);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--law);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--law);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--law);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
+            border-color: var(--law);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--law);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-law {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--law);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-law:hover {
+            color: var(--justice);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/law'">Back to Law Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Law Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Employers</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/law" class="back-to-law">
+            <i class="fas fa-arrow-left"></i> Back to Law Careers
+        </a>
+    </div>
+
+    <script>
+        // Law Career Data (for all sub-cards in law.html)
+        const lawCareerData = {
+            "lawyer": {
+                title: "Lawyer",
+                image: "{{ url_for('static', filename='images/lawyer.jpg') }}",
+                description: "Lawyers represent clients in legal matters, provide counsel, and advocate in court proceedings. They specialize in various areas of law such as criminal, corporate, family, or environmental law, interpreting laws and applying them to specific cases.",
+                salary: "$80,000 - $200,000+ annually depending on specialization and experience",
+                education: "Juris Doctor (JD) degree from accredited law school + passing the bar exam",
+                growth: "10% growth projected (2020-2030)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-7 years, Senior: 8+ years",
+                skills: [
+                    "Legal research and analysis",
+                    "Oral and written advocacy",
+                    "Case strategy development",
+                    "Client counseling",
+                    "Negotiation",
+                    "Legal writing and documentation",
+                    "Courtroom procedures",
+                    "Specialized legal knowledge"
+                ],
+                companies: "Law firms (large and boutique), corporate legal departments, government agencies, non-profit organizations, solo practice",
+                path: [
+                    {
+                        stage: "Undergraduate Education",
+                        content: "Complete bachelor's degree (any field, but pre-law or related fields recommended)"
+                    },
+                    {
+                        stage: "Law School",
+                        content: "Earn Juris Doctor (JD) degree (3 years full-time)"
+                    },
+                    {
+                        stage: "Bar Exam",
+                        content: "Pass state bar examination and ethics exam"
+                    },
+                    {
+                        stage: "Associate Attorney",
+                        content: "Entry-level position at law firm or organization (1-5 years)"
+                    },
+                    {
+                        stage: "Senior Attorney/Partner",
+                        content: "Take on more complex cases and potentially become partner (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Getting to Maybe: How to Excel on Law School Exams",
+                        link: "https://www.amazon.com/Getting-Maybe-Excel-Law-Exams/dp/0890897603"
+                    },
+                    {
+                        type: "Course",
+                        title: "Law School Admission Council (LSAC) Resources",
+                        link: "https://www.lsac.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "BARBRI Bar Exam Review",
+                        link: "https://www.barbri.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "State Bar Association Resources",
+                        link: "https://www.americanbar.org/groups/bar_services/"
+                    }
+                ],
+                outlook: "Lawyer positions are expected to grow about as fast as average, with strong competition for jobs. Specializations in healthcare, intellectual property, and environmental law are particularly in demand. Technology is changing legal practice, creating opportunities for tech-savvy lawyers."
+            },
+            "judge": {
+                title: "Judge",
+                image: "{{ url_for('static', filename='images/judge.jpg') }}",
+                description: "Judges preside over legal proceedings, interpret laws, and deliver judgments in court. They ensure trials and hearings are conducted fairly according to legal procedures and may also determine sentences in criminal cases.",
+                salary: "$120,000 - $250,000+ annually depending on jurisdiction and court level",
+                education: "Juris Doctor (JD) degree + extensive legal experience (typically 5-15 years as lawyer)",
+                growth: "3% growth projected (2020-2030)",
+                experience: "Substantial legal experience required (typically 5-15 years as practicing attorney)",
+                skills: [
+                    "Legal expertise",
+                    "Judicial temperament",
+                    "Decision-making",
+                    "Case management",
+                    "Impartiality",
+                    "Procedural knowledge",
+                    "Conflict resolution",
+                    "Ethical judgment"
+                ],
+                companies: "Federal, state, and local court systems",
+                path: [
+                    {
+                        stage: "Legal Education",
+                        content: "Complete law school and earn JD degree"
+                    },
+                    {
+                        stage: "Legal Practice",
+                        content: "Gain experience as practicing attorney (5+ years recommended)"
+                    },
+                    {
+                        stage: "Judicial Appointment/Election",
+                        content: "Be appointed or elected to judgeship (requirements vary by jurisdiction)"
+                    },
+                    {
+                        stage: "Lower Court Judgeship",
+                        content: "Begin in municipal or county court"
+                    },
+                    {
+                        stage: "Higher Court Advancement",
+                        content: "Potential advancement to appellate or supreme courts"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Behavior of Federal Judges: A Theoretical and Empirical Study",
+                        link: "https://www.amazon.com/Behavior-Federal-Judges-Empirical-Theoretical/dp/067472591X"
+                    },
+                    {
+                        type: "Course",
+                        title: "National Judicial College Programs",
+                        link: "https://www.judges.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "American Bar Association Judicial Division",
+                        link: "https://www.americanbar.org/groups/judicial/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "State Judicial Education Programs",
+                        link: "https://www.judicialeducation.org/"
+                    }
+                ],
+                outlook: "Judicial positions have limited growth due to the small number of positions available. Competition is intense, with most judges appointed or elected after significant legal experience. Turnover creates periodic opportunities."
+            },
+            "legal-advisor": {
+                title: "Legal Advisor",
+                image: "{{ url_for('static', filename='images/legal-advisor.jpg') }}",
+                description: "Legal advisors provide specialized legal guidance to organizations or government agencies. They help interpret laws and regulations, assess legal risks, and ensure compliance without necessarily representing clients in court.",
+                salary: "$90,000 - $180,000 annually depending on organization and experience",
+                education: "Juris Doctor (JD) degree, often with specialized additional training",
+                growth: "8% growth projected (2020-2030)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-7 years, Senior: 8+ years",
+                skills: [
+                    "Legal analysis",
+                    "Regulatory knowledge",
+                    "Risk assessment",
+                    "Policy interpretation",
+                    "Compliance strategies",
+                    "Corporate governance",
+                    "Contract review",
+                    "Industry-specific expertise"
+                ],
+                companies: "Corporations, government agencies, non-profits, educational institutions, healthcare organizations",
+                path: [
+                    {
+                        stage: "Legal Education",
+                        content: "Complete law school and earn JD degree"
+                    },
+                    {
+                        stage: "Bar Admission",
+                        content: "Pass bar exam (required in most positions)"
+                    },
+                    {
+                        stage: "Legal Practice",
+                        content: "Gain experience in relevant legal area (2-5 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Develop expertise in specific regulatory/compliance area"
+                    },
+                    {
+                        stage: "Senior Advisor",
+                        content: "Take on leadership role in legal department"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Corporate Legal Advisor: A Guide to Effective Practice",
+                        link: "https://www.amazon.com/Corporate-Legal-Advisor-Effective-Practice/dp/9386515749"
+                    },
+                    {
+                        type: "Course",
+                        title: "Corporate Law and Governance Courses",
+                        link: "https://www.law.cornell.edu/wex/corporate_law"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Association of Corporate Counsel Resources",
+                        link: "https://www.acc.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Compliance & Ethics Professional (CCEP)",
+                        link: "https://www.corporatecompliance.org/certifications/ccep"
+                    }
+                ],
+                outlook: "Demand for legal advisors is growing as regulations become more complex across industries. Corporate compliance and healthcare law are particularly strong areas. Technology and data privacy expertise is increasingly valuable."
+            },
+            "paralegal": {
+                title: "Paralegal",
+                image: "{{ url_for('static', filename='images/paralegal.jpg') }}",
+                description: "Paralegals support lawyers with research, documentation, and case preparation. They perform substantive legal work under attorney supervision but cannot provide legal advice or represent clients in court.",
+                salary: "$45,000 - $80,000 annually depending on experience and location",
+                education: "Associate's degree or certificate in paralegal studies (some learn on the job)",
+                growth: "12% growth projected (2020-2030)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Legal research",
+                    "Document drafting",
+                    "Case management",
+                    "Court filing procedures",
+                    "Client communication",
+                    "Evidence organization",
+                    "Technology proficiency",
+                    "Attention to detail"
+                ],
+                companies: "Law firms, corporate legal departments, government agencies, non-profits",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete paralegal certificate or degree program (6 months - 2 years)"
+                    },
+                    {
+                        stage: "Certification",
+                        content: "Obtain voluntary certification (NALA, NFPA, etc.) for career advancement"
+                    },
+                    {
+                        stage: "Junior Paralegal",
+                        content: "Entry-level position assisting with basic legal tasks"
+                    },
+                    {
+                        stage: "Senior Paralegal",
+                        content: "Take on more complex responsibilities and specialize"
+                    },
+                    {
+                        stage: "Paralegal Manager",
+                        content: "Supervise other paralegals and legal support staff"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Paralegal Today: The Essentials",
+                        link: "https://www.amazon.com/Paralegal-Today-Essentials-Roger-Miller/dp/1337408953"
+                    },
+                    {
+                        type: "Course",
+                        title: "NALA Certified Paralegal Program",
+                        link: "https://www.nala.org/certification/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "National Federation of Paralegal Associations",
+                        link: "https://www.paralegals.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Advanced Certified Paralegal (ACP) Specializations",
+                        link: "https://www.nala.org/certification/advanced-certified-paralegal"
+                    }
+                ],
+                outlook: "Paralegal jobs are growing faster than average as law firms seek to improve efficiency. Specialized paralegals in areas like litigation, corporate law, and healthcare have the best prospects. Technology skills are increasingly important."
+            },
+            "public-prosecutor": {
+                title: "Public Prosecutor",
+                image: "{{ url_for('static', filename='images/public-prosecutor.jpg') }}",
+                description: "Public prosecutors represent the government in criminal cases, deciding whether to bring charges and presenting cases in court. They work to uphold justice by proving criminal charges against defendants.",
+                salary: "$70,000 - $150,000 annually depending on jurisdiction and experience",
+                education: "Juris Doctor (JD) degree + state bar admission",
+                growth: "5% growth projected (2020-2030)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-7 years, Senior: 8+ years",
+                skills: [
+                    "Criminal law expertise",
+                    "Trial advocacy",
+                    "Evidence evaluation",
+                    "Case preparation",
+                    "Witness examination",
+                    "Plea negotiation",
+                    "Ethical decision-making",
+                    "Public speaking"
+                ],
+                companies: "District Attorney offices, State Attorney General offices, U.S. Attorney offices",
+                path: [
+                    {
+                        stage: "Legal Education",
+                        content: "Complete law school and earn JD degree"
+                    },
+                    {
+                        stage: "Bar Admission",
+                        content: "Pass state bar examination"
+                    },
+                    {
+                        stage: "Junior Prosecutor",
+                        content: "Start as Assistant District/State Attorney handling misdemeanors"
+                    },
+                    {
+                        stage: "Senior Prosecutor",
+                        content: "Handle felony cases and more complex prosecutions"
+                    },
+                    {
+                        stage: "Chief Prosecutor",
+                        content: "Lead prosecution team or office (typically elected position)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Prosecutors: A Year in the Life of a District Attorney's Office",
+                        link: "https://www.amazon.com/Prosecutors-Year-District-Attorneys-Office/dp/0452279095"
+                    },
+                    {
+                        type: "Course",
+                        title: "National District Attorneys Association Training",
+                        link: "https://ndaa.org/training/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "National College of District Attorneys",
+                        link: "https://law.sc.edu/ncda/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "State Prosecutorial Training Programs",
+                        link: "https://www.americanbar.org/groups/public_services/prosecutors/"
+                    }
+                ],
+                outlook: "Prosecutor positions have steady demand with government budgets determining hiring. Turnover creates regular openings. Specialized units (gangs, narcotics, cybercrime) offer career advancement opportunities."
+            },
+            "criminal-lawyer": {
+                title: "Criminal Lawyer",
+                image: "{{ url_for('static', filename='images/criminal-lawyer.jpg') }}",
+                description: "Criminal lawyers defend or prosecute individuals accused of criminal offenses. They handle cases ranging from misdemeanors to serious felonies, ensuring clients' rights are protected throughout legal proceedings.",
+                salary: "$75,000 - $200,000+ annually depending on practice type and experience",
+                education: "Juris Doctor (JD) degree + state bar admission",
+                growth: "8% growth projected (2020-2030)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-7 years, Senior: 8+ years",
+                skills: [
+                    "Criminal procedure",
+                    "Trial strategy",
+                    "Evidence analysis",
+                    "Plea bargaining",
+                    "Client counseling",
+                    "Cross-examination",
+                    "Legal research",
+                    "Persuasive argumentation"
+                ],
+                companies: "Private law firms, public defender offices, prosecutor offices, solo practice",
+                path: [
+                    {
+                        stage: "Legal Education",
+                        content: "Complete law school with criminal law coursework"
+                    },
+                    {
+                        stage: "Bar Admission",
+                        content: "Pass state bar examination"
+                    },
+                    {
+                        stage: "Junior Associate/Public Defender",
+                        content: "Handle misdemeanor cases and assist on felonies"
+                    },
+                    {
+                        stage: "Criminal Defense Attorney",
+                        content: "Take on felony cases and build reputation"
+                    },
+                    {
+                        stage: "Senior Partner/Specialist",
+                        content: "Handle high-profile cases or develop niche practice"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Defending the Damned: Inside Chicago's Cook County Public Defender's Office",
+                        link: "https://www.amazon.com/Defending-Damned-Inside-Chicagos-County/dp/1416547310"
+                    },
+                    {
+                        type: "Course",
+                        title: "National Criminal Defense College Programs",
+                        link: "https://www.ncdc.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "National Association of Criminal Defense Lawyers",
+                        link: "https://www.nacdl.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Board Certification in Criminal Law (state-specific)",
+                        link: "https://www.nblsc.us/"
+                    }
+                ],
+                outlook: "Criminal law practice remains steady with consistent demand. Public defender positions often have openings, while private practice success depends on reputation building. Specialization in areas like DUI or white-collar crime can be lucrative."
+            },
+            "corporate-lawyer": {
+                title: "Corporate Lawyer",
+                image: "{{ url_for('static', filename='images/corporate-lawyer.jpg') }}",
+                description: "Corporate lawyers handle legal matters for businesses including contracts, mergers, compliance, and governance. They ensure companies operate within legal boundaries while achieving business objectives.",
+                salary: "$120,000 - $300,000+ annually depending on firm size and experience",
+                education: "Juris Doctor (JD) degree + state bar admission (often with business background)",
+                growth: "9% growth projected (2020-2030)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-7 years, Senior: 8+ years",
+                skills: [
+                    "Contract drafting",
+                    "Mergers & acquisitions",
+                    "Corporate governance",
+                    "Regulatory compliance",
+                    "Due diligence",
+                    "Risk assessment",
+                    "Transaction structuring",
+                    "Business acumen"
+                ],
+                companies: "Large law firms, corporate legal departments, boutique firms",
+                path: [
+                    {
+                        stage: "Legal Education",
+                        content: "Complete law school with business law focus"
+                    },
+                    {
+                        stage: "Bar Admission",
+                        content: "Pass state bar examination"
+                    },
+                    {
+                        stage: "Associate Attorney",
+                        content: "Start at law firm or corporate legal department"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Develop expertise in specific corporate law area"
+                    },
+                    {
+                        stage: "Partner/General Counsel",
+                        content: "Advance to leadership role managing teams or departments"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Business Lawyer's Handbook: Essential Skills for Corporate Practice",
+                        link: "https://www.amazon.com/Business-Lawyers-Handbook-Essential-Corporate/dp/0735598400"
+                    },
+                    {
+                        type: "Course",
+                        title: "Corporate Law Institute Programs",
+                        link: "https://www.law.duke.edu/corporatelaw/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "American Bar Association Business Law Section",
+                        link: "https://www.americanbar.org/groups/business_law/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "LLM in Corporate Law (optional advanced degree)",
+                        link: "https://www.llm-guide.com/specialization/corporate-law"
+                    }
+                ],
+                outlook: "Corporate law remains strong with steady demand, especially in financial centers. Mergers & acquisitions and securities law specialists are particularly sought after. In-house corporate counsel positions are growing."
+            },
+            "family-lawyer": {
+                title: "Family Lawyer",
+                image: "{{ url_for('static', filename='images/family-lawyer.jpg') }}",
+                description: "Family lawyers handle divorce, custody, adoption, and other family-related legal matters. They help clients navigate emotionally charged situations while protecting their legal rights and interests.",
+                salary: "$70,000 - $150,000 annually depending on practice size and location",
+                education: "Juris Doctor (JD) degree + state bar admission",
+                growth: "7% growth projected (2020-2030)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-7 years, Senior: 8+ years",
+                skills: [
+                    "Divorce proceedings",
+                    "Child custody laws",
+                    "Mediation techniques",
+                    "Property division",
+                    "Client counseling",
+                    "Courtroom advocacy",
+                    "Document preparation",
+                    "Emotional intelligence"
+                ],
+                companies: "Family law firms, legal aid organizations, solo practice",
+                path: [
+                    {
+                        stage: "Legal Education",
+                        content: "Complete law school with family law coursework"
+                    },
+                    {
+                        stage: "Bar Admission",
+                        content: "Pass state bar examination"
+                    },
+                    {
+                        stage: "Junior Associate",
+                        content: "Assist with family law cases under supervision"
+                    },
+                    {
+                        stage: "Family Law Attorney",
+                        content: "Handle own caseload of family law matters"
+                    },
+                    {
+                        stage: "Senior Partner/Specialist",
+                        content: "Focus on complex cases or develop mediation practice"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Family Law in Practice: A Practical Guide for Lawyers",
+                        link: "https://www.amazon.com/Family-Law-Practice-Practical-Lawyers/dp/1634599029"
+                    },
+                    {
+                        type: "Course",
+                        title: "American Academy of Matrimonial Lawyers Training",
+                        link: "https://www.aaml.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "National Family Law Association Resources",
+                        link: "https://www.aaml.org/about-the-academy/state-chapters"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Board Certification in Family Law (state-specific)",
+                        link: "https://www.nblsc.us/"
+                    }
+                ],
+                outlook: "Family law remains steady with consistent demand. Mediation and collaborative law approaches are growing trends. Technology is changing practice with virtual consultations and online dispute resolution."
+            },
+            "civil-rights-lawyer": {
+                title: "Civil Rights Lawyer",
+                image: "{{ url_for('static', filename='images/civil-rights-lawyer.jpg') }}",
+                description: "Civil rights lawyers advocate for equal rights and challenge discrimination through the legal system. They handle cases involving constitutional rights, discrimination, police misconduct, and voting rights.",
+                salary: "$60,000 - $130,000 annually depending on organization and experience",
+                education: "Juris Doctor (JD) degree + state bar admission",
+                growth: "10% growth projected (2020-2030)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-7 years, Senior: 8+ years",
+                skills: [
+                    "Constitutional law",
+                    "Civil rights statutes",
+                    "Impact litigation",
+                    "Policy analysis",
+                    "Community advocacy",
+                    "Public speaking",
+                    "Legal research",
+                    "Social justice commitment"
+                ],
+                companies: "Non-profit organizations, government agencies, civil rights firms, legal aid",
+                path: [
+                    {
+                        stage: "Legal Education",
+                        content: "Complete law school with civil rights focus"
+                    },
+                    {
+                        stage: "Bar Admission",
+                        content: "Pass state bar examination"
+                    },
+                    {
+                        stage: "Fellowship/Entry Position",
+                        content: "Start with civil rights organization or public interest firm"
+                    },
+                    {
+                        stage: "Civil Rights Attorney",
+                        content: "Handle individual cases and class actions"
+                    },
+                    {
+                        stage: "Senior Attorney/Policy Advocate",
+                        content: "Lead major cases or influence policy change"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Civil Rights Stories (Law Stories Series)",
+                        link: "https://www.amazon.com/Civil-Rights-Stories-Law/dp/1599410505"
+                    },
+                    {
+                        type: "Course",
+                        title: "Civil Rights Litigation CLE Programs",
+                        link: "https://www.law.cornell.edu/wex/civil_rights"
+                    },
+                    {
+                        type: "Platform",
+                        title: "American Civil Liberties Union (ACLU) Resources",
+                        link: "https://www.aclu.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Public Interest Law Fellowships",
+                        link: "https://www.equaljusticeworks.org/"
+                    }
+                ],
+                outlook: "Civil rights law is growing with increasing focus on social justice issues. Funding for non-profits affects job availability. Specializations in disability rights, LGBTQ+ rights, and voting rights are particularly active."
+            },
+            "environmental-lawyer": {
+                title: "Environmental Lawyer",
+                image: "{{ url_for('static', filename='images/environmental-lawyer.jpg') }}",
+                description: "Environmental lawyers work on legal issues related to environmental protection and regulations. They represent clients in cases involving pollution, land use, natural resources, and climate change.",
+                salary: "$80,000 - $180,000 annually depending on sector and experience",
+                education: "Juris Doctor (JD) degree + state bar admission (often with environmental science background)",
+                growth: "12% growth projected (2020-2030)",
+                experience: "Entry-level: 0-3 years, Mid-level: 4-7 years, Senior: 8+ years",
+                skills: [
+                    "Environmental regulations",
+                    "Policy analysis",
+                    "Land use law",
+                    "Climate change law",
+                    "Litigation strategy",
+                    "Regulatory compliance",
+                    "Scientific literacy",
+                    "Public speaking"
+                ],
+                companies: "Environmental law firms, government agencies (EPA, state DEPs), non-profit organizations, corporate sustainability departments",
+                path: [
+                    {
+                        stage: "Undergraduate Education",
+                        content: "Complete bachelor's degree (environmental science, policy, or related field recommended)"
+                    },
+                    {
+                        stage: "Law School",
+                        content: "Earn JD with environmental law coursework and clinics"
+                    },
+                    {
+                        stage: "Bar Admission",
+                        content: "Pass state bar examination"
+                    },
+                    {
+                        stage: "Junior Associate/Fellow",
+                        content: "Start at environmental organization or firm (1-3 years)"
+                    },
+                    {
+                        stage: "Environmental Attorney",
+                        content: "Handle cases independently and develop expertise (4+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Environmental Law Handbook",
+                        link: "https://www.amazon.com/Environmental-Law-Handbook-Tom-Daniels/dp/1641433744"
+                    },
+                    {
+                        type: "Course",
+                        title: "Environmental Law Institute Training",
+                        link: "https://www.eli.org/training"
+                    },
+                    {
+                        type: "Platform",
+                        title: "American Bar Association - Environment, Energy and Resources",
+                        link: "https://www.americanbar.org/groups/environment_energy_resources/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "State Environmental Law Certifications",
+                        link: "https://www.eli.org/keywords/environmental-law-certification"
+                    }
+                    ],
+                outlook: "Environmental law is growing rapidly with increasing regulations. Specialists in climate change law and renewable energy are particularly in demand. Government agencies and NGOs are expanding their legal teams in this area."
+            }
+        };
+
+        // Load career data based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerKey = urlParams.get('career');
+
+        if (careerKey && lawCareerData[careerKey]) {
+            const career = lawCareerData[careerKey];
+            
+            // Set basic information
+            document.title = `${career.title} | CareerHub`;
+            document.getElementById("career-title").textContent = career.title;
+            document.getElementById("career-image").src = career.image;
+            document.getElementById("career-image").alt = career.title;
+            document.getElementById("career-description").textContent = career.description;
+            document.getElementById("career-salary").textContent = career.salary;
+            document.getElementById("career-education").textContent = career.education;
+            document.getElementById("career-growth").textContent = career.growth;
+            document.getElementById("career-experience").textContent = career.experience;
+            document.getElementById("career-companies").textContent = career.companies;
+            
+            // Populate skills
+            const skillsContainer = document.getElementById("skills-container");
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement("div");
+                skillTag.className = "skill-tag";
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Populate career path
+            const careerPath = document.getElementById("career-path");
+            career.path.forEach((stage, index) => {
+                const pathItem = document.createElement("div");
+                pathItem.className = "path-item";
+                
+                const pathContent = document.createElement("div");
+                pathContent.className = "path-content";
+                
+                const stageTitle = document.createElement("h4");
+                stageTitle.textContent = `${index + 1}. ${stage.stage}`;
+                
+                const stageDesc = document.createElement("p");
+                stageDesc.textContent = stage.content;
+                
+                pathContent.appendChild(stageTitle);
+                pathContent.appendChild(stageDesc);
+                pathItem.appendChild(pathContent);
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Populate resources
+            const resourcesContainer = document.getElementById("resources-container");
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement("div");
+                resourceCard.className = "resource-card";
+                
+                const resourceTitle = document.createElement("h4");
+                resourceTitle.innerHTML = `<i class="fas ${getResourceIcon(resource.type)}"></i> ${resource.type}: ${resource.title}`;
+                
+                const resourceLink = document.createElement("a");
+                resourceLink.href = resource.link;
+                resourceLink.target = "_blank";
+                resourceLink.textContent = "Explore Resource →";
+                
+                resourceCard.appendChild(resourceTitle);
+                resourceCard.appendChild(resourceLink);
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            const jobOutlook = document.getElementById("job-outlook");
+            jobOutlook.innerHTML = `<h3><i class="fas fa-chart-line"></i> Market Outlook</h3><p>${career.outlook}</p>`;
+            
+        } else {
+            document.querySelector(".career-container").innerHTML = `
+                <div style="text-align: center; padding: 5rem 0;">
+                    <h2 style="color: var(--law); margin-bottom: 1rem;">Law Career Not Found</h2>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">The requested law career path could not be found.</p>
+                    <button class="cta-btn" onclick="window.location.href='/law'">Browse Law Careers</button>
+                </div>
+            `;
+        }
+
+        function getResourceIcon(type) {
+            switch(type.toLowerCase()) {
+                case 'book': return 'fa-book';
+                case 'course': return 'fa-graduation-cap';
+                case 'platform': return 'fa-laptop';
+                case 'certification': return 'fa-certificate';
+                case 'documentation': return 'fa-file-alt';
+                default: return 'fa-link';
+            }
+        }
+    </script>
+</body>
+</html>

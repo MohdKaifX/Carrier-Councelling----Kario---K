@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arts Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --creative: #a855f7;
+            --artistic: #e879f9;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--creative), var(--artistic));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--creative), var(--artistic));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .highlight-card h3 {
+            color: var(--creative);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--creative);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--artistic);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--creative);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--creative);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2);
+            border-color: var(--creative);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--creative);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-arts {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--creative);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-arts:hover {
+            color: var(--artistic);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Career Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/arts'">Back to Arts Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Arts Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/arts" class="back-to-arts">
+            <i class="fas fa-arrow-left"></i> Back to Arts Careers
+        </a>
+    </div>
+
+    <script>
+        // Arts Career Data (for all sub-cards in arts.html)
+        const artsCareerData = {
+            "painter": {
+                title: "Painter",
+                image: "{{ url_for('static', filename='images/painter.jpg') }}",
+                description: "Painters create visual art using various techniques and mediums, from traditional oils and acrylics to digital painting. They express ideas, emotions, and perspectives through color, composition, and brushwork, working in fine art, commercial illustration, or digital media.",
+                salary: "$30k-$100k+ (Highly variable based on reputation and market)",
+                education: "BFA in Painting recommended but not required. Portfolio is most important.",
+                growth: "6% (Slower than average)",
+                experience: "Entry-level: 0-2 years, Established: 5+ years",
+                skills: [
+                    "Color Theory",
+                    "Composition",
+                    "Various Painting Techniques",
+                    "Art History Knowledge",
+                    "Creativity & Originality",
+                    "Digital Painting Tools",
+                    "Self-Promotion",
+                    "Art Business Management"
+                ],
+                companies: "Art galleries, Museums, Freelance commissions, Animation studios, Publishing houses, Game studios",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Develop fundamental skills through practice and study (1-3 years)"
+                    },
+                    {
+                        stage: "Education/Training",
+                        content: "Optional formal education or apprenticeships (2-4 years)"
+                    },
+                    {
+                        stage: "Emerging Artist",
+                        content: "Build portfolio and begin exhibiting (2-5 years)"
+                    },
+                    {
+                        stage: "Professional Artist",
+                        content: "Establish consistent work and recognition (5-10 years)"
+                    },
+                    {
+                        stage: "Master Artist",
+                        content: "Achieve significant recognition and higher commissions (10+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Color and Light by James Gurney",
+                        link: "https://www.amazon.com/Color-Light-Guide-Realist-Painter/dp/0740797719"
+                    },
+                    {
+                        type: "Course",
+                        title: "Oil Painting Mastery on Udemy",
+                        link: "https://www.udemy.com/course/oil-painting-mastery/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "ArtStation Learning",
+                        link: "https://www.artstation.com/learning"
+                    },
+                    {
+                        type: "Community",
+                        title: "WetCanvas Artist Community",
+                        link: "https://www.wetcanvas.com/"
+                    }
+                ],
+                outlook: "Traditional painting careers grow slowly but digital painting opportunities are expanding in entertainment industries. NFT art market creating new revenue streams for digital painters."
+            },
+            "sculptor": {
+                title: "Sculptor",
+                image: "{{ url_for('static', filename='images/sculptor.jpg') }}",
+                description: "Sculptors create three-dimensional artworks using materials like clay, metal, stone, wood, or mixed media. They work on public art installations, gallery pieces, or commercial projects, translating concepts into physical forms through various techniques.",
+                salary: "$35k-$90k (Commission-based with wide variation)",
+                education: "BFA/MFA in Sculpture beneficial but not required. Technical skills paramount.",
+                growth: "5% (Slower than average)",
+                experience: "Apprentice: 1-3 years, Professional: 5+ years",
+                skills: [
+                    "3D Design",
+                    "Material Knowledge",
+                    "Modeling & Casting",
+                    "Metal/Wood Working",
+                    "Anatomy Understanding",
+                    "Installation Planning",
+                    "Public Art Processes",
+                    "Fabrication Techniques"
+                ],
+                companies: "Art foundries, Public art programs, Museums, Architectural firms, Film/theater productions",
+                path: [
+                    {
+                        stage: "Skill Development",
+                        content: "Learn fundamental techniques (1-3 years)"
+                    },
+                    {
+                        stage: "Assistant/Apprentice",
+                        content: "Work under established sculptors (2-4 years)"
+                    },
+                    {
+                        stage: "Independent Work",
+                        content: "Build portfolio and seek commissions (3-5 years)"
+                    },
+                    {
+                        stage: "Established Sculptor",
+                        content: "Secure gallery representation or steady clients (5-8 years)"
+                    },
+                    {
+                        stage: "Master Sculptor",
+                        content: "Create large-scale or high-profile works (10+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Sculpting Basics by Karin Hessenberg",
+                        link: "https://www.amazon.com/Sculpting-Basics-Everything-Need-Sculpture/dp/0764146299"
+                    },
+                    {
+                        type: "Course",
+                        title: "Sculpture Techniques at local art schools",
+                        link: ""
+                    },
+                    {
+                        type: "Tool",
+                        title: "Sculpture House Supplies",
+                        link: "https://www.sculpturehouse.com/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "International Sculpture Center",
+                        link: "https://www.sculpture.org/"
+                    }
+                ],
+                outlook: "Traditional sculpture opportunities limited but growing demand for sculptors in entertainment industries (film, games) and public art projects. Digital sculpting skills increasingly valuable."
+            },
+            "graphic-designer": {
+                title: "Graphic Designer",
+                image: "{{ url_for('static', filename='images/graphic.jpg') }}",
+                description: "Graphic designers create visual concepts to communicate ideas for branding, advertising, and digital media. They combine art and technology to develop layouts, logos, packaging, and marketing materials that inform and inspire consumers.",
+                salary: "$45k-$85k (Higher in tech/senior roles)",
+                education: "BFA in Graphic Design or related field preferred",
+                growth: "3% (Slower than average but digital skills in demand)",
+                experience: "Junior: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Adobe Creative Suite",
+                    "Typography",
+                    "Branding",
+                    "Layout Design",
+                    "UI/UX Basics",
+                    "Print Production",
+                    "Digital Illustration",
+                    "Marketing Principles"
+                ],
+                companies: "Advertising agencies, Design studios, Corporate marketing departments, Publishing houses, Tech companies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete design degree or equivalent training (2-4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain real-world experience (6 months-1 year)"
+                    },
+                    {
+                        stage: "Junior Designer",
+                        content: "Work under art directors (1-3 years)"
+                    },
+                    {
+                        stage: "Designer",
+                        content: "Handle complete projects (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Designer/AD",
+                        content: "Lead creative direction (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Thinking with Type by Ellen Lupton",
+                        link: "https://www.amazon.com/Thinking-Type-2nd-revised-expanded/dp/1568989695"
+                    },
+                    {
+                        type: "Course",
+                        title: "Graphic Design Specialization (Coursera)",
+                        link: "https://www.coursera.org/specializations/graphic-design"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Behance Portfolio Site",
+                        link: "https://www.behance.net/"
+                    },
+                    {
+                        type: "Community",
+                        title: "AIGA Design Community",
+                        link: "https://www.aiga.org/"
+                    }
+                ],
+                outlook: "Traditional print design roles declining but digital design opportunities growing, especially in UI/UX crossover roles. Strong competition makes specialization important."
+            },
+            "illustrator": {
+                title: "Illustrator",
+                image: "{{ url_for('static', filename='images/illustrator.jpg') }}",
+                description: "Illustrators create original images for books, magazines, products, and digital media. They develop visual narratives and concepts across publishing, advertising, and entertainment industries, working in various styles from editorial to fantasy art.",
+                salary: "$40k-$120k (Freelance income varies widely)",
+                education: "BFA in Illustration recommended but portfolio is key",
+                growth: "7% (Average growth)",
+                experience: "Junior: 0-3 years, Established: 5+ years",
+                skills: [
+                    "Drawing Fundamentals",
+                    "Digital Painting",
+                    "Visual Storytelling",
+                    "Style Versatility",
+                    "Client Communication",
+                    "Time Management",
+                    "Business Acumen",
+                    "Industry Trends"
+                ],
+                companies: "Publishing houses, Advertising agencies, Animation studios, Game companies, Freelance marketplaces",
+                path: [
+                    {
+                        stage: "Skill Building",
+                        content: "Develop core drawing/painting abilities (2-4 years)"
+                    },
+                    {
+                        stage: "Portfolio Development",
+                        content: "Create professional-quality samples (1-2 years)"
+                    },
+                    {
+                        stage: "Assistant/Junior",
+                        content: "Work under art directors (2-3 years)"
+                    },
+                    {
+                        stage: "Professional",
+                        content: "Secure regular clients or staff position (3-5 years)"
+                    },
+                    {
+                        stage: "Established",
+                        content: "Develop recognizable style and client base (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Figure Drawing for All It's Worth by Andrew Loomis",
+                        link: "https://www.amazon.com/Figure-Drawing-All-Worth-Loomis/dp/0857680986"
+                    },
+                    {
+                        type: "Course",
+                        title: "Proko Figure Drawing Courses",
+                        link: "https://www.proko.com/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Society of Visual Storytelling",
+                        link: "https://www.svslearn.com/"
+                    },
+                    {
+                        type: "Community",
+                        title: "Concept Art Association",
+                        link: "https://www.conceptartassociation.com/"
+                    }
+                ],
+                outlook: "Illustration careers growing steadily with expansion of digital media. Strong opportunities in children's books, concept art, and editorial illustration. NFT market creating new avenues."
+            },
+            "multimedia-artist": {
+                title: "Multimedia Artist",
+                image: "{{ url_for('static', filename='images/multimedia.jpg') }}",
+                description: "Multimedia artists create digital art, animations, and interactive content for various media platforms. They work in film, television, video games, and online media, combining artistic skills with technical proficiency in digital tools.",
+                salary: "$50k-$110k (Higher in tech/gaming hubs)",
+                education: "BFA in Digital Arts or related field recommended",
+                growth: "16% (Much faster than average)",
+                experience: "Junior: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "2D/3D Animation",
+                    "Motion Graphics",
+                    "Digital Painting",
+                    "Video Editing",
+                    "3D Modeling",
+                    "Game Engine Basics",
+                    "AR/VR Tools",
+                    "Technical Art"
+                ],
+                companies: "Animation studios, Game developers, Film/TV production, Advertising agencies, Tech companies",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete digital arts training (2-4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain industry experience (6 months-1 year)"
+                    },
+                    {
+                        stage: "Junior Artist",
+                        content: "Work on specific assets/components (1-3 years)"
+                    },
+                    {
+                        stage: "Artist",
+                        content: "Handle complete sequences/projects (3-5 years)"
+                    },
+                    {
+                        stage: "Lead Artist",
+                        content: "Direct teams and pipelines (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Software",
+                        title: "Adobe Creative Cloud for Multimedia",
+                        link: "https://www.adobe.com/creativecloud.html"
+                    },
+                    {
+                        type: "Course",
+                        title: "Animation Mentor Program",
+                        link: "https://www.animationmentor.com/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Animator's Survival Kit by Richard Williams",
+                        link: "https://www.amazon.com/Animators-Survival-Kit-Richard-Williams/dp/0571202284"
+                    },
+                    {
+                        type: "Platform",
+                        title: "CG Society Community",
+                        link: "https://www.cgsociety.org/"
+                    }
+                ],
+                outlook: "Multimedia artist roles growing rapidly with expansion of digital entertainment and interactive media. Strong demand for skills in real-time rendering, VR, and procedural animation."
+            },
+            "art-director": {
+                title: "Art Director",
+                image: "{{ url_for('static', filename='images/art-director.jpg') }}",
+                description: "Art directors lead visual style and creative vision for publications, products, or campaigns. They oversee teams of designers and artists, ensuring cohesive aesthetics that meet strategic goals across media platforms.",
+                salary: "$70k-$150k+ (Higher in major markets)",
+                education: "BFA + 5+ years design experience typically required",
+                growth: "11% (Faster than average)",
+                experience: "Junior AD: 3-5 years, Senior AD: 7+ years",
+                skills: [
+                    "Creative Leadership",
+                    "Brand Strategy",
+                    "Team Management",
+                    "Budget Planning",
+                    "Client Relations",
+                    "Trend Analysis",
+                    "Cross-media Design",
+                    "Presentation Skills"
+                ],
+                companies: "Advertising agencies, Publishing houses, Film/TV studios, Game companies, Corporate marketing",
+                path: [
+                    {
+                        stage: "Design Education",
+                        content: "Complete relevant degree (2-4 years)"
+                    },
+                    {
+                        stage: "Junior Designer",
+                        content: "Gain hands-on experience (2-3 years)"
+                    },
+                    {
+                        stage: "Senior Designer",
+                        content: "Lead design projects (3-5 years)"
+                    },
+                    {
+                        stage: "Associate AD",
+                        content: "Assist with creative direction (1-2 years)"
+                    },
+                    {
+                        stage: "Art Director",
+                        content: "Lead visual strategy (5+ years total)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Creative Direction by Gavin Ambrose",
+                        link: "https://www.amazon.com/Creative-Direction-Gavin-Ambrose/dp/2940411601"
+                    },
+                    {
+                        type: "Course",
+                        title: "Advertising Creative Direction (Miami Ad School)",
+                        link: "https://www.miamiadschool.com/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Art Directors Club",
+                        link: "https://www.adcglobal.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "D&AD Professional Network",
+                        link: "https://www.dandad.org/"
+                    }
+                ],
+                outlook: "Art direction roles growing steadily as visual branding becomes increasingly important across digital platforms. Demand strongest in tech and entertainment sectors."
+            },
+            "fashion-designer": {
+                title: "Fashion Designer",
+                image: "{{ url_for('static', filename='images/fashion.jpg') }}",
+                description: "Fashion designers create original clothing, accessories, and footwear designs for production. They research trends, sketch designs, select fabrics, and oversee garment creation for retail or haute couture markets.",
+                salary: "$50k-$130k (Highly variable by brand/reputation)",
+                education: "BFA in Fashion Design typically required",
+                growth: "3% (Slower than average)",
+                experience: "Assistant: 0-2 years, Designer: 3-5 years, Lead: 7+ years",
+                skills: [
+                    "Trend Forecasting",
+                    "Pattern Making",
+                    "Textile Knowledge",
+                    "Fashion Illustration",
+                    "CAD Software",
+                    "Production Processes",
+                    "Brand Development",
+                    "Retail Awareness"
+                ],
+                companies: "Fashion houses, Apparel manufacturers, Retail brands, Costume design studios, Freelance",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete fashion design program (2-4 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Gain industry experience (6 months-1 year)"
+                    },
+                    {
+                        stage: "Design Assistant",
+                        content: "Support senior designers (1-2 years)"
+                    },
+                    {
+                        stage: "Junior Designer",
+                        content: "Develop smaller collections (2-3 years)"
+                    },
+                    {
+                        stage: "Lead Designer",
+                        content: "Direct complete lines (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Fashion Designer Survival Guide by Mary Gehlhar",
+                        link: "https://www.amazon.com/Fashion-Designer-Survival-Guide-Updated/dp/1621535308"
+                    },
+                    {
+                        type: "Course",
+                        title: "Fashion Design Specialization (Coursera)",
+                        link: "https://www.coursera.org/specializations/fashion-design"
+                    },
+                    {
+                        type: "Magazine",
+                        title: "Women's Wear Daily",
+                        link: "https://wwd.com/"
+                    },
+                    {
+                        type: "Software",
+                        title: "CLO 3D Fashion Design",
+                        link: "https://www.clo3d.com/"
+                    }
+                ],
+                outlook: "Traditional fashion design roles competitive but sustainable fashion and digital clothing (NFTs/metaverse) creating new opportunities. Technical design skills increasingly valuable."
+            },
+            "textile-designer": {
+                title: "Textile Designer",
+                image: "{{ url_for('static', filename='images/textile.jpg') }}",
+                description: "Textile designers create patterns and designs for fabrics used in fashion, furnishings, and products. They combine artistic skills with technical knowledge of materials and production processes to develop innovative textiles.",
+                salary: "$45k-$95k (Higher in specialized roles)",
+                education: "BFA in Textile Design or related field preferred",
+                growth: "4% (Average growth)",
+                experience: "Junior: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Pattern Design",
+                    "Color Matching",
+                    "Fabric Properties",
+                    "Print Techniques",
+                    "CAD Software",
+                    "Trend Research",
+                    "Production Processes",
+                    "Sustainability"
+                ],
+                companies: "Textile mills, Fashion brands, Home furnishing companies, Automotive interiors, Freelance studios",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete textile design training (2-4 years)"
+                    },
+                    {
+                        stage: "Assistant",
+                        content: "Learn industry processes (1-2 years)"
+                    },
+                    {
+                        stage: "Designer",
+                        content: "Develop commercial patterns (2-4 years)"
+                    },
+                    {
+                        stage: "Senior Designer",
+                        content: "Lead collections/innovations (5+ years)"
+                    },
+                    {
+                        stage: "Creative Director",
+                        content: "Set brand textile direction (8+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Textile Design by Simon Clarke",
+                        link: "https://www.amazon.com/Textile-Design-Simon-Clarke/dp/1780673441"
+                    },
+                    {
+                        type: "Software",
+                        title: "Adobe Illustrator for Textiles",
+                        link: "https://www.adobe.com/products/illustrator.html"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Textile Society of America",
+                        link: "https://www.textilesocietyofamerica.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Printed Textile Design (Central Saint Martins)",
+                        link: "https://www.arts.ac.uk/colleges/central-saint-martins"
+                    }
+                ],
+                outlook: "Textile design roles stable with growth in technical and sustainable textiles. Digital printing technologies expanding creative possibilities."
+            },
+            "photographer": {
+                title: "Photographer",
+                image: "{{ url_for('static', filename='images/photographer.jpg') }}",
+                description: "Photographers capture and edit images for commercial, artistic, or journalistic purposes. They specialize in areas like portrait, fashion, product, or event photography, using technical and artistic skills to create compelling visuals.",
+                salary: "$35k-$100k+ (Highly variable by specialty)",
+                education: "Formal education optional. Portfolio and experience most important.",
+                growth: "9% (Average growth)",
+                experience: "Assistant: 1-2 years, Professional: 3+ years",
+                skills: [
+                    "Lighting Techniques",
+                    "Composition",
+                    "Photo Editing",
+                    "Equipment Knowledge",
+                    "Client Management",
+                    "Business Operations",
+                    "Specialized Styles",
+                    "Digital Workflow"
+                ],
+                companies: "Media outlets, Advertising agencies, E-commerce companies, Wedding studios, Freelance",
+                path: [
+                    {
+                        stage: "Skill Development",
+                        content: "Master technical fundamentals (1-2 years)"
+                    },
+                    {
+                        stage: "Assistant",
+                        content: "Work under established photographers (1-3 years)"
+                    },
+                    {
+                        stage: "Independent",
+                        content: "Build client base and portfolio (2-4 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Focus on profitable niche (3-5 years)"
+                    },
+                    {
+                        stage: "Established",
+                        content: "Develop reputation and higher-paying work (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Understanding Exposure by Bryan Peterson",
+                        link: "https://www.amazon.com/Understanding-Exposure-Fourth-Photographs-Camera/dp/1607748509"
+                    },
+                    {
+                        type: "Course",
+                        title: "CreativeLive Photography Classes",
+                        link: "https://www.creativelive.com/catalog/photography"
+                    },
+                    {
+                        type: "Software",
+                        title: "Adobe Lightroom for Photographers",
+                        link: "https://www.adobe.com/products/photoshop-lightroom.html"
+                    },
+                    {
+                        type: "Community",
+                        title: "Professional Photographers of America",
+                        link: "https://www.ppa.com/"
+                    }
+                ],
+                outlook: "Photography careers growing steadily with expansion of digital media. Strongest opportunities in commercial, product, and real estate photography. AI tools changing post-production workflows."
+            },
+            "ux-designer": {
+                title: "UX/UI Designer",
+                image: "{{ url_for('static', filename='images/ux-designer.jpg') }}",
+                description: "UX/UI designers create user experiences and interfaces for digital products and services. They combine design skills with user research to develop intuitive, aesthetically pleasing interfaces that solve user problems effectively.",
+                salary: "$65k-$140k (Higher in tech hubs)",
+                education: "BFA in Design + UX certification, or Bootcamp training",
+                growth: "22% (Much faster than average)",
+                experience: "Junior: 0-2 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "User Research",
+                    "Wireframing",
+                    "Prototyping",
+                    "Interaction Design",
+                    "Information Architecture",
+                    "Usability Testing",
+                    "Design Systems",
+                    "Front-end Basics"
+                ],
+                companies: "Tech companies, Digital agencies, Financial services, Healthcare tech, E-commerce",
+                path: [
+                    {
+                        stage: "Foundation",
+                        content: "Learn design principles (1-2 years)"
+                    },
+                    {
+                        stage: "UX Training",
+                        content: "Complete specialized courses (6-12 months)"
+                    },
+                    {
+                        stage: "Junior UX",
+                        content: "Work on specific components (1-2 years)"
+                    },
+                    {
+                        stage: "UX Designer",
+                        content: "Own complete user flows (2-4 years)"
+                    },
+                    {
+                        stage: "Senior UX",
+                        content: "Lead product design (5+ years)"
+                    }
+                ],
+                resources: [
+                {
+                        type: "Book",
+                        title: "Don't Make Me Think by Steve Krug",
+                        link: "https://www.amazon.com/Dont-Make-Think-Revisited-Usability/dp/0321965515"
+                    },
+                    {
+                        type: "Course",
+                        title: "Google UX Design Certificate",
+                        link: "https://www.coursera.org/professional-certificates/google-ux-design"
+                    },
+                    {
+                        type: "Tool",
+                        title: "Figma Design Platform",
+                        link: "https://www.figma.com/"
+                    },
+                    {
+                        type: "Community",
+                        title: "UX Design Institute",
+                        link: "https://www.uxdesigninstitute.com/"
+                    }
+                ],
+                outlook: "UX/UI design is one of the fastest-growing creative fields with increasing digital transformation across industries. Demand particularly strong for designers with research and prototyping skills."
+            },
+            "art-therapist": {
+                title: "Art Therapist",
+                image: "{{ url_for('static', filename='images/art-therapist.jpg') }}",
+                description: "Art therapists use creative processes to help clients explore emotions, improve mental health, and enhance well-being. They combine psychotherapy with art-making to facilitate healing, self-expression, and personal development across diverse populations.",
+                salary: "$45k-$85k (Varies by setting and location)",
+                education: "Master's in Art Therapy + State licensure required",
+                growth: "10% (Faster than average)",
+                experience: "Internship: 1 year, Licensed: 2+ years",
+                skills: [
+                    "Counseling Techniques",
+                    "Art Media Knowledge",
+                    "Psychological Assessment",
+                    "Group Facilitation",
+                    "Cultural Sensitivity",
+                    "Treatment Planning",
+                    "Clinical Documentation",
+                    "Ethical Practice"
+                ],
+                companies: "Hospitals, Schools, Rehabilitation centers, Private practice, Community programs",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BA in Psychology or Art (4 years)"
+                    },
+                    {
+                        stage: "Graduate",
+                        content: "Earn MA in Art Therapy (2-3 years)"
+                    },
+                    {
+                        stage: "Internship",
+                        content: "Complete supervised clinical hours (1 year)"
+                    },
+                    {
+                        stage: "Licensure",
+                        content: "Pass board exams and obtain license (6-12 months)"
+                    },
+                    {
+                        stage: "Professional",
+                        content: "Build clinical practice (2+ years post-license)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Art Therapy Sourcebook by Cathy Malchiodi",
+                        link: "https://www.amazon.com/Art-Therapy-Sourcebook-Cathy-Malchiodi/dp/0071468274"
+                    },
+                    {
+                        type: "Organization",
+                        title: "American Art Therapy Association",
+                        link: "https://arttherapy.org/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Art Therapy: Journal of AATA",
+                        link: "https://www.tandfonline.com/journals/uart20"
+                    },
+                    {
+                        type: "Course",
+                        title: "Introduction to Art Therapy (Udemy)",
+                        link: "https://www.udemy.com/course/art-therapy/"
+                    }
+                ],
+                outlook: "Art therapy growing steadily with increasing recognition of creative therapies in mental health. Opportunities expanding in trauma work, geriatrics, and community programs."
+            },
+            "museum-curator": {
+                title: "Museum Curator",
+                image: "{{ url_for('static', filename='images/curator.jpg') }}",
+                description: "Museum curators research, acquire, and care for collections of artwork and cultural artifacts. They develop exhibitions, interpret objects for the public, and contribute to scholarship in their specialized fields of art history or cultural heritage.",
+                salary: "$50k-$120k (Higher at major institutions)",
+                education: "MA in Art History/Museum Studies required, PhD preferred",
+                growth: "12% (Faster than average)",
+                experience: "Assistant: 2-3 years, Associate: 5+ years, Senior: 8+ years",
+                skills: [
+                    "Art Historical Research",
+                    "Collection Management",
+                    "Exhibition Development",
+                    "Grant Writing",
+                    "Public Speaking",
+                    "Conservation Basics",
+                    "Digital Archiving",
+                    "Cultural Policy"
+                ],
+                companies: "Art museums, Historical societies, University galleries, Cultural foundations, Auction houses",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BA in Art History or related field (4 years)"
+                    },
+                    {
+                        stage: "Graduate",
+                        content: "Earn MA in Art History/Museum Studies (2 years)"
+                    },
+                    {
+                        stage: "Internships",
+                        content: "Gain museum experience (1-2 years)"
+                    },
+                    {
+                        stage: "Assistant Curator",
+                        content: "Support exhibition projects (2-3 years)"
+                    },
+                    {
+                        stage: "Curator",
+                        content: "Lead collections and exhibitions (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Curatorial Activism by Maura Reilly",
+                        link: "https://www.amazon.com/Curatorial-Activism-Towards-Ethics-Exhibiting/dp/0500239707"
+                    },
+                    {
+                        type: "Organization",
+                        title: "American Alliance of Museums",
+                        link: "https://www.aam-us.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Museum Studies (Smithsonian)",
+                        link: "https://www.si.edu/museuminstitute"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Curator: The Museum Journal",
+                        link: "https://onlinelibrary.wiley.com/journal/21516952"
+                    }
+                ],
+                outlook: "Curatorial positions remain competitive but growing with museum expansions and digital initiatives. Specialists in diverse art histories and community engagement increasingly sought."
+            }
+        };
+
+        // Get career parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerId = urlParams.get('career');
+
+        // Set career data if valid ID provided
+        if (careerId && artsCareerData[careerId]) {
+            const career = artsCareerData[careerId];
+            
+            // Set basic info
+            document.getElementById('career-title').textContent = career.title;
+            document.getElementById('career-image').src = career.image;
+            document.getElementById('career-image').alt = career.title;
+            document.getElementById('career-description').textContent = career.description;
+            document.getElementById('career-salary').textContent = career.salary;
+            document.getElementById('career-education').textContent = career.education;
+            document.getElementById('career-growth').textContent = career.growth;
+            document.getElementById('career-experience').textContent = career.experience;
+            document.getElementById('career-companies').textContent = career.companies;
+            document.getElementById('job-outlook').innerHTML = `<h3><i class="fas fa-chart-line"></i> Outlook</h3><p>${career.outlook}</p>`;
+            
+            // Set skills
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Set career path
+            const careerPath = document.getElementById('career-path');
+            careerPath.innerHTML = '';
+            career.path.forEach(stage => {
+                const pathItem = document.createElement('div');
+                pathItem.className = 'path-item';
+                pathItem.innerHTML = `
+                    <div class="path-content">
+                        <h4>${stage.stage}</h4>
+                        <p>${stage.content}</p>
+                    </div>
+                `;
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Set resources
+            const resourcesContainer = document.getElementById('resources-container');
+            resourcesContainer.innerHTML = '';
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <h4><i class="fas fa-${resource.type.toLowerCase()}"></i> ${resource.type}: ${resource.title}</h4>
+                    <a href="${resource.link}" target="_blank">Learn More <i class="fas fa-external-link-alt"></i></a>
+                `;
+                resourcesContainer.appendChild(resourceCard);
+            });
+        } else {
+            // Redirect if invalid career ID
+            window.location.href = '/arts';
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.highlight-card, .path-item, .resource-card')
+               .forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
+                    
+                       

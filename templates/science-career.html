@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --science-blue: #3b82f6;
+            --research-purple: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--science-blue), var(--research-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--science-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--science-blue);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--science-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--science-blue);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--science-blue);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+            border-color: var(--science-blue);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--science-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-science {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--science-blue);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-science:hover {
+            color: var(--research-purple);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/science'">Back to Science Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Science Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Companies Hiring</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/science" class="back-to-science">
+            <i class="fas fa-arrow-left"></i> Back to Science Careers
+        </a>
+    </div>
+
+    <script>
+        // Science Career Data (for all sub-cards in science.html)
+        const scienceCareerData = {
+            "physicist": {
+                title: "Physicist",
+                image: "{{ url_for('static', filename='images/physicist.jpg') }}",
+                description: "Physicists study matter, energy, and the fundamental laws of the universe through theoretical and experimental research. They work in academia, national labs, and industries to advance our understanding of physical phenomena and develop new technologies.",
+                salary: "₹4-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "PhD in Physics (5-7 years after bachelor's), MSc for some positions",
+                growth: "7% (average growth expected)",
+                experience: "Postdoc: 2-5 years, Researcher: 5-10 years, Senior: 10+ years",
+                skills: [
+                    "Mathematical Modeling",
+                    "Experimental Design",
+                    "Data Analysis",
+                    "Scientific Computing",
+                    "Quantum Mechanics",
+                    "Statistical Analysis",
+                    "Technical Writing",
+                    "Problem Solving"
+                ],
+                companies: "ISRO, DRDO, BARC, TIFR, IISc, IITs, Research Institutions, Tech Companies",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Physics (3 years) or BTech in Engineering Physics (4 years)"
+                    },
+                    {
+                        stage: "Graduate Studies",
+                        content: "Pursue MSc in Physics (2 years) followed by PhD (3-5 years)"
+                    },
+                    {
+                        stage: "Postdoctoral Research",
+                        content: "Gain specialized research experience (2-5 years)"
+                    },
+                    {
+                        stage: "Research Scientist",
+                        content: "Conduct independent research in academia or industry"
+                    },
+                    {
+                        stage: "Senior Scientist",
+                        content: "Lead research teams and projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Feynman Lectures on Physics",
+                        link: "https://www.feynmanlectures.caltech.edu/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Introduction to Quantum Mechanics (MIT OCW)",
+                        link: "https://ocw.mit.edu/courses/physics/8-04-quantum-physics-i-spring-2013/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Physical Review Letters",
+                        link: "https://journals.aps.org/prl/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Physics Association",
+                        link: "https://www.ipa-india.org/"
+                    }
+                ],
+                outlook: "Physics careers offer stable opportunities in research and development, with growing demand in applied physics fields like quantum computing and materials science. Government research positions are competitive but provide job security."
+            },
+            "biologist": {
+                title: "Biologist",
+                image: "{{ url_for('static', filename='images/biologist.jpg') }}",
+                description: "Biologists research living organisms and their interactions with each other and their environments. They specialize in areas like microbiology, ecology, genetics, or marine biology, working in labs, field settings, or conservation organizations.",
+                salary: "₹3-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "BSc in Biology (3 years) + MSc (2 years), PhD for research positions",
+                growth: "5% (average growth expected)",
+                experience: "Research Assistant: 1-3 years, Junior Scientist: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Laboratory Techniques",
+                    "Field Research",
+                    "Data Collection",
+                    "Scientific Writing",
+                    "Microscopy",
+                    "Statistical Analysis",
+                    "Species Identification",
+                    "Experimental Design"
+                ],
+                companies: "CSIR Labs, ICAR, Wildlife Institutes, Pharma Companies, Biotechnology Firms",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Biology or Life Sciences (3 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue MSc in specific biological discipline (2 years)"
+                    },
+                    {
+                        stage: "Research Experience",
+                        content: "Work as research assistant or pursue PhD (3-5 years)"
+                    },
+                    {
+                        stage: "Biologist",
+                        content: "Conduct independent research or work in applied settings"
+                    },
+                    {
+                        stage: "Senior Biologist",
+                        content: "Lead research projects or manage conservation programs"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Campbell Biology",
+                        link: "https://www.pearson.com/store/p/campbell-biology/P100000537062/9780135188743"
+                    },
+                    {
+                        type: "Course",
+                        title: "Introduction to Biology (edX)",
+                        link: "https://www.edx.org/course/introduction-to-biology-the-secret-of-life-3"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Nature Journal",
+                        link: "https://www.nature.com/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Academy of Sciences",
+                        link: "https://www.ias.ac.in/"
+                    }
+                ],
+                outlook: "Biology careers are growing steadily with increasing focus on biotechnology, environmental conservation, and medical research. Specializations in molecular biology and genetics have strong prospects."
+            },
+            "chemist": {
+                title: "Chemist",
+                image: "{{ url_for('static', filename='images/chemist.jpg') }}",
+                description: "Chemists study substances at the atomic/molecular level to develop new materials and products. They work in pharmaceuticals, materials science, environmental testing, and other industries requiring chemical expertise.",
+                salary: "₹3.5-14 LPA (Entry Level), ₹14-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "BSc/MSc in Chemistry, PhD for research positions",
+                growth: "6% (average growth expected)",
+                experience: "Lab Technician: 1-2 years, Research Chemist: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Analytical Techniques",
+                    "Chromatography",
+                    "Spectroscopy",
+                    "Chemical Synthesis",
+                    "Quality Control",
+                    "Safety Protocols",
+                    "Data Interpretation",
+                    "Instrument Operation"
+                ],
+                companies: "Pharmaceutical Companies, CSIR Labs, Chemical Manufacturers, FMCG Companies",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Chemistry (3 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue MSc in Chemistry or related field (2 years)"
+                    },
+                    {
+                        stage: "Entry-Level",
+                        content: "Work as lab technician or research assistant (1-2 years)"
+                    },
+                    {
+                        stage: "Research Chemist",
+                        content: "Conduct independent chemical research or analysis"
+                    },
+                    {
+                        stage: "Senior Chemist",
+                        content: "Lead research teams or quality control departments"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Organic Chemistry by Clayden",
+                        link: "https://www.amazon.in/Organic-Chemistry-Jonathan-Clayden/dp/0199270295"
+                    },
+                    {
+                        type: "Course",
+                        title: "Principles of Chemical Science (MIT OCW)",
+                        link: "https://ocw.mit.edu/courses/chemistry/5-111-principles-of-chemical-science-fall-2008/"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of the American Chemical Society",
+                        link: "https://pubs.acs.org/journal/jacsat"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Chemical Society",
+                        link: "https://www.indianchemicalsociety.org/"
+                    }
+                ],
+                outlook: "Chemistry careers remain stable with consistent demand in pharmaceuticals, materials science, and environmental analysis. Specializations in medicinal chemistry and green chemistry are growing."
+            },
+            "astronomer": {
+                title: "Astronomer",
+                image: "{{ url_for('static', filename='images/astronomer.jpg') }}",
+                description: "Astronomers study celestial objects, space, and the physical universe through observation and theory. They use telescopes, satellites, and computer models to understand cosmic phenomena and the origins of the universe.",
+                salary: "₹5-18 LPA (Entry Level), ₹18-35 LPA (Mid Level), ₹35-70+ LPA (Senior)",
+                education: "PhD in Astronomy/Astrophysics (5-7 years after bachelor's)",
+                growth: "5% (average growth expected)",
+                experience: "Postdoc: 2-5 years, Researcher: 5-10 years, Senior: 10+ years",
+                skills: [
+                    "Data Analysis",
+                    "Computational Modeling",
+                    "Telescope Operation",
+                    "Statistical Methods",
+                    "Scientific Programming",
+                    "Theoretical Physics",
+                    "Technical Writing",
+                    "Observational Techniques"
+                ],
+                companies: "ISRO, IIA, TIFR, NCRA, ARIES, International Observatories",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Physics or Engineering (3-4 years)"
+                    },
+                    {
+                        stage: "Graduate Studies",
+                        content: "Pursue MSc in Physics/Astronomy (2 years) followed by PhD (3-5 years)"
+                    },
+                    {
+                        stage: "Postdoctoral Research",
+                        content: "Specialize in specific area of astronomy (2-5 years)"
+                    },
+                    {
+                        stage: "Research Astronomer",
+                        content: "Conduct independent astronomical research"
+                    },
+                    {
+                        stage: "Senior Astronomer",
+                        content: "Lead research projects and mentor junior scientists"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "An Introduction to Modern Astrophysics",
+                        link: "https://www.amazon.in/Introduction-Modern-Astrophysics-Bradley-Carroll/dp/1108422160"
+                    },
+                    {
+                        type: "Course",
+                        title: "Introduction to Astronomy (Coursera)",
+                        link: "https://www.coursera.org/learn/astro"
+                    },
+                    {
+                        type: "Journal",
+                        title: "The Astrophysical Journal",
+                        link: "https://iopscience.iop.org/journal/0004-637X"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Astronomical Society of India",
+                        link: "https://www.astron-soc.in/"
+                    }
+                ],
+                outlook: "Astronomy positions are limited but stable, with most opportunities in research institutions and space agencies. Growing interest in space exploration may create new opportunities."
+            },
+            "environmental-scientist": {
+                title: "Environmental Scientist",
+                image: "{{ url_for('static', filename='images/environmental-scientist.jpg') }}",
+                description: "Environmental scientists analyze environmental problems and develop solutions to protect ecosystems and human health. They study pollution, climate change, and resource management, working for government agencies, NGOs, or private firms.",
+                salary: "₹3.5-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "BSc/MSc in Environmental Science, PhD for research positions",
+                growth: "8% (faster than average)",
+                experience: "Field Technician: 1-2 years, Scientist: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Field Sampling",
+                    "GIS Mapping",
+                    "Data Analysis",
+                    "Environmental Regulations",
+                    "Sustainability Practices",
+                    "Ecological Assessment",
+                    "Report Writing",
+                    "Policy Analysis"
+                ],
+                companies: "MoEFCC, CPCB, State Pollution Boards, WWF, TERI, Environmental Consultancies",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Environmental Science or related field (3 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue MSc in specific environmental discipline (2 years)"
+                    },
+                    {
+                        stage: "Field Experience",
+                        content: "Work as field technician or research assistant (1-2 years)"
+                    },
+                    {
+                        stage: "Environmental Scientist",
+                        content: "Conduct independent research or environmental assessments"
+                    },
+                    {
+                        stage: "Senior Scientist",
+                        content: "Lead environmental projects or policy development"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Environmental Science: Earth as a Living Planet",
+                        link: "https://www.wiley.com/en-us/Environmental+Science%3A+Earth+as+a+Living+Planet%2C+9th+Edition-p-9781118427323"
+                    },
+                    {
+                        type: "Course",
+                        title: "Environmental Science and Sustainability (Coursera)",
+                        link: "https://www.coursera.org/learn/environmental-science"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Environmental Science & Technology",
+                        link: "https://pubs.acs.org/journal/esthag"
+                    },
+                    {
+                        type: "Organization",
+                        title: "The Energy and Resources Institute (TERI)",
+                        link: "https://www.teriin.org/"
+                    }
+                ],
+                outlook: "Environmental science careers are growing faster than average due to increasing focus on sustainability and climate change. Strong demand for professionals with expertise in pollution control and renewable energy."
+            },
+            "geneticist": {
+                title: "Geneticist",
+                image: "{{ url_for('static', filename='images/geneticist.jpg') }}",
+                description: "Geneticists study genes, heredity, and variation in living organisms to understand and treat diseases. They work in medical research, agriculture, and biotechnology to analyze DNA and develop genetic therapies.",
+                salary: "₹4-20 LPA (Entry Level), ₹20-40 LPA (Mid Level), ₹40-80+ LPA (Senior)",
+                education: "PhD in Genetics or related field (5-7 years after bachelor's)",
+                growth: "11% (faster than average)",
+                experience: "Postdoc: 2-5 years, Researcher: 5-10 years, Senior: 10+ years",
+                skills: [
+                    "DNA Sequencing",
+                    "PCR Techniques",
+                    "Bioinformatics",
+                    "Statistical Genetics",
+                    "Gene Editing",
+                    "Molecular Biology",
+                    "Data Analysis",
+                    "Research Design"
+                ],
+                companies: "Biotech Firms, Pharma Companies, Research Institutes, Agricultural Companies",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Genetics, Biology, or Biotechnology (3 years)"
+                    },
+                    {
+                        stage: "Graduate Studies",
+                        content: "Pursue MSc in Genetics or related field (2 years) followed by PhD (3-5 years)"
+                    },
+                    {
+                        stage: "Postdoctoral Research",
+                        content: "Specialize in specific area of genetics (2-5 years)"
+                    },
+                    {
+                        stage: "Research Geneticist",
+                        content: "Conduct independent genetic research"
+                    },
+                    {
+                        stage: "Senior Geneticist",
+                        content: "Lead research teams or genetic testing programs"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Genetics: Analysis and Principles",
+                        link: "https://www.mheducation.com/highered/product/genetics-analysis-principles-brooker/M9781260240856.html"
+                    },
+                    {
+                        type: "Course",
+                        title: "Introduction to Genetics and Evolution (Coursera)",
+                        link: "https://www.coursera.org/learn/genetics-evolution"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Nature Genetics",
+                        link: "https://www.nature.com/ng/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Society of Human Genetics",
+                        link: "https://www.ishg.org.in/"
+                    }
+                ],
+                outlook: "Genetics careers are growing rapidly with advancements in gene therapy and personalized medicine. Strong demand in both medical research and agricultural biotechnology sectors."
+            },
+            "data-scientist": {
+                title: "Data Scientist",
+                image: "{{ url_for('static', filename='images/data-scientist.jpg') }}",
+                description: "Data scientists use scientific methods to extract insights from complex data sets across industries. They apply statistical analysis, machine learning, and data visualization to solve business and research problems.",
+                salary: "₹6-30 LPA (Entry Level), ₹30-50 LPA (Mid Level), ₹50-100+ LPA (Senior)",
+                education: "BSc/MSc in Statistics, Math, or CS + Data Science training",
+                growth: "35% (much faster than average)",
+                experience: "Analyst: 1-2 years, Data Scientist: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Python/R Programming",
+                    "Machine Learning",
+                    "Statistical Analysis",
+                    "Data Visualization",
+                    "SQL/NoSQL",
+                    "Big Data Technologies",
+                    "Data Wrangling",
+                    "Business Acumen"
+                ],
+                companies: "Tech Companies, Financial Institutions, Healthcare, E-commerce, Research Labs",
+                path: [
+                    {
+                        stage: "Education",
+                        content: "Complete bachelor's in quantitative field (3-4 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue MSc or certifications in data science (1-2 years)"
+                    },
+                    {
+                        stage: "Data Analyst",
+                        content: "Gain experience with data analysis (1-2 years)"
+                    },
+                    {
+                        stage: "Data Scientist",
+                        content: "Build models and extract insights from complex data"
+                    },
+                    {
+                        stage: "Senior Data Scientist",
+                        content: "Lead data strategy and machine learning projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Machine Learning by Andrew Ng (Coursera)",
+                        link: "https://www.coursera.org/learn/machine-learning"
+                    },
+                    {
+                        type: "Book",
+                        title: "Python for Data Analysis",
+                        link: "https://www.amazon.in/Python-Data-Analysis-Wrangling-IPython/dp/1491957662"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Kaggle for Competitions",
+                        link: "https://www.kaggle.com/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Google Data Analytics Certificate",
+                        link: "https://grow.google/certificates/data-analytics/"
+                    }
+                ],
+                outlook: "Data science roles are projected to grow 35% from 2022-2032. With increasing data generation across sectors, organizations need professionals who can derive actionable insights."
+            },
+            "marine-biologist": {
+                title: "Marine Biologist",
+                image: "{{ url_for('static', filename='images/marine-biologist.jpg') }}",
+                description: "Marine biologists study ocean ecosystems, marine organisms, and their interactions with the environment. They conduct field research, conservation work, and policy development related to marine life.",
+                salary: "₹3.5-15 LPA (Entry Level), ₹15-30 LPA (Mid Level), ₹30-60+ LPA (Senior)",
+                education: "BSc/MSc in Marine Biology, PhD for research positions",
+                growth: "5% (average growth expected)",
+                experience: "Research Assistant: 1-2 years, Field Biologist: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Field Research",
+                    "Species Identification",
+                    "SCUBA Diving",
+                    "Data Collection",
+                    "Ecosystem Analysis",
+                    "Conservation Planning",
+                    "Scientific Writing",
+                    "Policy Development"
+                ],
+                companies: "NIO, CMFRI, Wildlife Institutes, Conservation NGOs, Aquariums",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Marine Biology or related field (3 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue MSc in Marine Biology or Oceanography (2 years)"
+                    },
+                    {
+                        stage: "Field Experience",
+                        content: "Work as research assistant or field technician (1-2 years)"
+                    },
+                    {
+                        stage: "Marine Biologist",
+                        content: "Conduct independent marine research or conservation work"
+                    },
+                    {
+                        stage: "Senior Marine Biologist",
+                        content: "Lead research projects or conservation programs"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Marine Biology: Function, Biodiversity, Ecology",
+                        link: "https://www.amazon.in/Marine-Biology-Function-Biodiversity-Ecology/dp/0190625279"
+                    },
+                    {
+                        type: "Course",
+                        title: "Introduction to Marine Biology (Coursera)",
+                        link: "https://www.coursera.org/learn/marine-biology"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of Marine Biology",
+                        link: "https://www.hindawi.com/journals/jmb/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Marine Biological Association of India",
+                        link: "https://www.mbai.org.in/"
+                    }
+                ],
+                outlook: "Marine biology careers are stable with growing focus on ocean conservation and climate change impacts. Opportunities exist in research, policy, and environmental consulting."
+            },
+            "forensic-scientist": {
+                title: "Forensic Scientist",
+                image: "{{ url_for('static', filename='images/forensic-scientist.jpg') }}",
+                description: "Forensic scientists apply scientific principles to analyze evidence and solve crimes in legal investigations. They specialize in areas like DNA analysis, toxicology, or ballistics, working for law enforcement or crime labs.",
+                salary: "₹3-12 LPA (Entry Level), ₹12-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "BSc/MSc in Forensic Science, Certifications for specialization",
+                growth: "14% (faster than average)",
+                experience: "Lab Technician: 1-2 years, Forensic Analyst: 3-5 years, Senior: 5+ years",
+                skills: [
+                    "Evidence Collection",
+                    "Laboratory Analysis",
+                    "DNA Profiling",
+                    "Chemical Analysis",
+                    "Microscopy",
+                    "Report Writing",
+                    "Legal Procedures",
+                    "Quality Control"
+                ],
+                companies: "CBI, State Forensic Labs, Private Investigative Firms, Law Enforcement",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Forensic Science or related field (3 years)"
+                    },
+                    {
+                        stage: "Specialization",
+                        content: "Pursue MSc in specific forensic discipline (2 years)"
+                    },
+                    {
+                        stage: "Lab Experience",
+                        content: "Work as lab technician or assistant (1-2 years)"
+                    },
+                    {
+                        stage: "Forensic Scientist",
+                        content: "Conduct independent forensic analyses"
+                    },
+                    {
+                        stage: "Senior Forensic Scientist",
+                        content: "Lead forensic teams or specialize in advanced techniques"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Criminalistics: An Introduction to Forensic Science",
+                        link: "https://www.pearson.com/store/p/criminalistics-an-introduction-to-forensic-science/P100000537063"
+                    },
+                    {
+                        type: "Course",
+                        title: "Introduction to Forensic Science (edX)",
+                        link: "https://www.edx.org/course/introduction-to-forensic-science"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of Forensic Sciences",
+                        link: "https://onlinelibrary.wiley.com/journal/15564029"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Academy of Forensic Sciences",
+                        link: "https://www.iafsindia.in/"
+                    }
+               
+                    ],
+                outlook: "Forensic science careers are growing faster than average due to increasing reliance on scientific evidence in legal cases. Specializations in DNA analysis and digital forensics have particularly strong prospects."
+            },
+            "research-scientist": {
+                title: "Research Scientist",
+                image: "{{ url_for('static', filename='images/research-scientist.jpg') }}",
+                description: "Research scientists design and conduct experiments to advance knowledge in specialized scientific fields. They work in academia, government labs, or private industry to push the boundaries of scientific understanding.",
+                salary: "₹4-18 LPA (Entry Level), ₹18-35 LPA (Mid Level), ₹35-70+ LPA (Senior)",
+                education: "PhD in relevant scientific discipline (5-7 years after bachelor's)",
+                growth: "8% (faster than average)",
+                experience: "Postdoc: 2-5 years, Researcher: 5-10 years, Senior: 10+ years",
+                skills: [
+                    "Experimental Design",
+                    "Data Analysis",
+                    "Scientific Writing",
+                    "Grant Writing",
+                    "Lab Techniques",
+                    "Problem Solving",
+                    "Collaboration",
+                    "Technical Presentations"
+                ],
+                companies: "CSIR Labs, DRDO, ISRO, Academic Institutions, Pharma Companies, Tech R&D",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in relevant scientific discipline (3 years)"
+                    },
+                    {
+                        stage: "Graduate Studies",
+                        content: "Pursue MSc (2 years) followed by PhD (3-5 years)"
+                    },
+                    {
+                        stage: "Postdoctoral Research",
+                        content: "Gain specialized research experience (2-5 years)"
+                    },
+                    {
+                        stage: "Research Scientist",
+                        content: "Conduct independent scientific research"
+                    },
+                    {
+                        stage: "Senior Scientist",
+                        content: "Lead research teams and projects"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "The Craft of Research",
+                        link: "https://press.uchicago.edu/ucp/books/book/chicago/C/bo3530284.html"
+                    },
+                    {
+                        type: "Course",
+                        title: "How to Write and Publish a Scientific Paper (Coursera)",
+                        link: "https://www.coursera.org/learn/sciwrite"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Science Journal",
+                        link: "https://www.science.org/journal/science"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian National Science Academy",
+                        link: "https://www.insaindia.res.in/"
+                    }
+                ],
+                outlook: "Research scientist positions are growing steadily with increasing investment in R&D across sectors. Opportunities vary by specialization but remain strong in biotechnology, materials science, and environmental research."
+            },
+            "neuroscientist": {
+                title: "Neuroscientist",
+                image: "{{ url_for('static', filename='images/neuroscientist.jpg') }}",
+                description: "Neuroscientists study the nervous system to understand brain function and neurological disorders. They conduct research on cognition, behavior, and neurological diseases using various experimental techniques.",
+                salary: "₹5-20 LPA (Entry Level), ₹20-40 LPA (Mid Level), ₹40-80+ LPA (Senior)",
+                education: "PhD in Neuroscience or related field (5-7 years after bachelor's)",
+                growth: "10% (faster than average)",
+                experience: "Postdoc: 2-5 years, Researcher: 5-10 years, Senior: 10+ years",
+                skills: [
+                    "Neuroimaging",
+                    "Electrophysiology",
+                    "Data Analysis",
+                    "Experimental Design",
+                    "Scientific Writing",
+                    "Behavioral Testing",
+                    "Molecular Biology",
+                    "Statistical Methods"
+                ],
+                companies: "NIMHANS, TIFR, Academic Institutions, Pharma Companies, Research Hospitals",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Neuroscience, Biology, or Psychology (3 years)"
+                    },
+                    {
+                        stage: "Graduate Studies",
+                        content: "Pursue MSc in Neuroscience (2 years) followed by PhD (3-5 years)"
+                    },
+                    {
+                        stage: "Postdoctoral Research",
+                        content: "Specialize in specific area of neuroscience (2-5 years)"
+                    },
+                    {
+                        stage: "Neuroscientist",
+                        content: "Conduct independent neuroscience research"
+                    },
+                    {
+                        stage: "Senior Neuroscientist",
+                        content: "Lead research teams or clinical neuroscience programs"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Principles of Neural Science",
+                        link: "https://www.amazon.com/Principles-Neural-Science-Fifth-Kandel/dp/0071390111"
+                    },
+                    {
+                        type: "Course",
+                        title: "Fundamentals of Neuroscience (Harvard edX)",
+                        link: "https://www.edx.org/course/fundamentals-of-neuroscience"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Journal of Neuroscience",
+                        link: "https://www.jneurosci.org/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Indian Academy of Neurosciences",
+                        link: "http://www.neurosciencesindia.org/"
+                    }
+                ],
+                outlook: "Neuroscience careers are growing rapidly with increasing focus on brain research and neurological disorders. Strong demand in both academic research and pharmaceutical development."
+            },
+            "quantum-physicist": {
+                title: "Quantum Physicist",
+                image: "{{ url_for('static', filename='images/quantum-physicist.jpg') }}",
+                description: "Quantum physicists research quantum phenomena to develop new computing and communication technologies. They work at the intersection of physics, engineering, and computer science to advance quantum technologies.",
+                salary: "₹6-25 LPA (Entry Level), ₹25-50 LPA (Mid Level), ₹50-100+ LPA (Senior)",
+                education: "PhD in Physics with quantum specialization (5-7 years after bachelor's)",
+                growth: "15% (much faster than average)",
+                experience: "Postdoc: 2-5 years, Researcher: 5-10 years, Senior: 10+ years",
+                skills: [
+                    "Quantum Mechanics",
+                    "Mathematical Modeling",
+                    "Quantum Computing",
+                    "Experimental Physics",
+                    "Programming",
+                    "Data Analysis",
+                    "Scientific Writing",
+                    "Problem Solving"
+                ],
+                companies: "ISRO, DRDO, TIFR, Tech Companies, Quantum Startups, Research Labs",
+                path: [
+                    {
+                        stage: "Undergraduate",
+                        content: "Complete BSc in Physics or Engineering (3-4 years)"
+                    },
+                    {
+                        stage: "Graduate Studies",
+                        content: "Pursue MSc in Physics (2 years) followed by PhD in Quantum Physics (3-5 years)"
+                    },
+                    {
+                        stage: "Postdoctoral Research",
+                        content: "Specialize in quantum technologies (2-5 years)"
+                    },
+                    {
+                        stage: "Quantum Physicist",
+                        content: "Conduct research in quantum computing or communication"
+                    },
+                    {
+                        stage: "Senior Quantum Physicist",
+                        content: "Lead quantum research teams or technology development"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Book",
+                        title: "Quantum Computation and Quantum Information",
+                        link: "https://www.cambridge.org/highereducation/books/quantum-computation-and-quantum-information/01E10196D0A682A6AEFFEA52D53BE9AE"
+                    },
+                    {
+                        type: "Course",
+                        title: "Quantum Mechanics for Everyone (edX)",
+                        link: "https://www.edx.org/course/quantum-mechanics-for-everyone"
+                    },
+                    {
+                        type: "Journal",
+                        title: "Physical Review Quantum",
+                        link: "https://journals.aps.org/prquantum/"
+                    },
+                    {
+                        type: "Organization",
+                        title: "Quantum Research Initiatives in India",
+                        link: "https://www.meity.gov.in/quantum"
+                    }
+                ],
+                outlook: "Quantum physics careers are experiencing rapid growth with increasing investment in quantum technologies worldwide. Strong demand for specialists in both research and industry applications."
+            }
+        };
+
+        // Get career parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerName = urlParams.get('career');
+
+        // Display career data based on URL parameter
+        if (careerName && scienceCareerData[careerName]) {
+            const career = scienceCareerData[careerName];
+            
+            // Set basic information
+            document.getElementById('career-title').textContent = career.title;
+            document.getElementById('career-image').src = career.image;
+            document.getElementById('career-description').textContent = career.description;
+            document.getElementById('career-salary').textContent = career.salary;
+            document.getElementById('career-education').textContent = career.education;
+            document.getElementById('career-growth').textContent = career.growth;
+            document.getElementById('career-experience').textContent = career.experience;
+            document.getElementById('career-companies').textContent = career.companies;
+            document.getElementById('job-outlook').innerHTML = `<h3><i class="fas fa-chart-line"></i> Job Market Outlook</h3><p>${career.outlook}</p>`;
+            
+            // Set skills
+            const skillsContainer = document.getElementById('skills-container');
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Set career path
+            const careerPath = document.getElementById('career-path');
+            career.path.forEach(stage => {
+                const pathItem = document.createElement('div');
+                pathItem.className = 'path-item';
+                pathItem.innerHTML = `
+                    <div class="path-content">
+                        <h4>${stage.stage}</h4>
+                        <p>${stage.content}</p>
+                    </div>
+                `;
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Set resources
+            const resourcesContainer = document.getElementById('resources-container');
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <h4><i class="fas ${resource.type === 'Book' ? 'fa-book' : 
+                                       resource.type === 'Course' ? 'fa-graduation-cap' : 
+                                       resource.type === 'Journal' ? 'fa-newspaper' : 
+                                       resource.type === 'Organization' ? 'fa-building' : 
+                                       resource.type === 'Platform' ? 'fa-laptop-code' : 
+                                       resource.type === 'Certification' ? 'fa-certificate' : 'fa-link'}"></i> 
+                        ${resource.type}: ${resource.title}
+                    </h4>
+                    <p>${resource.description || ''}</p>
+                    <a href="${resource.link}" target="_blank">Visit Resource <i class="fas fa-external-link-alt"></i></a>
+                `;
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Update page title
+            document.title = `${career.title} | CareerHub`;
+        } else {
+            // Handle invalid career parameter
+            document.getElementById('career-title').textContent = "Career Not Found";
+            document.getElementById('career-description').textContent = "The requested science career path could not be found. Please return to the science careers page and select a valid option.";
+        }
+    </script>
+</body>
+</html>

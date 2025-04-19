@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media & Communication Careers | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --media: #ec4899;
+            --communication: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 8rem 6% 3rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
+                        url('/static/images/media-banner.jpg') center/cover;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--media), var(--communication));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .field-intro {
+            padding: 3rem 6%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .field-intro h2 {
+            font-size: 2rem;
+            color: var(--media);
+            margin-bottom: 1.5rem;
+        }
+
+        .field-intro h3 {
+            font-size: 1.5rem;
+            color: var(--communication);
+            margin: 2rem 0 1rem;
+        }
+
+        .field-intro p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .highlight-box {
+            background: rgba(236, 72, 153, 0.1);
+            border-left: 4px solid var(--media);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        ul.feature-list {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        ul.feature-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul.feature-list li::before {
+            content: '📢';
+            position: absolute;
+            left: 0;
+        }
+
+        .career-cards-container {
+            padding: 2rem 6%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(236, 72, 153, 0.2);
+            border-color: var(--media);
+        }
+
+        .career-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .career-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .career-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .career-card p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        .career-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.2rem 0;
+        }
+
+        .stat-pill {
+            background: rgba(236, 72, 153, 0.15);
+            color: var(--communication);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(236, 72, 153, 0.1);
+            border: 1px solid var(--media);
+            border-radius: 0.5rem;
+            color: var(--light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .learn-more:hover {
+            background: var(--media);
+            color: var(--light);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+        }
+
+        .faq-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 6%;
+            margin: 3rem auto;
+            border-radius: 1rem;
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--media);
+        }
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--media);
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .answer {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq.active .answer {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .faq.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 6rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .career-cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .field-intro, .career-cards-container, .faq-section {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-broadcast-tower"></i> Media & Communication Careers</h1>
+        <p>Shaping narratives, informing the public, and connecting the world through powerful storytelling</p>
+    </header>
+
+    <section class="field-intro">
+        <h2>About the Media Field</h2>
+        <p>The media and communication industry encompasses diverse careers focused on creating, distributing, and managing information across multiple platforms. From traditional journalism to digital content creation, media professionals shape public discourse, influence culture, and connect audiences worldwide in our increasingly digital society.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Media Landscape:</strong> Journalism, broadcasting, digital media, public relations, and advertising. Careers range from traditional newsrooms to influencer marketing, with growing opportunities in podcasting, streaming, and immersive media technologies.</p>
+        </div>
+
+        <h3>Who Should Pursue Media Careers?</h3>
+        <p>This field is perfect for individuals who:</p>
+        <ul class="feature-list">
+            <li>Have strong communication and storytelling abilities</li>
+            <li>Are curious, creative, and adaptable to new technologies</li>
+            <li>Enjoy researching, analyzing, and presenting information</li>
+            <li>Thrive in fast-paced, deadline-driven environments</li>
+            <li>Want to inform, entertain, or influence public opinion</li>
+        </ul>
+
+        <h3>Career Outlook</h3>
+        <p>The Bureau of Labor Statistics projects varied growth across media careers:</p>
+        <ul class="feature-list">
+            <li><strong>Digital content creators:</strong> +30% growth by 2030</li>
+            <li><strong>Public relations specialists:</strong> +11% growth</li>
+            <li><strong>Film/video editors:</strong> +12% growth</li>
+            <li><strong>Reporters/journalists:</strong> -9% decline</li>
+        </ul>
+        <p>The digital transformation has created new opportunities in social media management, podcast production, and multimedia journalism while traditional media roles evolve.</p>
+
+        <a href="/explore" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to All Fields
+        </a>
+    </section>
+
+    <section class="career-cards-container">
+        <!-- Journalism -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/journalist.jpg') }}" alt="Journalist">
+            <div class="card-content">
+                <h3><i class="fas fa-newspaper"></i> Journalist</h3>
+                <p>Research, investigate, and report news stories across print, digital, and broadcast media.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$35k-$100k+</span>
+                    <span class="stat-pill">Deadline-driven</span>
+                    <span class="stat-pill">BA in Journalism</span>
+                </div>
+                <a href="/media-career?career=journalist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/news-anchor.jpg') }}" alt="News Anchor">
+            <div class="card-content">
+                <h3><i class="fas fa-tv"></i> News Anchor</h3>
+                <p>Present news stories on television, conduct interviews, and moderate discussions.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$200k+</span>
+                    <span class="stat-pill">On-camera</span>
+                    <span class="stat-pill">Market size</span>
+                </div>
+                <a href="/media-career?career=news-anchor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Public Relations -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/public-relations.jpg') }}" alt="Public Relations Specialist">
+            <div class="card-content">
+                <h3><i class="fas fa-handshake"></i> Public Relations Specialist</h3>
+                <p>Manage organizational reputation, media relations, and strategic communications.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$120k</span>
+                    <span class="stat-pill">Crisis management</span>
+                    <span class="stat-pill">Networking</span>
+                </div>
+                <a href="/media-career?career=public-relations" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Digital Content -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/content-creator.jpg') }}" alt="Content Creator">
+            <div class="card-content">
+                <h3><i class="fas fa-pen-fancy"></i> Content Creator</h3>
+                <p>Develop engaging written, visual, and multimedia content for digital platforms.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$30k-$150k+</span>
+                    <span class="stat-pill">Freelance common</span>
+                    <span class="stat-pill">Platform expertise</span>
+                </div>
+                <a href="/media-career?career=content-creator" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/editor.jpg') }}" alt="Editor">
+            <div class="card-content">
+                <h3><i class="fas fa-edit"></i> Editor</h3>
+                <p>Review, refine, and prepare content for publication across various media formats.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$110k</span>
+                    <span class="stat-pill">Detail-oriented</span>
+                    <span class="stat-pill">Style guides</span>
+                </div>
+                <a href="/media-career?career=editor" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Advertising/Marketing -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/advertising-specialist.jpg') }}" alt="Advertising Specialist">
+            <div class="card-content">
+                <h3><i class="fas fa-ad"></i> Advertising Specialist</h3>
+                <p>Develop and implement creative campaigns to promote products and services.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$50k-$130k</span>
+                    <span class="stat-pill">Creative strategy</span>
+                    <span class="stat-pill">Metrics-driven</span>
+                </div>
+                <a href="/media-career?career=advertising-specialist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/social-media-manager.jpg') }}" alt="Social Media Manager">
+            <div class="card-content">
+                <h3><i class="fas fa-hashtag"></i> Social Media Manager</h3>
+                <p>Develop strategies and create content to grow brand presence on social platforms.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$45k-$100k</span>
+                    <span class="stat-pill">Analytics skills</span>
+                    <span class="stat-pill">Trend awareness</span>
+                </div>
+                <a href="/media-career?career=social-media-manager" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Production -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/videographer.jpg') }}" alt="Videographer">
+            <div class="card-content">
+                <h3><i class="fas fa-video"></i> Videographer</h3>
+                <p>Plan, shoot, and edit video content for various media platforms and clients.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$100k</span>
+                    <span class="stat-pill">Technical skills</span>
+                    <span class="stat-pill">Portfolio-based</span>
+                </div>
+                <a href="/media-career?career=videographer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/radio-jockey.jpg') }}" alt="Radio Jockey">
+            <div class="card-content">
+                <h3><i class="fas fa-microphone"></i> Radio Jockey</h3>
+                <p>Host radio programs, conduct interviews, and engage with listeners.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$30k-$90k</span>
+                    <span class="stat-pill">Voice skills</span>
+                    <span class="stat-pill">Live broadcasting</span>
+                </div>
+                <a href="/media-career?career=radio-jockey" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Research -->
+        <div class="career-card">
+            <img src="{{ url_for('static', filename='images/media-researcher.jpg') }}" alt="Media Researcher">
+            <div class="card-content">
+                <h3><i class="fas fa-search"></i> Media Researcher</h3>
+                <p>Gather and analyze information to support content creation and production.</p>
+                <div class="career-stats">
+                    <span class="stat-pill">$40k-$85k</span>
+                    <span class="stat-pill">Fact-checking</span>
+                    <span class="stat-pill">Data analysis</span>
+                </div>
+                <a href="/media-career?career=media-researcher" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2>Media Career FAQs</h2>
+        <div class="faq-container">
+            <div class="faq">
+                <div class="question">
+                    <span>What education is needed for media careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Educational requirements vary widely:</p>
+                    <ul>
+                        <li><strong>Traditional media:</strong> Degrees in journalism, communications, or related fields</li>
+                        <li><strong>Digital media:</strong> Often self-taught or portfolio-based</li>
+                        <li><strong>Technical roles:</strong> Certifications in specific software/tools</li>
+                        <li><strong>PR/Advertising:</strong> Marketing or business degrees can be beneficial</li>
+                    </ul>
+                    <p>Many professionals combine formal education with hands-on experience through internships or personal projects.</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How has digital media changed career paths?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>The digital revolution has transformed media careers:</p>
+                    <ul>
+                        <li><strong>New roles:</strong> Social media managers, SEO specialists, podcast producers</li>
+                        <li><strong>Changed workflows:</strong> Multi-platform content creation and distribution</li>
+                        <li><strong>Skills evolution:</strong> Data analytics, audience engagement metrics</li>
+                        <li><strong>Opportunities:</strong> Global reach for independent creators</li>
+                        <li><strong>Monetization:</strong> New models like influencer marketing and subscriptions</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>What's the income potential in media careers?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Earnings vary dramatically by specialization:</p>
+                    <ul>
+                        <li><strong>Entry-level:</strong> $30k-$50k (assistant roles, local markets)</li>
+                        <li><strong>Mid-career:</strong> $50k-$100k (specialists, managers)</li>
+                        <li><strong>Top-tier:</strong> $100k-$300k+ (executives, top talent)</li>
+                        <li><strong>Freelance:</strong> Highly variable based on clients and niche</li>
+                        <li><strong>Digital creators:</strong> Can range from minimal to millions</li>
+                    </ul>
+                    <p>Many professionals combine multiple income streams (salaried positions, freelance work, content monetization).</p>
+                </div>
+            </div>
+    
+            <div class="faq">
+                <div class="question">
+                    <span>How do I build a successful media career?</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="answer">
+                    <p>Key strategies for media career success:</p>
+                    <ul>
+                        <li><strong>Build a portfolio:</strong> Showcase your best work across formats</li>
+                        <li><strong>Develop niche expertise:</strong> Specialize in growing areas</li>
+                        <li><strong>Network actively:</strong> Attend industry events and connect online</li>
+                        <li><strong>Stay adaptable:</strong> Continuously learn new platforms and tools</li>
+                        <li><strong>Gain diverse experience:</strong> Internships, freelance, personal projects</li>
+                        <li><strong>Create online presence:</strong> Professional website and social profiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.querySelectorAll(".faq").forEach((faq) => {
+            faq.addEventListener("click", () => {
+                faq.classList.toggle("active");
+            });
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.career-card, .field-intro > *, .faq')
+               .forEach(el => observer.observe(el));
+
+        // Card hover enhancement
+        document.querySelectorAll('.career-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('img').style.transform = 'scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

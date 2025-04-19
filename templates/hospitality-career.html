@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospitality Career Details | CareerHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #00d4ff;
+            --hospitality: #10b981;
+            --travel: #0ea5e9;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --error: #ff6b6b;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 6%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--hospitality), var(--travel));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Career Details Styles */
+        .career-container {
+            padding: 10rem 6% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .career-header {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .career-image {
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .career-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--hospitality), var(--travel));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .career-description {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .career-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight-card h3 {
+            color: var(--hospitality);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            color: var(--hospitality);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-tag {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--hospitality);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .career-path {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .path-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .path-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--hospitality);
+            opacity: 0.3;
+        }
+
+        .path-item::after {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0.5rem;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--hospitality);
+        }
+
+        .path-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .path-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .resources-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+            border-color: var(--hospitality);
+        }
+
+        .resource-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--hospitality);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-hospitality {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: var(--hospitality);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-hospitality:hover {
+            color: var(--travel);
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .career-header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .career-image {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .career-container {
+                padding-top: 8rem;
+            }
+            
+            .career-title {
+                font-size: 2.2rem;
+            }
+            
+            .highlight-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .career-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="CareerHub">
+            CareerHub
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/explore">Explore</a></li>
+                <li><a href="/#career-hub">Career Hub</a></li>
+                <li><a href="/quiz">Quiz</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="cta-btn" onclick="window.location.href='/hospitality'">Back to Hospitality Careers</button>
+    </header>
+
+    <div class="career-container">
+        <div class="career-header">
+            <img id="career-image" class="career-image" src="" alt="Career Image">
+            <div>
+                <h1 id="career-title" class="career-title">Hospitality Career Details</h1>
+                <p id="career-description" class="career-description"></p>
+                
+                <div class="career-highlights">
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Average Salary</h3>
+                        <p id="career-salary"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education Required</h3>
+                        <p id="career-education"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-briefcase"></i> Job Growth</h3>
+                        <p id="career-growth"></p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3><i class="fas fa-clock"></i> Experience Level</h3>
+                        <p id="career-experience"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Key Skills Required</h2>
+        <div id="skills-container" class="skills-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-building"></i> Top Employers</h2>
+        <p id="career-companies" class="career-description"></p>
+
+        <h2 class="section-title"><i class="fas fa-road"></i> Career Path</h2>
+        <div id="career-path" class="career-path"></div>
+
+        <h2 class="section-title"><i class="fas fa-book"></i> Learning Resources</h2>
+        <div id="resources-container" class="resources-container"></div>
+
+        <h2 class="section-title"><i class="fas fa-chart-line"></i> Job Market Outlook</h2>
+        <div id="job-outlook" class="highlight-card"></div>
+
+        <a href="/hospitality" class="back-to-hospitality">
+            <i class="fas fa-arrow-left"></i> Back to Hospitality Careers
+        </a>
+    </div>
+
+    <script>
+        // Hospitality Career Data (for all sub-cards in hospitality.html)
+        const hospitalityCareerData = {
+            "hotel-manager": {
+                title: "Hotel Manager",
+                image: "{{ url_for('static', filename='images/hotel-manager.jpg') }}",
+                description: "Hotel managers oversee all aspects of hotel operations including staff management, guest services, and financial performance. They ensure the establishment runs smoothly while maintaining high standards of service and profitability.",
+                salary: "₹5-10 LPA (Entry Level), ₹10-25 LPA (Mid Level), ₹25-50+ LPA (Senior)",
+                education: "Bachelor's in Hospitality Management preferred, or relevant experience with certifications",
+                growth: "18% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-7 years, Senior: 8+ years",
+                skills: [
+                    "Leadership & Team Management",
+                    "Customer Service Excellence",
+                    "Financial Management",
+                    "Operations Oversight",
+                    "Marketing & Sales",
+                    "Problem Solving",
+                    "Multitasking",
+                    "Cultural Awareness"
+                ],
+                companies: "Taj Hotels, Oberoi Group, Marriott, Hyatt, Hilton, ITC Hotels, Lemon Tree, Indian hotel chains",
+                path: [
+                    {
+                        stage: "Entry-Level",
+                        content: "Start in front desk, housekeeping, or food service roles (1-2 years)"
+                    },
+                    {
+                        stage: "Supervisor",
+                        content: "Manage a department (front office, food & beverage, etc.) (2-4 years)"
+                    },
+                    {
+                        stage: "Assistant Manager",
+                        content: "Assist with overall hotel operations (3-5 years)"
+                    },
+                    {
+                        stage: "Hotel Manager",
+                        content: "Oversee entire hotel operations (5-8 years)"
+                    },
+                    {
+                        stage: "General Manager",
+                        content: "Manage multiple properties or luxury establishments (8+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Hotel Management Specialization (Coursera)",
+                        link: "https://www.coursera.org/specializations/hotel-management"
+                    },
+                    {
+                        type: "Book",
+                        title: "Check-In Check-Out by Gary Vallen",
+                        link: "https://www.amazon.in/Check-In-Check-Out-Managing-Hotel-Operations/dp/0135126609"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Hotel Administrator (CHA)",
+                        link: "https://www.ahlei.org/certifications/cha/"
+                    },
+                    {
+                        type: "Association",
+                        title: "Hotel Association of India",
+                        link: "https://www.hotelassociationofindia.com/"
+                    }
+                ],
+                outlook: "Hotel management roles growing 18% annually with increasing tourism. Luxury hotels and boutique properties offer particularly strong opportunities for advancement."
+            },
+            "concierge": {
+                title: "Concierge",
+                image: "{{ url_for('static', filename='images/concierge.jpg') }}",
+                description: "Concierges provide personalized services and local recommendations to hotel guests, ensuring exceptional stays. They handle reservations, arrange transportation, suggest activities, and solve problems to enhance the guest experience.",
+                salary: "₹3-6 LPA (Entry Level), ₹6-10 LPA (Mid Level), ₹10-15+ LPA (Senior)",
+                education: "High school diploma minimum, hospitality certification preferred",
+                growth: "15% (average growth expected)",
+                experience: "Entry-level: 0-1 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Exceptional Customer Service",
+                    "Local Knowledge",
+                    "Communication Skills",
+                    "Problem Solving",
+                    "Multitasking",
+                    "Foreign Languages",
+                    "Attention to Detail",
+                    "Networking with Vendors"
+                ],
+                companies: "Luxury hotels, resorts, cruise lines, corporate housing, private clubs",
+                path: [
+                    {
+                        stage: "Front Desk",
+                        content: "Start in general front desk roles (6 months-1 year)"
+                    },
+                    {
+                        stage: "Junior Concierge",
+                        content: "Assist senior concierge with guest requests (1-2 years)"
+                    },
+                    {
+                        stage: "Concierge",
+                        content: "Handle all guest services independently (2-4 years)"
+                    },
+                    {
+                        stage: "Head Concierge",
+                        content: "Lead concierge team (5+ years)"
+                    },
+                    {
+                        stage: "Guest Relations Manager",
+                        content: "Oversee all guest services (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Les Clefs d'Or Certification",
+                        link: "https://www.lesclefsdorusa.org/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Guest Service Gold Certification",
+                        link: "https://www.ahlei.org/courses/guest-service-gold/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Concierge Manual by Kathleen Ameche",
+                        link: "https://www.amazon.com/Concierge-Manual-Kathleen-Ameche/dp/0970114704"
+                    },
+                    {
+                        type: "Association",
+                        title: "International Concierge Association",
+                        link: "https://www.conciergeassoc.org/"
+                    }
+                ],
+                outlook: "Concierge positions growing steadily with luxury travel market. Multilingual concierges in high demand at international properties."
+            },
+            "chef": {
+                title: "Chef",
+                image: "{{ url_for('static', filename='images/chef.jpg') }}",
+                description: "Chefs create culinary masterpieces, manage kitchen operations, and develop menus for restaurants or hotels. They oversee food preparation, maintain quality standards, and lead kitchen staff in various culinary environments.",
+                salary: "₹4-8 LPA (Junior), ₹8-15 LPA (Sous Chef), ₹15-30+ LPA (Executive Chef)",
+                education: "Culinary school diploma/degree or apprenticeship, certifications available",
+                growth: "15% (average growth expected)",
+                experience: "Junior: 0-3 years, Chef de Partie: 3-5 years, Head Chef: 5+ years",
+                skills: [
+                    "Culinary Techniques",
+                    "Menu Development",
+                    "Food Safety",
+                    "Kitchen Management",
+                    "Creativity & Presentation",
+                    "Team Leadership",
+                    "Budgeting",
+                    "Time Management"
+                ],
+                companies: "Restaurant groups, hotels, cruise lines, catering companies, private chefs",
+                path: [
+                    {
+                        stage: "Culinary School",
+                        content: "Complete formal culinary education (1-4 years)"
+                    },
+                    {
+                        stage: "Commis Chef",
+                        content: "Entry-level position learning basics (1-2 years)"
+                    },
+                    {
+                        stage: "Chef de Partie",
+                        content: "Station chef responsible for specific area (2-4 years)"
+                    },
+                    {
+                        stage: "Sous Chef",
+                        content: "Second-in-command in kitchen (4-6 years)"
+                    },
+                    {
+                        stage: "Executive Chef",
+                        content: "Head of kitchen operations (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "School",
+                        title: "Culinary Academy of India",
+                        link: "https://www.culinaryacademyofindia.com/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Professional Chef by CIA",
+                        link: "https://www.amazon.in/Professional-Chef-Culinary-Institute-America/dp/0470421355"
+                    },
+                    {
+                        type: "Competition",
+                        title: "Indian Culinary Forum Events",
+                        link: "https://www.indianculinaryforum.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Executive Chef (CEC)",
+                        link: "https://www.acfchefs.org/Certify"
+                    }
+                ],
+                outlook: "Chef roles growing with food service industry. Specialized chefs (pastry, vegan, etc.) and those with international cuisine expertise in high demand."
+            },
+            "restaurant-manager": {
+                title: "Restaurant Manager",
+                image: "{{ url_for('static', filename='images/restaurant-manager.jpg') }}",
+                description: "Restaurant managers oversee daily operations, staff, and customer service in dining establishments. They ensure smooth service, manage finances, handle customer concerns, and maintain quality standards.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-25+ LPA (Senior)",
+                education: "Hospitality degree preferred, or experience with certifications",
+                growth: "10% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Customer Service",
+                    "Staff Management",
+                    "Inventory Control",
+                    "Financial Management",
+                    "Problem Solving",
+                    "Menu Knowledge",
+                    "Health & Safety Compliance",
+                    "Marketing"
+                ],
+                companies: "Fine dining restaurants, hotel F&B outlets, chain restaurants, catering companies",
+                path: [
+                    {
+                        stage: "Server/Host",
+                        content: "Start in front-of-house roles (6 months-1 year)"
+                    },
+                    {
+                        stage: "Shift Supervisor",
+                        content: "Manage shifts and small teams (1-2 years)"
+                    },
+                    {
+                        stage: "Assistant Manager",
+                        content: "Assist with overall operations (2-3 years)"
+                    },
+                    {
+                        stage: "Restaurant Manager",
+                        content: "Full operational responsibility (3-5 years)"
+                    },
+                    {
+                        stage: "General Manager",
+                        content: "Manage multiple locations (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Restaurant Management (Udemy)",
+                        link: "https://www.udemy.com/course/restaurant-management/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Setting the Table by Danny Meyer",
+                        link: "https://www.amazon.in/Setting-Table-Hospitality-Danny-Meyer/dp/0060742755"
+                    },
+                    {
+                        type: "Association",
+                        title: "National Restaurant Association of India",
+                        link: "https://www.nrai.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Foodservice Management Professional",
+                        link: "https://www.nraef.org/certifications/fmp/"
+                    }
+                ],
+                outlook: "Restaurant management growing with food service industry. Managers with experience in diverse cuisines and sustainable practices have advantage."
+            },
+            "travel-agent": {
+                title: "Travel Agent",
+                image: "{{ url_for('static', filename='images/travel-agent.jpg') }}",
+                description: "Travel agents plan and book customized travel experiences, from flights to luxury vacations. They advise clients, arrange itineraries, handle bookings, and solve travel issues, specializing in leisure or corporate travel.",
+                salary: "₹3-6 LPA (Entry Level), ₹6-12 LPA (Mid Level), ₹12-20+ LPA (Senior)",
+                education: "High school diploma minimum, travel certifications preferred",
+                growth: "5% (slower than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Destination Knowledge",
+                    "Booking Systems",
+                    "Customer Service",
+                    "Sales & Marketing",
+                    "Attention to Detail",
+                    "Problem Solving",
+                    "Foreign Languages",
+                    "Cultural Awareness"
+                ],
+                companies: "Travel agencies, tour operators, corporate travel departments, online agencies",
+                path: [
+                    {
+                        stage: "Training",
+                        content: "Learn booking systems and travel products (6 months-1 year)"
+                    },
+                    {
+                        stage: "Junior Agent",
+                        content: "Handle simple bookings under supervision (1-2 years)"
+                    },
+                    {
+                        stage: "Travel Agent",
+                        content: "Manage full client itineraries independently (2-4 years)"
+                    },
+                    {
+                        stage: "Senior Agent",
+                        content: "Specialize in luxury or corporate travel (4-6 years)"
+                    },
+                    {
+                        stage: "Agency Manager",
+                        content: "Lead agency operations (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "IATA Travel & Tourism Diploma",
+                        link: "https://www.iata.org/en/training/courses/travel-tourism-diploma/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Travel Agent Essentials (Udemy)",
+                        link: "https://www.udemy.com/course/travel-agent-essentials/"
+                    },
+                    {
+                        type: "Association",
+                        title: "Travel Agents Association of India",
+                        link: "https://www.taai.in/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "Amadeus Training",
+                        link: "https://www.amadeus.com/en/training"
+                    }
+                ],
+                outlook: "Traditional travel agent roles declining but specialists in luxury, adventure, and corporate travel remain in demand. Tech-savvy agents thriving."
+            },
+            "tour-guide": {
+                title: "Tour Guide",
+                image: "{{ url_for('static', filename='images/tour-guide.jpg') }}",
+                description: "Tour guides lead educational and entertaining tours through cultural, historical, or natural attractions. They provide commentary, ensure safety, and create memorable experiences for groups or individuals.",
+                salary: "₹2-5 LPA (Entry Level), ₹5-8 LPA (Mid Level), ₹8-15+ LPA (Senior)",
+                education: "High school diploma minimum, specialized training/certifications",
+                growth: "10% (average growth expected)",
+                experience: "Entry-level: 0-1 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Public Speaking",
+                    "Historical/Cultural Knowledge",
+                    "Storytelling",
+                    "Customer Service",
+                    "Foreign Languages",
+                    "First Aid",
+                    "Group Management",
+                    "Local Expertise"
+                ],
+                companies: "Tour operators, museums, historical sites, national parks, cruise lines",
+                path: [
+                    {
+                        stage: "Training",
+                        content: "Complete guide certification for specific sites/regions (3-6 months)"
+                    },
+                    {
+                        stage: "Assistant Guide",
+                        content: "Shadow experienced guides (6 months-1 year)"
+                    },
+                    {
+                        stage: "Tour Guide",
+                        content: "Lead standard tours independently (1-3 years)"
+                    },
+                    {
+                        stage: "Senior Guide",
+                        content: "Develop specialized tours (3-5 years)"
+                    },
+                    {
+                        stage: "Tour Manager",
+                        content: "Oversee multiple guides and operations (5+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Ministry of Tourism Guide Certification",
+                        link: "https://tourism.gov.in/"
+                    },
+                    {
+                        type: "Course",
+                        title: "Heritage Interpretation Training",
+                        link: "https://www.nhfoundation.org.in/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Professional Guide's Handbook",
+                        link: "https://www.amazon.in/Professional-Guides-Handbook-Patrick-Hollingworth/dp/1741175919"
+                    },
+                    {
+                        type: "Association",
+                        title: "Indian Association of Tour Operators",
+                        link: "https://www.iato.in/"
+                    }
+                ],
+                outlook: "Tour guide opportunities growing with domestic and international tourism. Multilingual guides and those with niche expertise (wildlife, culinary, etc.) in demand."
+            },
+            "event-planner": {
+                title: "Event Planner",
+                image: "{{ url_for('static', filename='images/event-planner.jpg') }}",
+                description: "Event planners coordinate all aspects of professional events, from corporate meetings to weddings. They handle venue selection, vendor coordination, budgeting, logistics, and on-site management to ensure successful events.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-15 LPA (Mid Level), ₹15-30+ LPA (Senior)",
+                education: "Bachelor's degree in hospitality/events preferred, certifications available",
+                growth: "15% faster than average (2022-2032)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Organization",
+                    "Vendor Management",
+                    "Budgeting",
+                    "Creativity",
+                    "Problem Solving",
+                    "Negotiation",
+                    "Attention to Detail",
+                    "Client Relations"
+                ],
+                companies: "Event management firms, hotels, corporate event departments, wedding planners",
+                path: [
+                    {
+                        stage: "Assistant",
+                        content: "Support senior planners with logistics (1-2 years)"
+                    },
+                    {
+                        stage: "Coordinator",
+                        content: "Manage smaller events independently (2-3 years)"
+                    },
+                    {
+                        stage: "Event Planner",
+                        content: "Handle full event planning (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Planner",
+                        content: "Oversee large/complex events (5-7 years)"
+                    },
+                    {
+                        stage: "Event Director",
+                        content: "Lead event department or own business (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Certification",
+                        title: "Certified Meeting Professional (CMP)",
+                        link: "https://www.eventscouncil.org/CMP/CMP-Certification"
+                    },
+                    {
+                        type: "Course",
+                        title: "Event Planning Management (Udemy)",
+                        link: "https://www.udemy.com/course/event-planning-management/"
+                    },
+                    {
+                        type: "Book",
+                        title: "The Event Planning Handbook",
+                        link: "https://www.amazon.in/Event-Planning-Handbook-Allan-Wolf/dp/0730386612"
+                    },
+                    {
+                        type: "Association",
+                        title: "Event and Entertainment Management Association",
+                        link: "https://www.eema.in/"
+                    }
+                ],
+                outlook: "Event planning growing faster than average with corporate and social events rebounding post-pandemic. Luxury and destination wedding planners in high demand."
+            },
+            "airline-customer-service": {
+                title: "Airline Customer Service",
+                image: "{{ url_for('static', filename='images/airline-customer-service.jpg') }}",
+                description: "Airline customer service representatives assist passengers with check-in, boarding, and resolving travel issues at airports. They handle ticketing, baggage, flight changes, and ensure smooth travel experiences.",
+                salary: "₹3-6 LPA (Entry Level), ₹6-10 LPA (Mid Level), ₹10-15+ LPA (Senior)",
+                education: "High school diploma minimum, airline training provided",
+                growth: "8% (average growth expected)",
+                experience: "Entry-level: 0-1 years, Mid-level: 2-4 years, Senior: 5+ years",
+                skills: [
+                    "Customer Service",
+                    "Problem Solving",
+                    "Communication",
+                    "Computer Systems",
+                    "Multitasking",
+                    "Foreign Languages",
+                    "Conflict Resolution",
+                    "Attention to Detail"
+                ],
+                companies: "Domestic and international airlines, airport service providers",
+                path: [
+                    {
+                        stage: "Training",
+                        content: "Complete airline-specific training program (3-6 months)"
+                    },
+                    {
+                        stage: "Customer Service Agent",
+                        content: "Handle check-in, boarding, basic issues (1-2 years)"
+                    },
+                    {
+                        stage: "Senior Agent",
+                        content: "Manage complex customer issues (3-4 years)"
+                    },
+                    {
+                        stage: "Supervisor",
+                        content: "Lead customer service team (4-6 years)"
+                    },
+                    {
+                        stage: "Station Manager",
+                        content: "Oversee airport operations (6+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Airline Customer Service (IATA)",
+                        link: "https://www.iata.org/en/training/courses/airline-customer-service/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Fundamentals of Airline Operations",
+                        link: "https://www.amazon.in/Fundamentals-Airline-Operations-John-G-Wensveen/dp/1472436271"
+                    },
+                    {
+                        type: "Association",
+                        title: "International Air Transport Association",
+                        link: "https://www.iata.org/"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Airport Customer Service Specialist",
+                        link: "https://www.airportnet.org/page/ACSS"
+                    }
+                ],
+                outlook: "Airline customer service roles growing steadily with air travel recovery. Multilingual agents and those with IT skills have advantage."
+            },
+            "cruise-director": {
+                title: "Cruise Director",
+                image: "{{ url_for('static', filename='images/cruise-director.jpg') }}",
+                description: "Cruise directors plan and oversee entertainment, activities, and guest experiences aboard cruise ships. They coordinate shows, events, excursions, and ensure passengers have memorable vacations.",
+                salary: "₹6-12 LPA (Entry Level), ₹12-20 LPA (Mid Level), ₹20-35+ LPA (Senior)",
+                education: "Hospitality/entertainment background preferred, cruise training provided",
+                growth: "12% (faster than average)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Entertainment Management",
+                    "Public Speaking",
+                    "Event Planning",
+                    "Team Leadership",
+                    "Customer Service",
+                    "Multilingual",
+                    "Crisis Management",
+                    "Creativity"
+                ],
+                companies: "Major cruise lines (Royal Caribbean, Carnival, Norwegian, etc.)",
+                path: [
+                    {
+                        stage: "Cruise Staff",
+                        content: "Start in entry-level entertainment roles (1-2 years)"
+                    },
+                    {
+                        stage: "Assistant Director",
+                        content: "Assist with activity coordination (2-3 years)"
+                    },
+                    {
+                        stage: "Cruise Director",
+                        content: "Lead all onboard entertainment (3-5 years)"
+                    },
+                    {
+                        stage: "Senior Director",
+                        content: "Oversee multiple ships' programs (5-7 years)"
+                    },
+                    {
+                        stage: "Shore Excursions Manager",
+                        content: "Manage port activities (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Cruise Ship Employment Training",
+                        link: "https://www.cruiseshipjobtraining.com/"
+                    },
+                    {
+                        type: "Book",
+                        title: "Working on Cruise Ships",
+                        link: "https://www.amazon.in/Working-Cruise-Ships-Comprehensive-Handbook/dp/191015840X"
+                    },
+                    {
+                        type: "Association",
+                        title: "Cruise Lines International Association",
+                        link: "https://www.cruising.org/"
+                    },
+                    {
+                        type: "Platform",
+                        title: "All Cruise Jobs",
+                        link: "https://www.allcruisejobs.com/"
+                    }
+                ],
+                outlook: "Cruise director roles growing faster than average with cruise industry expansion. Entertainers with hospitality experience in demand."
+            },
+            "lodging-operations": {
+                title: "Lodging Operations Supervisor",
+                image: "{{ url_for('static', filename='images/lodging-operations.jpg') }}",
+                description: "Lodging operations supervisors manage front desk, housekeeping, and maintenance operations for hotels and resorts. They ensure smooth daily operations, guest satisfaction, and staff coordination across departments.",
+                salary: "₹4-8 LPA (Entry Level), ₹8-12 LPA (Mid Level), ₹12-20+ LPA (Senior)",
+                education: "Hospitality degree preferred or experience with certifications",
+                growth: "10% (average growth expected)",
+                experience: "Entry-level: 0-2 years, Mid-level: 3-5 years, Senior: 6+ years",
+                skills: [
+                    "Operations Management",
+                    "Staff Supervision",
+                    "Guest Services",
+                    "Housekeeping Standards",
+                    "Maintenance Coordination",
+                    "Problem Solving",
+                    "Inventory Management",
+                    "Quality Control"
+                ],
+                companies: "Hotels, resorts, extended stay properties, vacation rentals",
+                path: [
+                    {
+                        stage: "Front Desk Agent",
+                        content: "Start in guest-facing role (1-2 years)"
+                    },
+                    {
+                        stage: "Department Supervisor",
+                        content: "Lead housekeeping or front desk team (2-3 years)"
+                    },
+                    {
+                        stage: "Operations Supervisor",
+                        content: "Coordinate multiple departments (3-5 years)"
+                    },
+                    {
+                        stage: "Operations Manager",
+                        content: "Oversee all daily operations (5-7 years)"
+                    },
+                    {
+                        stage: "General Manager",
+                        content: "Full property management (7+ years)"
+                    }
+                ],
+                resources: [
+                    {
+                        type: "Course",
+                        title: "Hotel Operations Management (edX)",
+                        link: "https://www.edx.org/course/hotel-operations-management"
+                    },
+                    {
+                        type: "Book",
+                        title: "Hotel Operations Management by David K. Hayes",
+                        link: "https://www.amazon.in/Hotel-Operations-Management-David-Hayes/dp/0135129942"
+                    },
+                    {
+                        type: "Certification",
+                        title: "Certified Hospitality Supervisor (CHS)",
+                        link: "https://www.ahlei.org/certifications/chs/"
+                    },
+                    {
+                        type: "Association",
+                        title: "Hospitality Operations Association",
+                        link: "https://www.hospitalitynet.org/"
+                    }
+                ],
+                outlook: "Lodging operations roles growing steadily with hospitality industry recovery. Supervisors with cross-departmental experience have best prospects."
+            }
+        };
+
+        // Get career parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const careerId = urlParams.get('career');
+
+        // Load career data
+        if (careerId && hospitalityCareerData[careerId]) {
+            const career = hospitalityCareerData[careerId];
+            
+            // Set basic info
+            document.getElementById('career-title').textContent = career.title;
+            document.getElementById('career-image').src = career.image;
+            document.getElementById('career-image').alt = career.title;
+            document.getElementById('career-description').textContent = career.description;
+            
+            // Set highlights
+            document.getElementById('career-salary').textContent = career.salary;
+            document.getElementById('career-education').textContent = career.education;
+            document.getElementById('career-growth').textContent = career.growth;
+            document.getElementById('career-experience').textContent = career.experience;
+            
+            // Set skills
+            const skillsContainer = document.getElementById('skills-container');
+            career.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.textContent = skill;
+                skillsContainer.appendChild(skillTag);
+            });
+            
+            // Set companies
+            document.getElementById('career-companies').textContent = career.companies;
+            
+            // Set career path
+            const careerPath = document.getElementById('career-path');
+            career.path.forEach(stage => {
+                const pathItem = document.createElement('div');
+                pathItem.className = 'path-item';
+                pathItem.innerHTML = `
+                    <div class="path-content">
+                        <h4>${stage.stage}</h4>
+                        <p>${stage.content}</p>
+                    </div>
+                `;
+                careerPath.appendChild(pathItem);
+            });
+            
+            // Set resources
+            const resourcesContainer = document.getElementById('resources-container');
+            career.resources.forEach(resource => {
+                const resourceCard = document.createElement('div');
+                resourceCard.className = 'resource-card';
+                resourceCard.innerHTML = `
+                    <h4><i class="fas fa-${resource.type === 'Course' ? 'graduation-cap' : 
+                                         resource.type === 'Book' ? 'book' : 
+                                         resource.type === 'Certification' ? 'certificate' : 
+                                         resource.type === 'School' ? 'university' : 
+                                         resource.type === 'Competition' ? 'trophy' : 
+                                         resource.type === 'Association' ? 'users' : 
+                                         resource.type === 'Platform' ? 'laptop' : 'info-circle'}"></i> ${resource.type}: ${resource.title}</h4>
+                    <p>${resource.description || ''}</p>
+                    <a href="${resource.link}" target="_blank">View Resource <i class="fas fa-external-link-alt"></i></a>
+                `;
+                resourcesContainer.appendChild(resourceCard);
+            });
+            
+            // Set job outlook
+            document.getElementById('job-outlook').innerHTML = `
+                <h3><i class="fas fa-chart-line"></i> Market Outlook</h3>
+                <p>${career.outlook}</p>
+            `;
+        } else {
+            // Redirect if invalid career ID
+            window.location.href = '/hospitality';
+        }
+
+        // Animation for elements
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.highlight-card, .path-item, .resource-card')
+               .forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

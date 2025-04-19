@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Environment & Sustainability Careers | CareerHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #10b981;
+      --secondary: #34d399;
+      --accent: #6ee7b7;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --environment: #10b981;
+      --conservation: #34d399;
+      --sustainability: #6ee7b7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 8rem 6% 3rem;
+      background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
+                  url('/static/images/environment-banner.jpg') center/cover;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(to top, var(--dark), transparent);
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--environment), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    header p {
+      font-size: 1.3rem;
+      color: #e2e8f0;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+      font-style: italic;
+    }
+
+    .field-intro {
+      padding: 4rem 6%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .field-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--environment);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .field-intro h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--environment), transparent);
+    }
+
+    .field-intro h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--conservation);
+      margin: 2.5rem 0 1.5rem;
+    }
+
+    .field-intro p {
+      margin-bottom: 1.5rem;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .highlight-box {
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 4px solid var(--environment);
+      padding: 2rem;
+      margin: 3rem 0;
+      border-radius: 0 8px 8px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-box::before {
+      content: '“';
+      position: absolute;
+      top: -20px;
+      left: 10px;
+      font-size: 6rem;
+      color: rgba(16, 185, 129, 0.05);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .highlight-box p {
+      color: #e2e8f0;
+      font-size: 1.2rem;
+      position: relative;
+    }
+
+    ul.feature-list {
+      color: #94a3b8;
+      margin-left: 1.5rem;
+      margin-bottom: 2rem;
+      list-style-type: none;
+    }
+
+    ul.feature-list li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 2rem;
+      font-size: 1.1rem;
+    }
+
+    ul.feature-list li::before {
+      content: '🌱';
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+    }
+
+    .career-cards-container {
+      padding: 3rem 6%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .career-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .career-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+      border-color: var(--environment);
+    }
+
+    .career-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+      filter: brightness(0.9);
+    }
+
+    .career-card:hover img {
+      transform: scale(1.05);
+      filter: brightness(1);
+    }
+
+    .card-content {
+      padding: 2rem;
+    }
+
+    .career-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .career-card p {
+      color: #94a3b8;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      min-height: 80px;
+      line-height: 1.7;
+    }
+
+    .career-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-pill {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--environment);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .learn-more {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      width: 100%;
+      padding: 1rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--environment);
+      border-radius: 0.5rem;
+      color: var(--light);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      font-size: 1.1rem;
+    }
+
+    .learn-more:hover {
+      background: var(--environment);
+      color: var(--dark);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .faq-section {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4rem 6%;
+      margin: 4rem auto;
+      border-radius: 1rem;
+      max-width: 1000px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(16, 185, 129, 0.1);
+    }
+
+    .faq-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      color: var(--environment);
+      position: relative;
+    }
+
+    .faq-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--environment), transparent);
+    }
+
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .faq {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.8rem;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .faq:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--environment);
+    }
+
+    .question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--light);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .answer {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      margin-top: 1.5rem;
+      display: none;
+      line-height: 1.8;
+    }
+
+    .faq.active .answer {
+      display: block;
+    }
+
+    .arrow {
+      transition: transform 0.4s ease;
+      color: var(--environment);
+    }
+
+    .faq.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 3rem;
+      background: linear-gradient(135deg, var(--environment), var(--conservation));
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(15, 23, 42, 0.8);
+      margin-top: 4rem;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding-top: 6rem;
+      }
+      
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .career-cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .field-intro, .faq-section {
+        padding: 3rem 5%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      header p {
+        font-size: 1.1rem;
+      }
+      
+      .field-intro, .career-cards-container, .faq-section {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+
+      .career-card {
+        margin-bottom: 1.5rem;
+      }
+
+      .career-card h3 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-leaf"></i> Environment & Sustainability</h1>
+    <p>"Building a greener future through science, policy, and innovation"</p>
+  </header>
+
+  <section class="field-intro">
+    <h2>About Environmental Careers</h2>
+    <p>The environmental sector is at the forefront of addressing global challenges like climate change, biodiversity loss, and sustainable development. These careers combine scientific knowledge with practical solutions to protect ecosystems and create a more sustainable future for all.</p>
+    
+    <div class="highlight-box">
+      <p><strong>Planetary Stewardship:</strong> From field research to policy development, environmental professionals work across disciplines to understand ecological systems, mitigate human impact, and develop sustainable alternatives. Their work ensures the health of our planet for future generations.</p>
+    </div>
+
+    <h3>Who Thrives in Environmental Careers?</h3>
+    <p>This field calls to those who:</p>
+    <ul class="feature-list">
+      <li>Are passionate about nature and conservation</li>
+      <li>Enjoy both fieldwork and analytical problem-solving</li>
+      <li>Want to make tangible contributions to environmental protection</li>
+      <li>Are comfortable with interdisciplinary collaboration</li>
+      <li>Can communicate complex ecological concepts to diverse audiences</li>
+      <li>Are adaptable to changing environmental conditions and policies</li>
+    </ul>
+
+    <h3>Career Outlook</h3>
+    <p>The Bureau of Labor Statistics projects strong growth in environmental fields:</p>
+    <ul class="feature-list">
+      <li><strong>Environmental Scientists:</strong> +8% growth by 2030</li>
+      <li><strong>Conservation Scientists:</strong> +7% growth</li>
+      <li><strong>Environmental Engineers:</strong> +10% growth</li>
+      <li><strong>Renewable Energy Specialists:</strong> +15% growth</li>
+    </ul>
+    <p>Increasing focus on climate change mitigation and corporate sustainability is driving demand across all environmental sectors.</p>
+
+    <a href="/explore" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to All Fields
+    </a>
+  </section>
+
+  <section class="career-cards-container">
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/environmental-scientist.jpg') }}" alt="Environmental Scientist">
+      <div class="card-content">
+        <h3><i class="fas fa-flask"></i> Environmental Scientist</h3>
+        <p>Conduct research to identify and mitigate environmental hazards, from pollution to habitat loss.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $50k-$120k</span>
+          <span class="stat-pill"><i class="fas fa-microscope"></i> Research Focus</span>
+          <span class="stat-pill"><i class="fas fa-graduation-cap"></i> Master's Preferred</span>
+        </div>
+        <a href="/environment-career?career=environmental-scientist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/ecologist.jpg') }}" alt="Ecologist">
+      <div class="card-content">
+        <h3><i class="fas fa-frog"></i> Ecologist</h3>
+        <p>Study ecosystems, species interactions, and biodiversity patterns in natural environments.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $45k-$110k</span>
+          <span class="stat-pill"><i class="fas fa-tree"></i> Field Research</span>
+          <span class="stat-pill"><i class="fas fa-chart-line"></i> Data Analysis</span>
+        </div>
+        <a href="/environment-career?career=ecologist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/conservationist.jpg') }}" alt="Conservationist">
+      <div class="card-content">
+        <h3><i class="fas fa-paw"></i> Conservationist</h3>
+        <p>Develop and implement strategies to protect natural habitats and endangered species.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $40k-$95k</span>
+          <span class="stat-pill"><i class="fas fa-globe"></i> NGO/Government</span>
+          <span class="stat-pill"><i class="fas fa-hands-helping"></i> Community Work</span>
+        </div>
+        <a href="/environment-career?career=conservationist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/climate-analyst.jpg') }}" alt="Climate Analyst">
+      <div class="card-content">
+        <h3><i class="fas fa-cloud-sun-rain"></i> Climate Analyst</h3>
+        <p>Interpret climate data to predict trends and advise on mitigation strategies.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$130k</span>
+          <span class="stat-pill"><i class="fas fa-database"></i> Big Data</span>
+          <span class="stat-pill"><i class="fas fa-chart-line"></i> +12% Growth</span>
+        </div>
+        <a href="/environment-career?career=climate-analyst" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/wildlife-biologist.jpg') }}" alt="Wildlife Biologist">
+      <div class="card-content">
+        <h3><i class="fas fa-kiwi-bird"></i> Wildlife Biologist</h3>
+        <p>Study animal behavior and populations to inform conservation efforts.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $45k-$100k</span>
+          <span class="stat-pill"><i class="fas fa-binoculars"></i> Field Work</span>
+          <span class="stat-pill"><i class="fas fa-book"></i> Species Expertise</span>
+        </div>
+        <a href="/environment-career?career=wildlife-biologist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/environmental-engineer.jpg') }}" alt="Environmental Engineer">
+      <div class="card-content">
+        <h3><i class="fas fa-recycle"></i> Environmental Engineer</h3>
+        <p>Design systems for waste management, pollution control, and sustainable development.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $70k-$150k</span>
+          <span class="stat-pill"><i class="fas fa-hard-hat"></i> Technical Solutions</span>
+          <span class="stat-pill"><i class="fas fa-graduation-cap"></i> PE License</span>
+        </div>
+        <a href="/environment-career?career=environmental-engineer" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/forester.jpg') }}" alt="Forester">
+      <div class="card-content">
+        <h3><i class="fas fa-tree"></i> Forester</h3>
+        <p>Manage forest resources for conservation, recreation, and sustainable timber production.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $50k-$110k</span>
+          <span class="stat-pill"><i class="fas fa-map-marked-alt"></i> Land Management</span>
+          <span class="stat-pill"><i class="fas fa-fire"></i> Fire Ecology</span>
+        </div>
+        <a href="/environment-career?career=forester" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/sustainability-specialist.jpg') }}" alt="Sustainability Specialist">
+      <div class="card-content">
+        <h3><i class="fas fa-solar-panel"></i> Sustainability Specialist</h3>
+        <p>Develop and implement green initiatives for corporations and organizations.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $55k-$130k</span>
+          <span class="stat-pill"><i class="fas fa-building"></i> Corporate Sector</span>
+          <span class="stat-pill"><i class="fas fa-chart-line"></i> +15% Growth</span>
+        </div>
+        <a href="/environment-career?career=sustainability-specialist" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/urban-planner.jpg') }}" alt="Urban Planner">
+      <div class="card-content">
+        <h3><i class="fas fa-city"></i> Urban Planner</h3>
+        <p>Design sustainable communities with green spaces and eco-friendly infrastructure.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $60k-$120k</span>
+          <span class="stat-pill"><i class="fas fa-users"></i> Community Focus</span>
+          <span class="stat-pill"><i class="fas fa-graduation-cap"></i> Master's Required</span>
+        </div>
+        <a href="/environment-career?career=urban-planner" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="career-card">
+      <img src="{{ url_for('static', filename='images/environmental-policy.jpg') }}" alt="Environmental Policy Analyst">
+      <div class="card-content">
+        <h3><i class="fas fa-file-contract"></i> Environmental Policy Analyst</h3>
+        <p>Research and develop regulations to address environmental challenges at all levels.</p>
+        <div class="career-stats">
+          <span class="stat-pill"><i class="fas fa-dollar-sign"></i> $55k-$140k</span>
+          <span class="stat-pill"><i class="fas fa-landmark"></i> Government/NGO</span>
+          <span class="stat-pill"><i class="fas fa-balance-scale"></i> Law Interface</span>
+        </div>
+        <a href="/environment-career?career=environmental-policy-analyst" class="learn-more">Explore Path <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>Environmental Career Insights</h2>
+    <div class="faq-container">
+      <div class="faq">
+        <div class="question">
+          <span>What education is needed for environmental careers?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Educational requirements vary by specialization:</p>
+          <ul>
+            <li><strong>Field scientists:</strong> Typically need at least a bachelor's in environmental science, biology, or related field</li>
+            <li><strong>Environmental engineers:</strong> Require engineering degree and often professional licensure</li>
+            <li><strong>Policy analysts:</strong> Benefit from degrees in environmental policy or law</li>
+            <li><strong>Advanced research:</strong> Usually requires master's or PhD</li>
+            <li><strong>Certifications:</strong> LEED, GIS, or specialized training can enhance qualifications</li>
+          </ul>
+          <p>Field experience through internships is highly valuable across all environmental careers.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>What are emerging trends in environmental careers?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Key trends shaping the field:</p>
+          <ul>
+            <li><strong>Climate adaptation:</strong> Developing resilience strategies for communities</li>
+            <li><strong>Circular economy:</strong> Designing waste out of production systems</li>
+            <li><strong>Corporate sustainability:</strong> ESG reporting and green business practices</li>
+            <li><strong>Renewable energy:</strong> Solar/wind development and grid integration</li>
+            <li><strong>Environmental justice:</strong> Addressing disproportionate impacts on communities</li>
+          </ul>
+          <p>Technological skills in GIS, remote sensing, and data analysis are increasingly important.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>What are the biggest challenges in this field?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Common challenges and how to address them:</p>
+          <ul>
+            <li><strong>Funding limitations:</strong> Develop grant-writing and fundraising skills</li>
+            <li><strong>Political changes:</strong> Maintain scientific integrity while navigating policy shifts</li>
+            <li><strong>Burnout:</strong> Practice self-care when dealing with environmental crises</li>
+            <li><strong>Data gaps:</strong> Develop strong research methodologies</li>
+            <li><strong>Public skepticism:</strong> Hone science communication skills</li>
+          </ul>
+          <p>Networking and professional organizations can provide valuable support systems.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="question">
+          <span>How can I gain experience while in school?</span>
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="answer">
+          <p>Valuable experience-building opportunities:</p>
+          <ul>
+            <li><strong>Internships:</strong> With government agencies, NGOs, or environmental firms</li>
+            <li><strong>Volunteering:</strong> Habitat restoration, citizen science projects</li>
+            <li><strong>Research:</strong> Assist professors with environmental studies</li>
+            <li><strong>Student organizations:</strong> Environmental clubs and initiatives</li>
+            <li><strong>Field courses:</strong> Many programs offer hands-on learning experiences</li>
+            <li><strong>Certifications:</strong> Earn basic certifications like first aid, GIS, or water quality testing</li>
+          </ul>
+          <p>Document all experiences for your professional portfolio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Career Explorer. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Enhanced FAQ Toggle with Animation
+    document.querySelectorAll(".faq").forEach((faq) => {
+      const question = faq.querySelector(".question");
+      question.addEventListener("click", () => {
+        faq.classList.toggle("active");
+        
+        // Smooth height transition for answer
+        const answer = faq.querySelector(".answer");
+        if (faq.classList.contains("active")) {
+          answer.style.display = "block";
+          const height = answer.scrollHeight;
+          answer.style.height = "0";
+          setTimeout(() => {
+            answer.style.height = `${height}px`;
+            setTimeout(() => {
+              answer.style.height = "auto";
+            }, 300);
+          }, 10);
+        } else {
+          const height = answer.scrollHeight;
+          answer.style.height = `${height}px`;
+          setTimeout(() => {
+            answer.style.height = "0";
+            setTimeout(() => {
+              answer.style.display = "none";
+            }, 300);
+          }, 10);
+        }
+      });
+    });
+
+    // Scroll Animation with Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.classList.contains('career-card')) {
+            entry.target.style.transitionDelay = `${entries.indexOf(entry) * 0.1}s`;
+          }
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
+    });
+
+    document.querySelectorAll('.career-card, .field-intro > *, .faq')
+           .forEach(el => observer.observe(el));
+
+    // Card hover enhancement
+    document.querySelectorAll('.career-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.querySelector('img').style.transform = 'scale(1.05)';
+        card.style.boxShadow = '0 20px 40px rgba(16, 185, 129, 0.3)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.querySelector('img').style.transform = 'scale(1)';
+        card.style.boxShadow = '0 15px 30px rgba(16, 185, 129, 0.2)';
+      });
+    });
+  </script>
+</body>
+</html>
