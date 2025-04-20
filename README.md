@@ -1,4 +1,4 @@
-# Carrier Counselling - Kario
+# Career Hub - Kario K
 
 ## Project Description
 The "Carrier Counselling - Kario" project is a career guidance platform designed to help users explore various career options. It includes interactive quizzes, forms, and detailed career cards to assist users in making informed career decisions. The platform aims to guide students and professionals in identifying their strengths and aligning them with potential career paths.
